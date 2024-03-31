@@ -97,7 +97,7 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
 
             <div className="amis-infos">
               <p className="amis-name"><p>{room.name}</p></p>
-              {/* <p className="last-message">room.lastMessage</p> */}
+              <p className="last-message">{room.lastmessagecontent}</p>
             </div>
 
             {RoomNotifs && (

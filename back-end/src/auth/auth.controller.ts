@@ -77,7 +77,6 @@ export class AuthController
                 throw new UnauthorizedException("2FA");
             }
             const numberofnotif = await this.authService.findnumberofnotif(user.id);
-            console.log(user);
             res.send(user)
         } 
         catch(e)

@@ -7,11 +7,12 @@ import { Friends } from 'src/typeorm/entities/friends';
 import { UsersService } from 'src/users/users.service';
 import { BlockedDtails, ChatDtails, FriendsDtails } from 'src/types/types';
 import { Repository } from 'typeorm';
+import { ChatService } from 'src/chat/chat.service';
 
 @Injectable()
 export class FriendsService {
 
-    constructor(@InjectRepository(Friends) private readonly friendrepository : Repository<Friends>,@InjectRepository(Blocked) private readonly blockedrepository : Repository<Blocked>,
+    constructor(@InjectRepository(Friends) private readonly friendrepository : Repository<Friends>,@InjectRepository(Blocked) private readonly blockedrepository : Repository<Blocked>,private readonly chatservice:ChatService
     
     ){}
     async confirmfriendship(details:FriendsDtails){
@@ -66,9 +67,31 @@ export class FriendsService {
         ],
         relations: ['user1', 'user2'],
       });
-      const users = friendships.map(friendship => {
-        return friendship.user1.id === user.id ? friendship.user2 : friendship.user1;
-      });
+      const users = await Promise.all(friendships.map(async (friendship) => {
+        const chatid = await this.chatservice.findChatByFriendshipId({friends:friendship,rooms:null});
+        const lastmessage = await this.chatservice.findMessagesByChatId(chatid.id);
+        const lastm =lastmessage[lastmessage.length - 1] ? lastmessage[lastmessage.length - 1].content : null;
+        if(friendship.user1.id == user.id)
+        {
+          return{
+            id:friendship.user2.id,
+            login:friendship.user2.login,
+            avatar:friendship.user2.avatar,
+            status:friendship.user2.status,
+            lastmessagecontent:lastm,
+          }
+        }
+        else
+        {
+          return{
+            id:friendship.user1.id,
+            login:friendship.user1.login,
+            avatar:friendship.user1.avatar,
+            status:friendship.user1.status,
+            lastmessagecontent:lastm,
+          }
+        }
+      }));
       return users;
     }
 

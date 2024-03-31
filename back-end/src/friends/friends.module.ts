@@ -16,7 +16,7 @@ import { Notif } from 'src/typeorm/entities/notif';
   imports:[AuthModule,forwardRef(() => ChatModule),
     TypeOrmModule.forFeature([Friends,Blocked,Notif]),JwtModule.register({secret:"secret",
   signOptions:{expiresIn:'1d'}})
-  ],
+  ], 
   providers: [FriendsService,WebsocketService,],
   controllers: [FriendsController],
   exports:[FriendsService]

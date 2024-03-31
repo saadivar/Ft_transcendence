@@ -13,10 +13,11 @@ import { Notif } from 'src/typeorm/entities/notif';
 import { WebsocketService } from 'src/realtime/Websocketservice';
 import { spec } from 'node:test/reporters';
 import { AuthService } from 'src/auth/auth.service';
+import { ChatService } from 'src/chat/chat.service';
 @Injectable()
 export class RoomService {
   constructor(@InjectRepository(Room) private readonly roomrepository: Repository<Room>,private readonly authservice:AuthService,private readonly websocketService:WebsocketService,
-    @InjectRepository(RoomMember) private readonly roommmemberrepository: Repository<RoomMember>,@InjectRepository(Notif) private readonly notifrepository : Repository<Notif>) {
+    @InjectRepository(RoomMember) private readonly roommmemberrepository: Repository<RoomMember>,@InjectRepository(Notif) private readonly notifrepository : Repository<Notif>,private readonly chatservice:ChatService) {
   }
   async updatechatroom(myroom: Room) {
     await this.roomrepository.save(myroom);
@@ -71,6 +72,10 @@ export class RoomService {
    
     const roomsjoinedwithroles = await Promise.all(roomsNotBanned.map(async (room) => {
       const memberStatus = await this.getstatusofthemember(room, user);
+      const chatid = await this.chatservice.findChatByroomid({friends:null,rooms:room});
+      const lastmessage = await this.chatservice.findMessagesByChatId(chatid.id);
+      
+      const lastm =lastmessage[lastmessage.length - 1] ? lastmessage[lastmessage.length - 1].content : null;
       const role = memberStatus ? memberStatus.role : null;
       const status = memberStatus ? memberStatus.status : null;
      
@@ -81,6 +86,7 @@ export class RoomService {
           members: await this.getstatusofallthemember(room, user.id),
           me: role,
           mestatus :status,
+          lastmessagecontent:lastm,
       };
   }));
     

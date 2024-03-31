@@ -22,7 +22,6 @@ export class RoomController {
 
         const user = req.user as User;
         const us = await this.roomservice.findPublicRoomsJoined(user);
-        console.log("ss " , us);
         const b = JSON.stringify(us);
         
         return res.send(b);

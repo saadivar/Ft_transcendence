@@ -56,7 +56,7 @@ const Friends_discusion = ({friendsData ,selectedUser,userSelect, SetNotifs, Not
  
 
 
-  return (
+  return ( 
     <div>
       {friendsData && friendsData.map((friend) => (
         <div
@@ -70,7 +70,7 @@ const Friends_discusion = ({friendsData ,selectedUser,userSelect, SetNotifs, Not
           <div className="amis-infos">
             <p className="amis-name"> <p>{friend.login}</p></p>
 
-            {/* <p className="last-message">{friend.lastMessage}</p> */}
+            <p className="last-message">{friend.lastmessagecontent}</p>
           </div>
           {friend.id !== selectedFriendId && MesagesById[friend.id] > 0 && <div className="amis-status">{MesagesById[friend.id]}</div>}
         </div>
