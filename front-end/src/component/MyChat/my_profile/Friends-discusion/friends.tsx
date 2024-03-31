@@ -4,7 +4,7 @@ import "./friends.css"
 import { useSocket } from "../../../Socket";
 // MessagebyId={MessagebyId}
 // setMessageById={setMessagebyId}
-const Friends_discusion = ({friendsData ,selectedUser,userSelect, SetNotifs, Notifs, SetMessages}) => {
+const Friends_discusion = ({friendsData ,selectedUser,userSelect, SetNotifs, Notifs, SetMessages, SetTotal}) => {
 
   const [selectedFriendId, setSelectedFriendId] = useState(null);
   // console.log(friendsData);
@@ -17,31 +17,43 @@ const Friends_discusion = ({friendsData ,selectedUser,userSelect, SetNotifs, Not
     setSelectedFriendId(friendId);
     userSelect(friend);
     SetMessagesById((...prevMessagesById) => prevMessagesById.filter(notif => notif.senderid !== friendId));
-    console.log("here 1")
     SetNotifs((prevNotifs) => prevNotifs.filter(notif => notif.senderid !== friendId));
     
   };
   
   useEffect(() => {
     let CountMessages = {};
-    console.log("hhh = ", Notifs);
-  
     Notifs.forEach(notif => {
       const type = notif.type;
       const id = notif.senderid;
-      console.log("id = ",id , "  selected = ",selectedFriendId)
+
       if(id === selectedFriendId)
         SetNotifs((prevNotifs) => prevNotifs.filter(notif => notif.senderid !== selectedFriendId));
       if (type === "message" && id !== selectedFriendId)
         CountMessages[id] = (CountMessages[id] || 0) + 1;
-      console.log("counts = ", CountMessages[id])
-
     });
-    SetMessagesById(CountMessages);
+  
+      SetMessagesById(CountMessages);
 
+     
   }, [Notifs]);
 
 
+  useEffect(() => {
+
+    const messagesValues = Object.values(MesagesById);
+    let totalNotifications = 0; 
+    if (messagesValues.length > 0) 
+    {
+      for (let i = 0; i < messagesValues.length; i++) {
+          totalNotifications += messagesValues[i];
+      } 
+    }
+    SetTotal(totalNotifications);
+  },[MesagesById])
+  
+  //  converts the object's values into an array
+ 
 
 
   return (

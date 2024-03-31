@@ -251,8 +251,10 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
   }, [boolpending])
 
 
-
-
+  const [totalMessages, SetTotal] = useState(0);
+  
+    console.log("ehhhh boy = ", totalMessages);
+  
   return (
     <div className="Myprofile">
       <MyData profileData={profileData}
@@ -358,6 +360,7 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
 
           {optionSelected !== "padding" && countByType["pending"] > 0 && ( <span className="Notification">{countByType["pending"]}</span>)}
         </div>
+        
       </div>
 
       <div className="discussions discussionrooms">
@@ -369,6 +372,7 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
             SetNotifs={SetNotifs}
             Notifs={Notifs}
             SetMessages={SetMessages}
+            SetTotal={SetTotal}
           />
         ) : (RoomData || NotRoomsdata) && optionSelected === "rooms" ? (
           <Rooms
