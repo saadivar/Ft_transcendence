@@ -56,6 +56,7 @@ function CodeModal({password, setPassword, onSubmit, onCancel }) {
                             <path d="M4 12l6 6L20 6" />
                         </svg>
                     </div>
+                    
                     <div className="But-modal Cancel-But-modal"
                     onClick={onCancel}>
                         <svg

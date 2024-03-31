@@ -56,16 +56,16 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/sel-biyy/data/postgres'
+      device: '/home/$USER/data/postgres_db'
   back-end:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/sel-biyy/Desktop/ft_transcendece/back-end'
+      device: './back-end'
   front-end:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/sel-biyy/Desktop/ft_transcendece/front-end'
+      device: './front-end'

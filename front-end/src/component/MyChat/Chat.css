@@ -24,7 +24,7 @@
     display: grid;
     width: 21vw;
     height: 90vh;
-    margin: 5vh 0vh 0vh 6vh;
+    margin: 7vmin 0vmin 0vmin 7.5vmin;
     grid-template-columns: 1fr;
     grid-template-rows: 0.1fr 0.2fr 0.1fr 1fr;
     grid-column-gap: 0px;
@@ -34,17 +34,3 @@
     border: 1px solid #8BD9D1;
     overflow: hidden;
 }
-
-
-@media (max-width: 576px) {
-    .OtherProfile {
-    
-    }
-  }
-  
-  /* Media query for medium screens (e.g., tablets) */
-  @media (min-width: 577px) and (max-width: 992px) {
-    .OtherProfile {
-     
-    }
-  }

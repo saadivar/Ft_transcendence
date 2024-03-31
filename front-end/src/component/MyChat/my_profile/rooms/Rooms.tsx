@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./Rooms.css"
 import { useSocket } from '../../../Socket';
 import axios from "axios";
+import CodeModal from '../../../Modals/RoomCode/RoomCode';
 
 const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, SetNotRoomsdata, RoomNotifs, SetRoomNotifs , SetMessagesRoom}) => {
 

@@ -240,7 +240,7 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
   useEffect( () => {
     const getData = async () =>{
       try {
-        const resp = await axios.get(`${import.meta.env.VITE_url_back}api/friends/notaccepted`, {withCredentials:true}); 
+        const resp = await axios.get(`${import.meta.env.VITE_url_back}/api/friends/notaccepted`, {withCredentials:true}); 
         SetPanding(resp.data)
       }   
       catch(error){

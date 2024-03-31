@@ -6,7 +6,7 @@ import axios from 'axios';
 const Padding = ({pandding,  userSelect}) => {
 
   userSelect(null);
-
+  console.log("panding", pandding);
   const handleAccept = async (friend) => {
     try {
        

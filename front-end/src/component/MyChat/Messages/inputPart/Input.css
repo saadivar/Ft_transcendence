@@ -1,13 +1,13 @@
 .inputPart {
     grid-area: 3 / 1 / 4 / 2;
     position: relative;
-    background:rgba(29, 242, 182, 1);
-	border-radius: 12px;
-	padding: 0 10px;
-    width: 40vw;
+    background: rgba(29, 242, 182, 1);
+    border-radius: 12px;
+    padding: 0px 1vmin;
+    width: 90%;
     margin-top: -15px;
     min-height: 6vh;
-    height : 6vh;
+    height: 10%;
     border: 2px solid white;
 }
 
