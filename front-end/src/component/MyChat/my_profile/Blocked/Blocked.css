@@ -1,0 +1,29 @@
+.unblock {
+    background-color: #14720b;
+    color: white;
+    padding: 8% 10% 8% 10%;
+    margin-right: 100%;
+    
+}
+
+.unblock:hover {
+  
+    background: #eaeeea;
+    color: #14720b;
+    transition: 2s ease;
+    cursor: pointer;
+}
+
+.discussion-blocked {
+    
+    height: 10vh;
+    display: grid;
+    grid-template-columns: 0.3fr 1fr 0.2fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    justify-items: center;
+    align-items: center;
+    border-bottom: 1px solid #8BD9D1;
+    padding-left: 3%;
+}

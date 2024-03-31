@@ -1,0 +1,131 @@
+
+.Myprofile {
+    grid-area: 1 / 1 / 2 / 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.3fr 0.1fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    margin: 5vmin 0vmin 0vmin 0vmin;
+    width: 21vw;
+    height: 90vh;
+    border-radius: 5px;
+    padding: 0vmin 1vmin 0vmin 0vmin;
+    background: rgb(175, 185, 185, 0.2);
+    border: 1px solid #8BD9D1;
+  }
+
+
+
+
+
+               /* selection part */
+
+.selections {
+    grid-area: 2 / 1 / 3 / 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    justify-items: center;
+    align-items: center;
+    padding-left: 1vmin;
+    padding-top: 0.7vmin;
+    border-top: 1px solid #8BD9D1;
+    position: relative;
+}
+
+
+
+.select  {
+    width: 2vw;
+    display: grid;
+    place-items: center;
+    color: white;
+}
+
+.select:hover{
+    padding: 0vmin 2vmin 0vmin 2vmin;;
+    border-radius: 5px;
+    background: rgba(29, 242, 182, 0.5);
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.selections .selected {
+    padding: 0vmin 2vmin 0vmin 2vmin;;
+    border-radius: 5px;
+    background: rgba(29, 242, 182, 1);
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+.section-friends {
+    grid-area: 1 / 1 / 2 / 2; 
+}
+
+.section-rooms {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.section-blocked {
+    grid-area: 1 / 3 / 2 / 4;
+}
+
+.section-padding {
+    grid-area: 1 / 4 / 2 / 5;
+}
+
+.Notification {
+    width: fit-content;
+    height: fit-content;
+    background: rgb(172, 6, 6);
+    border-radius: 50%;
+    position: absolute;
+    font-size: 1.2vmin;
+    padding: 0.4vmin 0.7vmin 0.4vmin 0.7vmin;
+    top: 10%;
+    right: 2%;
+    color: white;
+}
+                   /* /////////////////////////////// */
+
+
+
+.discussions {
+    grid-area: 3 / 1 / 4 / 2; 
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x:hidden;
+    max-height: 69vh; 
+    padding-right: 1vmin;
+    padding-top: 2vmin;
+    position: relative;
+}
+
+.discussion {
+    height: 10vh;
+    display: grid;
+    grid-template-columns: 0.3fr 1fr 0.2fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    justify-items: center;
+    align-items: center;
+}
+
+.discussion:hover{
+    cursor: pointer;
+    width: 100%;
+    background: rgba(139, 217, 209, 0.3);
+    padding-left: 1vmin;
+    transition: 0.5s ease;
+    border: 1px solid #8BD9D1;
+}
+
+.message-active {
+    cursor: pointer;
+    width: 100%;
+    background: rgba(139, 217, 209, 0.3);
+    padding-left: 10px;
+    transition: 0.5s ease;
+    border: 1px solid #8BD9D1;
+}

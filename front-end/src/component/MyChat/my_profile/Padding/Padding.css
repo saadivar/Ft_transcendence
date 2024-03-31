@@ -1,0 +1,81 @@
+
+.discussion-pandding {
+    
+    height: 10vh;
+    display: grid;
+    grid-template-columns: 0.3fr 1fr 0.2fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    justify-items: center;
+    align-items: center;
+    border-bottom: 1px solid #8BD9D1;
+    padding-left: 3%;
+}
+
+.amis-stat {
+    grid-area: 1 / 3 / 2 / 4;  
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    padding: 20px 20px 10px 20px;
+    font-size: small;
+    justify-items: center;
+    align-items: center;
+}
+.no-pen{
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    background: rgba(43, 158, 148, 0.1);
+    border: 1px solid #8BD9D1;
+    height: fit-content;
+    width: fit-content;
+    padding: 3%;
+    border-radius: 5px;
+}
+.amis-stat .accept {
+    grid-area: 1 / 1 / 2 / 2; 
+    background: #14720b;
+    width: fit-content;
+    height: fit-content;
+    display: grid;
+    place-items: center;
+    padding: 5px 10px 5px 10px ;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+}
+
+.amis-stat .accept:hover {
+  
+    background: #eaeeea;
+    color: #14720b;
+    transition: 2s ease;
+    cursor: pointer;
+}
+
+.amis-stat .reject:hover {
+  
+    background: #eaeeea;
+    color: #8d1c08;
+    transition: 2s ease;
+    cursor: pointer;
+}
+
+.amis-stat .reject {
+    background: #8d1c08;
+    grid-area: 2 / 1 / 3 / 2;
+    width: fit-content;
+    height: fit-content;
+    display: grid;
+    place-items: center;
+    padding: 5px 13px 5px 13px;
+    margin: -20% 0% 0% 0%;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+
+}

@@ -1,0 +1,23 @@
+
+.profile 
+{
+    display: grid;
+    grid-template-columns: 0.1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+
+    background: #0D1526;
+    overflow: hidden;
+}
+
+
+.page
+{
+    grid-area: 1 / 2 / 2 / 3; 
+    display: grid; 
+    grid-template-columns: 1fr 0.3fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 5px; 
+    grid-row-gap: 5px;
+}

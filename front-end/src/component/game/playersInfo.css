@@ -1,0 +1,88 @@
+#player-info{
+   background-color: transparent;
+   height: 9vh;
+   width: 100vw;
+}
+
+#player1-info{
+    border: solid 2px rgb(65, 70, 6);
+    border-radius: 10px;
+    width: 20vw;
+    /* background-color: rgb(130, 179, 140); */
+    box-shadow: 5px 5px 50px rgb(27, 126, 109);
+}
+
+#player2-info{
+    border: solid 2px rgb(65, 70, 6);
+    border-radius: 10px;
+    width: 20vw;
+    /* background-color: rgb(130, 179, 140); */
+    box-shadow: 5px 5px 50px rgb(27, 126, 109);
+    position: absolute;
+    top: 10%;
+    right: 2%;
+    height: inherit;
+}
+
+#player1-info a{ 
+    position: absolute;
+    left: 10%;
+    padding-top: 1%;
+    font-size: 2vw;
+    color:bisque;
+
+}
+
+#player2-info a{
+    position: absolute;
+    left: 18%;
+    padding-top: 5%;
+    font-size: 2vw;
+    color:bisque;
+
+
+}
+
+#player1-info img{
+    border-radius: 8px;
+    padding: 0;
+    margin: 0;
+    width: 30%;
+}
+
+#player2-info img{
+    border-radius: 8px;
+    width: 30%;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 0;
+}
+
+#score-info{
+    position: absolute;
+    left: 45vw;
+    width: 10vw;
+    height: 8vh;
+    border: 3px solid  rgb(70, 75, 26);
+    border-radius: 10px;
+}
+
+span{
+    font-size: 3vw;
+    color: turquoise;
+}
+
+#player2-score{
+    position: absolute;
+    width: 10%;
+    top: 0.5vh;
+    left: 67%;
+}
+
+#player1-score{
+    position: absolute;
+    width: 10%;
+    top: 0.5vh;
+    left: 15%;
+}

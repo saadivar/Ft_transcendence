@@ -1,0 +1,112 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+@font-face {
+  font-family: Cyber;
+  src: url("https://assets.codepen.io/605876/Blender-Pro-Bold.otf");
+  font-display: swap;
+}
+
+.cont {
+  /* justify-content: center; */
+  position: relative;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../assets/Super.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  overflow: hidden;
+
+}
+
+.title {
+  position: relative;
+  clip-path: polygon(9% 0, 100% 0%, 91% 100%, 0% 100%);
+  width: 40vw;
+  height: 25vh;
+  background-color: rgba(255,255, 255, 0.2);
+  top: 45%;
+  left: 10%;
+  /* border: 0.1px solid rgb(252, 249, 249); */
+}
+
+.butt {
+  position: relative;
+  clip-path: polygon(9% 0, 100% 0%, 91% 100%, 0% 100%);
+  width: 5vw;
+  height: 5vh;
+  background-color: rgb(201, 245, 8);
+  top: 42.5%;
+  left: 34%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 0.1px solid rgb(252, 249, 249); */
+}
+
+.butt > p {
+  position: relative;
+  text-align: center;
+  font-family: 'Cyber', sans-serif;
+  font-weight: bold; /* Font weight */
+  font-size: 120%;
+  top : 25%;
+}
+
+.game-title{
+  position: absolute; 
+  top: 25%; 
+  left: 9%;
+  color: white;
+  font-size: 500%; 
+  font-weight: bold; 
+  font-family: 'Cyber', sans-serif;
+}
+
+.wfa-container
+{
+  background: #0D1526;
+  position: relative;
+}
+
+.wfa{
+  position: absolute;
+  top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+  width: 35vw;
+  height: 35vh;
+  border-radius: 5px;
+  border: 2px solid #8BD9D1;
+}
+
+.wfa .h11 {
+  position: absolute;
+  font-size: x-large;
+  color: #8BD9D1;
+  left: 23%;
+  top: 10%;
+}
+
+.wfa .input {
+  position: absolute;
+  border-radius: 5px;
+  border: 2px solid #8BD9D1;
+  height: 2vh;
+  width: 12vw;
+  top: 41%;
+  left: 34%;
+}
+.wfa > Button{
+  width: fit-content;
+  height: fit-content;
+  top: 67%;
+  left: 49%;
+  position: absolute;
+  padding: 1vh;
+}

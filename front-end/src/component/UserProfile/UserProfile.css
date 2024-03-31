@@ -1,0 +1,85 @@
+.Userprofile 
+{
+    display: grid;
+    grid-template-columns: 0.1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+
+    background: #0D1526;
+    overflow: hidden;
+}
+.stat-title{
+    margin: -29vmin 0vmin 0vmin 49vmin;
+    color: white;
+    font-size: 2vmin;
+}
+.stats-container {
+    grid-area: 1 / 1 / 2 / 2;
+    position: relative;
+    border-radius: 10px;
+    margin-top: 7.5vmin;
+    height: 84%;
+    background: rgba(22, 89, 83,0.1);
+    border: 1px solid #8BD9D1;
+    margin-left: -2.3vmin;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.matches{
+    grid-area: 1 / 1 / 2 / 2;
+}
+.wins{
+    grid-area: 1 / 2 / 2 / 3; 
+}
+
+.loses{
+    grid-area: 1 / 3 / 2 / 4;
+}
+
+.matches-tit{
+    margin: 5vmin 0vmin 0vmin 13vmin;
+    color: white;
+    font-size: 3vmin;
+}
+
+.wins-tit {
+    margin: 5vmin 0vmin 0vmin 13vmin;
+    color: white;
+    font-size: 3vmin;
+}
+
+.loses-tit{
+    margin: 5vmin 0vmin 0vmin 13vmin;
+    color: white;
+    font-size: 3vmin;
+}
+.achievements-container{
+    grid-area: 1 / 2 / 3 / 3;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 0.2fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 2px;
+    position: relative;
+}
+
+.achiv{
+    height: 76%;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid #8BD9D1;
+    background: rgba(22, 89, 83,0.1);
+    position: absolute;
+    margin-top: 10.5vmin;
+    margin-left: 4vmin;
+}
+.achi-title{
+    color: white;
+    margin: 7vmin 0vmin 0vmin 15vmin;
+    font-size: 2vmin;
+}
