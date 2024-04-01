@@ -80,7 +80,7 @@ export class FriendsController {
         return res.send(b);
       }
       @Get('isaccepted')
-      async isaccepted(@Req() req,@Res() res) {
+      async isaccepted(@Req() req:Request,@Res() res) {
     
         const user = req.user as User;
         const us = await this.friendsservice.findAllacceotedfriends(user);

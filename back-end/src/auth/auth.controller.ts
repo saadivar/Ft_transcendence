@@ -60,7 +60,6 @@ export class AuthController
     @Get('user')
     async getUser(@Req() req:Request,@Res() res:Response) {
         try{
-            
             const cookie = req.cookies['jwt']; 
             if(!cookie)
             {
@@ -72,6 +71,7 @@ export class AuthController
                 throw new UnauthorizedException();
             }
             const user = await this.authService.findUser(data['id']);
+
             if(user.HasAccess == false)
             {
                 throw new UnauthorizedException("2FA");

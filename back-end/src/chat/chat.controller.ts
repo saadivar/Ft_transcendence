@@ -39,7 +39,8 @@ export class ChatController {
                 const simplifiedMessage = {
                     content: message.content,
                     sender: use.login,
-                    senderId: use.id
+                    senderId: use.id,
+                    senderavatar:use.avatar,
                 };
                 simplifiedMessages.push(simplifiedMessage);
             }
@@ -81,6 +82,7 @@ export class ChatController {
                         const simplifiedMessage = {
                             content: message.content,
                             senderId: use.id,
+                            senderavatar:use.avatar,
                         };
                         simplifiedMessages.push(simplifiedMessage);
                     }
