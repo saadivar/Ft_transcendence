@@ -251,10 +251,64 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
   }, [boolpending])
 
 
-  const [totalMessages, SetTotal] = useState(0);
-  
+  const [totalMessages, SetTotal] = useState('');
+  const [selectedFriendId, setSelectedFriendId] = useState(null);
     console.log("ehhhh boy = ", totalMessages);
+  const [MesagesById, SetMessagesById] = useState({});
+
+    useEffect(() => {
+      let CountMessages = {};
+      Notifs.forEach(notif => {
+        const type = notif.type;
+        const id = notif.senderid;
   
+        if (id === selectedFriendId)
+          SetNotifs((prevNotifs) => prevNotifs.filter(notif => notif.senderid !== selectedFriendId));
+        if (type === "message" && id !== selectedFriendId)
+          CountMessages[id] = (CountMessages[id] || 0) + 1;
+      });
+    
+      SetMessagesById(CountMessages);
+  
+       
+    }, [Notifs]);
+  
+  
+    useEffect(() => {
+  
+      const messagesValues = Object.values(MesagesById);
+      let totalNotifications = 0; 
+      if (messagesValues.length > 0) 
+      {
+        for (let i = 0; i < messagesValues.length; i++) {
+            totalNotifications += messagesValues[i];
+        } 
+      }
+      if (totalNotifications > 9)
+        SetTotal("+9")
+      else if (totalNotifications > 0)
+        SetTotal(totalNotifications .toString())
+      else
+        SetTotal('')
+      
+    },[MesagesById])
+
+    const [TotalRoomNotifs, Settotalrooms] = useState('')
+    useEffect(()=> {
+      let total = 0;
+      if (RoomNotifs) {
+        for(let i = 0; i< RoomNotifs.length; i++){
+          total += RoomNotifs[i].count;
+        }
+      }
+      if (total > 9)
+        Settotalrooms("+9")
+      else if (total > 0)
+        Settotalrooms(total.toString())
+      else
+        Settotalrooms('')
+    }, [RoomNotifs])
+    
   return (
     <div className="Myprofile">
       <MyData profileData={profileData}
@@ -280,8 +334,7 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
             <path d="M21.64 18.691l-.494-3.154A3 3 0 0 0 18.182 13h-2.364a3 3 0 0 0-2.964 2.537l-.493 3.154A2 2 0 0 0 14.337 21h5.326a2 2 0 0 0 1.976-2.309z" />
             <circle cx="17" cy="6" r="3" />
           </svg>
-
-         
+          {optionSelected !== "friends" && totalMessages.length > 0 &&  <span className="Notification-fr">{totalMessages}</span>}
         </div>
 
         <div
@@ -309,7 +362,7 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
             <path d="M4 14h-.306a2 2 0 0 0-1.973 1.671l-.333 2A2 2 0 0 0 3.361 20H7" />
             <path d="M20 14h.306a2 2 0 0 1 1.973 1.671l.333 2A2 2 0 0 1 20.639 20H17" />
           </svg>
-
+          {optionSelected !== "rooms" && TotalRoomNotifs.length > 0 &&  <span className="Notification-rom">{TotalRoomNotifs}</span>}
         </div>
 
         <div
@@ -372,7 +425,10 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
             SetNotifs={SetNotifs}
             Notifs={Notifs}
             SetMessages={SetMessages}
-            SetTotal={SetTotal}
+            MesagesById={MesagesById}
+            SetMessagesById={SetMessagesById}
+            selectedFriendId={selectedFriendId}
+            setSelectedFriendId={setSelectedFriendId}
           />
         ) : (RoomData || NotRoomsdata) && optionSelected === "rooms" ? (
           <Rooms

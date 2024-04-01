@@ -6,6 +6,7 @@ import SetOwnerModal from '../../../../Modals/Setowner/setowner'
 import axios from 'axios'
 import { useSocket } from '../../../../Socket'
 import { Socket } from 'socket.io-client'
+import LogsModal from '../../../../Modals/LogsModal/LogsModal'
 
 function OwnerOption (roleSelected : any,SetRole:any, room: any, memberSelectedid :any, RoomSelceted:any) 
 {
@@ -162,6 +163,8 @@ const Owner = ({room, RoomSelceted}) => {
   const [NewOwner, setNewOwner] = useState("");
   const [showSetOwner, setShowSetOwner] = useState(false);
   const  socket = useSocket();
+  const [Banned, SetBanned] = useState(null);
+  const [showLogs, setShowLogs] = useState(false);
 
   const handleAddClick = () => {
     setShowAdd(true);
@@ -169,6 +172,10 @@ const Owner = ({room, RoomSelceted}) => {
 
   const handleLeaveClick = () => {
     setShowSetOwner(true);
+  };
+
+  const handlelogsClick = () => {
+    setShowLogs(true);
   };
 
   const handleFormSubmit = async () => {
@@ -191,7 +198,10 @@ const Owner = ({room, RoomSelceted}) => {
     setShowSetOwner(false);
 
   };
-
+  useEffect(()=>{
+    //fetch banned data
+  },[])
+  
   return (
     <>
       {
@@ -199,6 +209,7 @@ const Owner = ({room, RoomSelceted}) => {
         <div className='addowner own' onClick={handleAddClick}>add</div>
       }
       <div className='leaveowner own' onClick={handleLeaveClick}>leave</div>
+      <div className='logsowner own' onClick={handlelogsClick}>logs</div>
       
         <AddFriendModal
           show={showAdd}
@@ -215,7 +226,12 @@ const Owner = ({room, RoomSelceted}) => {
           onSubmit={handleLeaveSubmit}
           onCancel={handleCancel}
       />
-    
+
+      <LogsModal
+          show={showLogs}
+          Banned={Banned}
+      
+      />
       
     </>
   );
@@ -325,7 +341,7 @@ const RoomInfo = ({profile, room, RoomSelceted}) => {
                           <div className="amis-infos">
                             <p className="amis-name"> <p>{member.login}</p> </p>
                           </div> 
-                          <p className="amis-status"> <p>{member.role}</p> </p>
+                          <p className="amis-role"> <p>{member.role}</p> </p>
                         </div> 
                         )
                     ))}

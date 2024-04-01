@@ -13,15 +13,23 @@ import { useSocket } from '../../Socket';
 const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRoom}) => {
 
     const messagesEndRef = useRef(null);
+    const messagesRoomEndRef = useRef(null);
     const socket = useSocket()
     useEffect(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [MessagesData]); 
+
+
+    useEffect(() => {
+        messagesRoomEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, [MessagesRoom]); 
+
     const [stat, setstat] = useState(false);
 
     useEffect(()=>{
         socket?.on('muted', setstat)
     }, [socket])
+    MessagesRoom && console.log("rooms = ", MessagesRoom)
   return (
 
     <div className='messages-container'> 
@@ -100,7 +108,8 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
                         ))
                     
                     }
-
+                        <div className="nwestMessages" ref={messagesRoomEndRef}></div>
+                    
                     
                     </div>
                 

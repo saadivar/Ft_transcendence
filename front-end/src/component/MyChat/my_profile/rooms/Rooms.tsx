@@ -100,11 +100,12 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
               <p className="last-message">{room.lastmessagecontent}</p>
             </div>
 
-            {RoomNotifs && (
-              (selectedroom && room.name !== selectedroom.name) &&
-              (RoomNotifs.find(notification => notification.roomname === room.name)?.count > 0)
+            <div className='room-type'>
+                {room.type}
+            </div>
+            {RoomNotifs && (RoomNotifs.find(notification => notification.roomname === room.name)?.count > 0
             ) ? (
-              <div className="amis-status">
+              <div className="room-notifications">
                 {RoomNotifs.find(notification => notification.roomname === room.name)?.count}
               </div>
             ) : (null)}
@@ -126,7 +127,7 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
                   <p className="amis-name"><p>{room.roomname}</p></p>
                   {/* <p className="last-message">room.lastMessage</p> */}
               </div>
-              <div className="amis-status" onClick={() => Joinroom(room)}> join </div>
+              <div className="join-room" onClick={() => Joinroom(room)}> join </div>
               </div>
         ))
       }

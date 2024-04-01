@@ -10,7 +10,7 @@
     width: 21vw;
     height: 90vh;
     border-radius: 5px;
-    padding: 0vmin 1vmin 0vmin 0vmin;
+  
     background: rgb(175, 185, 185, 0.2);
     border: 1px solid #8BD9D1;
   }
@@ -28,7 +28,6 @@
     grid-template-rows: 1fr;
     justify-items: center;
     align-items: center;
-    padding-left: 1vmin;
     padding-top: 0.7vmin;
     border-top: 1px solid #8BD9D1;
     position: relative;
@@ -83,20 +82,41 @@
     font-size: 1.2vmin;
     padding: 0.4vmin 0.7vmin 0.4vmin 0.7vmin;
     top: 10%;
-    right: 2%;
+    right: 16%;
     color: white;
 }
                    /* /////////////////////////////// */
-
-
-
+.Notification-fr{
+    width: fit-content;
+    height: fit-content;
+    background: rgb(172, 6, 6);
+    border-radius: 50%;
+    position: absolute;
+    font-size: 1.2vmin;
+    padding: 0.4vmin 0.7vmin 0.4vmin 0.7vmin;
+    top: 10%;
+    left: 4%;
+    color: white;
+}
+                  
+.Notification-rom{
+    width: fit-content;
+    height: fit-content;
+    background: rgb(172, 6, 6);
+    border-radius: 50%;
+    position: absolute;
+    font-size: 1.2vmin;
+    padding: 0.4vmin 0.7vmin 0.4vmin 0.7vmin;
+    top: 10%;
+    left: 29%;
+    color: white;
+}
 .discussions {
     grid-area: 3 / 1 / 4 / 2; 
     overflow: hidden;
     overflow-y: auto;
     overflow-x:hidden;
     max-height: 69vh; 
-    padding-right: 1vmin;
     padding-top: 2vmin;
     position: relative;
 }
@@ -104,6 +124,7 @@
 .discussion {
     height: 10vh;
     display: grid;
+    position: relative;
     grid-template-columns: 0.3fr 1fr 0.2fr;
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
@@ -116,7 +137,6 @@
     cursor: pointer;
     width: 100%;
     background: rgba(139, 217, 209, 0.3);
-    padding-left: 1vmin;
     transition: 0.5s ease;
     border: 1px solid #8BD9D1;
 }
@@ -125,7 +145,6 @@
     cursor: pointer;
     width: 100%;
     background: rgba(139, 217, 209, 0.3);
-    padding-left: 10px;
     transition: 0.5s ease;
     border: 1px solid #8BD9D1;
 }
