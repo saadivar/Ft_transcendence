@@ -8,7 +8,7 @@ import { useSocket } from '../../../../Socket'
 import { Socket } from 'socket.io-client'
 import LogsModal from '../../../../Modals/LogsModal/LogsModal'
 
-function OwnerOption (roleSelected : any,SetRole:any, room: any, memberSelectedid :any, RoomSelceted:any) 
+function OwnerOption (roleSelected : any, SetRole:any, room: any, memberSelectedid :any, RoomSelceted:any) 
 {
   const socket = useSocket()
 
@@ -163,7 +163,7 @@ const Owner = ({room, RoomSelceted}) => {
   const [NewOwner, setNewOwner] = useState("");
   const [showSetOwner, setShowSetOwner] = useState(false);
   const  socket = useSocket();
-  const [Banned, SetBanned] = useState(null);
+
   const [showLogs, setShowLogs] = useState(false);
 
   const handleAddClick = () => {
@@ -196,11 +196,10 @@ const Owner = ({room, RoomSelceted}) => {
     setFriendName("");
     setNewOwner("")
     setShowSetOwner(false);
-
+    setShowLogs(false);
   };
-  useEffect(()=>{
-    //fetch banned data
-  },[])
+
+
   
   return (
     <>
@@ -229,8 +228,8 @@ const Owner = ({room, RoomSelceted}) => {
 
       <LogsModal
           show={showLogs}
-          Banned={Banned}
-      
+          room={room}
+          onCancel={handleCancel}
       />
       
     </>

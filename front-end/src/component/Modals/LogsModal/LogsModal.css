@@ -1,30 +1,72 @@
 .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); /* For Safari and other WebKit-based browsers */
+  z-index: 1;
 }
+
+
+
+.modal-content-logs {
+  background: rgb(175, 185, 185, 0.2);
+  border: 1px solid #8BD9D1;
+  margin: 3% auto;
+  padding: 1%;
+  max-width: 598px;
+  border-radius: 10px;
+  width: 19vw;
+  height: 43vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 0.1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px; 
+}
+.bannned-container{
   
+    grid-area: 1 / 1 / 2 / 2;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x:hidden;
+    max-height: 30vh; 
+    padding-top: 2vmin;
+    position: relative;
 
-
-  .modal-content-room {
-    background: rgb(175, 185, 185, 0.2);
-    border: 1px solid #8BD9D1;
-    margin: 8% auto;
-    padding: 20px;
-    max-width: 598px;
-    border-radius: 10px;
-    width: 16vw;
-    height: 28vh;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+}
+.banned-members {
+  width: 95%; 
+  padding: 1% 3% 1% 1%;
+  border-radius: 12px;
+  outline: none;
+  border: 1px solid #8BD9D1;
+  height: 10vh;
+  display: grid;
+  grid-template-columns: 0.3fr 1fr 0.2fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  justify-items: center;
+  align-items: center;
 }
 
+.butt-cancel-logs
+{
+  grid-area: 2 / 1 / 3 / 2;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  justify-items: center;
+  position: relative;
+}
+.Cancel-But-logs{
+  color: rgb(116, 7, 7);
+  position: relative;
+  top: 50%;
+}

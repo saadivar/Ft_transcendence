@@ -32,6 +32,7 @@
     padding: 3%;
     border-radius: 5px;
 }
+
 .headPart {
     grid-area: 1 / 1 / 2 / 2;
     display: grid;
@@ -100,7 +101,6 @@
 	position: relative;
     margin: 4px 0px 0px 4px;
 }
-
 .new-chat {
     width: 100%;
     height: 100%;
@@ -110,52 +110,66 @@
     overflow-y: auto;
     max-width: 43vw;
     max-height: 75.6vh;
-    /* scrollbar-width: none; */
 }
 
-.time
-{
-    font-size: 0.8rem;
-    background: #EEE;
-    padding: 0.25rem 1rem;
-    border-radius: 2rem;
-    color: #999;
+
+.message-row {
+    display: flex;
+    align-items: flex-end; /* Keeps items aligned at the bottom */
+    margin: 0.5rem 0; /* Reduces the vertical space between message rows */
     width: fit-content;
     height: fit-content;
-    margin: 0 auto;
+    max-width: 60%;
+    
 }
 
 .message {
-    box-sizing: border-box;
     padding: 0.5rem 1rem;
-    margin: 1rem;
-    background:rgba(29, 242, 182, 1);
+    background: rgba(29, 242, 182, 1);
     border-radius: 1.125rem 1.125rem 1.125rem 0;
-    min-height: 2.25rem;
+    min-height: 2vmin;
     width: fit-content;
     height: fit-content;
-    max-width: 50%;
+    max-width: 60%;
     word-wrap: break-word;
-    /* overflow-y: auto; */
     box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
-    font-size: small;
+    font-size: 1vmin;
 }
+
+.mine {
+    margin: 0.5rem 1rem 0rem auto;
+
+}
+.sender-img {
+    width: 2.5vmin;
+    height: 2.5vmin;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 1vmin 0 0;
+}
+
+.mine .sender-img {
+    order: 2;
+   
+}
+
+.other .sender-img {
+    order: -1; 
+}
+
 .nwestMessages{
     height: 0;
     margin: 0;
     padding: 0;
     border: none;
 }
-.parker{
-	margin: 0.5rem 1rem 0rem auto;
-  	border-radius: 1.125rem 1.125rem 0 1.125rem;
-  	background: rgba(22, 89, 83, 1); ;
-  	color: white;
+
+.othermsg {
+    margin: 3% 0 0 auto;
+    border-radius: 1.125rem 1.125rem 0 1.125rem;
+    background: rgba(22, 89, 83, 1); ;
+    color: white;
 }
-
-
-
-
 
 .send-message-button svg {
     stroke: #F9F9F9;
@@ -170,3 +184,26 @@
 }
 
  
+
+.usermessage {
+    box-sizing: border-box;
+    padding: 0.5rem 1rem;
+    margin: 1rem;
+    background:rgba(29, 242, 182, 1);
+    border-radius: 1.125rem 1.125rem 1.125rem 0;
+    min-height: 2.25rem;
+    width: fit-content;
+    height: fit-content;
+    max-width: 50%;
+    word-wrap: break-word;
+    /* overflow-y: auto; */
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
+    font-size: small;
+}
+
+.parker{
+	margin: 0.5rem 1rem 0rem auto;
+  	border-radius: 1.125rem 1.125rem 0 1.125rem;
+  	background: rgba(22, 89, 83, 1); ;
+  	color: white;
+}

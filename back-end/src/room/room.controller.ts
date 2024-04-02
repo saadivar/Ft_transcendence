@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res, UnauthorizedException, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res, UnauthorizedException, UseGuards, ValidationPipe } from '@nestjs/common';
 import { Response, Request } from "express"
 import { RoomMember } from 'src/typeorm/entities/RoomMember';
 import { RoomService } from './room.service';
@@ -95,10 +95,12 @@ export class RoomController {
         const user11 = req.user as User;
         const usermuted = await this.authService.findUser(body.id);
         const roomname = body.name;
-
+        console.log(body.id ,body.name);
         const room = await this.roomservice.findroom(roomname);
         const user = await this.roomservice.unbanuser(room, usermuted, user11);
         await this.roomservice.leaveroom(roomname, usermuted);
+        this.websocketService.emitToUser(usermuted.id.toString(),"newmember");
+        this.websocketService.emitToUser(user11.id.toString(),"newmember");
         res.send("ok");
     }
     

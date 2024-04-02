@@ -10,6 +10,7 @@ import { useSocket } from '../../Socket';
 
 
 
+
 const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRoom}) => {
 
     const messagesEndRef = useRef(null);
@@ -29,7 +30,7 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
     useEffect(()=>{
         socket?.on('muted', setstat)
     }, [socket])
-    MessagesRoom && console.log("rooms = ", MessagesRoom)
+
   return (
 
     <div className='messages-container'> 
@@ -60,7 +61,7 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
                             
                                 <div
                                     key={message.senderId}
-                                    className={`message ${message.senderId === user.id ? 'parker' : 'stark'}`}>
+                                    className={`usermessage ${message.senderId === user.id ? 'parker' : 'stark'}`}>
                                     {message.content}
                                 </div>
                             ))   
@@ -99,17 +100,19 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
                     
                     <div className="new-chat">
                     
-                    { MessagesRoom && MessagesRoom.map((message) => (
-                            <div
-                                key={message.senderId }
-                                className={`message ${message.senderId !== profile.id ? 'parker' : 'stark'}`}>
-                            {message.content}
-                            </div>
-                        ))
-                    
-                    }
+                        {
+                            MessagesRoom && MessagesRoom.map((message) => (
+                            <div key={message.senderId} className={`message-row ${message.senderId !== profile.id ? 'other' : 'mine'}`}>
+                                {
+                                    (message.senderId !== profile.id ? <img src={message.senderavatar} alt="sender" className="sender-img" /> : null)
+                                }
+                                <div className={`message ${message.senderId === profile.id ? 'othermsg' : 'mymsg'}`}>
+                                    {message.content}
+                                </div>
+                                
+                            </div> ))
+                        }
                         <div className="nwestMessages" ref={messagesRoomEndRef}></div>
-                    
                     
                     </div>
                 

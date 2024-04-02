@@ -39,24 +39,29 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
     
 
     useEffect(() => {
+
         const memberLeaved = () => {
+      
           socket?.on('ileaved', () => {
-            if (selectedroom) {
-              socket?.emit('chatroomdeselected', selectedroom.name);
+
+              console.log("herrrrre = ", selectedroom)
               RoomSelect(null);
+              socket?.emit('chatroomdeselected', selectedroom.name);
             }
-          });
+          );
+          
         };
-    
+
         memberLeaved();
-    
+
         return () => {
-          socket?.off('ileaved', memberLeaved);
+          socket?.off('ileaved');
         };
-      }, [socket]);
+
+    }, [socket]);
 
     if (selectedroom && Roomsdata) {
-      // Find the updated room data by matching the id with the selected room
+
       const updatedRoom = Roomsdata.find(room => room.id === selectedroom.id);
       if (updatedRoom) {
         RoomSelect(updatedRoom); 

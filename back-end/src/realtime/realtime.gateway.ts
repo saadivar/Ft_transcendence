@@ -70,16 +70,18 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
         const memebers = await this.roomService.findroommembers(payload.roomname);
         for (let i = 0; i < memebers.members.length; i++) {
           const bool: Boolean = this.websocketService.checking(String(memebers.members[i].id), payload.roomname);
-          if (memebers.members[i].id == client.data.user.id || bool == true) {
+        
+          const memberstatus = await this.roomService.getstatusofthemember(room,memebers.members[i]);
+          if ((!memberstatus.status || memberstatus.status =="muted") && memebers.members[i].id == client.data.user.id || bool == true) {
             await this.authService.createnotif({ type: "roommessage", user: memebers.members[i], sender: user11, room: room, isReaded: true });
 
           }
-          else if (memebers.members[i].id != client.data.user.id) {
+          else if ((!memberstatus.status || memberstatus.status =="muted") && memebers.members[i].id != client.data.user.id) {
             await this.authService.createnotif({ type: "roommessage", user: memebers.members[i], sender: user11, room: room, isReaded: false });
             this.websocketService.emitToUser(String(memebers.members[i].id), "notifroommessage");
           }
         }
-      }
+      } 
 
     }
   }
@@ -131,7 +133,9 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     const joining = await this.roomService.joinusertoroom(room, user11);
     const members = await this.roomService.findroommembers(roomname);
     for (let i = 0; i < members.members.length; i++) {
-      this.websocketService.emitToUser(String(members.members[i].id), "newmember");
+      const memberstatus = await this.roomService.getstatusofthemember(room,members.members[i]);
+      if(!memberstatus.status || memberstatus.status =="muted")
+        this.websocketService.emitToUser(String(members.members[i].id), "newmember");
     }
   }
   @SubscribeMessage('kickuser')
@@ -145,11 +149,13 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     const members = await this.roomService.findroommembers(roomname);
 
     for (let i = 0; i < members.members.length; i++) {
-      this.websocketService.emitToUser(String(members.members[i].id), "newmember");
+      const memberstatus = await this.roomService.getstatusofthemember(room,members.members[i]);
+      if(!memberstatus.status || memberstatus.status =="muted")
+        this.websocketService.emitToUser(String(members.members[i].id), "newmember");
     }
     const bool: Boolean = this.websocketService.checking(payload.id.toString(), payload.name);
     if (bool == true) {
-
+      console.log(usermuted.login)
       this.websocketService.emitToUser(payload.id.toString(), "ileaved");
       this.websocketService.emitToUser(payload.id.toString(), "newmember");
     }
@@ -167,7 +173,12 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     const user = await this.roomService.setadmin(room, useradmin, user11);
     const members = await this.roomService.findroommembers(roomname);
     for (let i = 0; i < members.members.length; i++)
-      this.websocketService.emitToUser(String(members.members[i].id), "newmember");
+    {
+      const memberstatus = await this.roomService.getstatusofthemember(room,members.members[i]);
+      if(!memberstatus.status || memberstatus.status =="muted")
+        this.websocketService.emitToUser(String(members.members[i].id), "newmember");
+
+    }
   }
   @SubscribeMessage('unsetadmin')
   async unsetadmin(client: Socket, payload: { id: number, name: string }) {
@@ -178,7 +189,12 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     const user = await this.roomService.unsetadmin(room, useradmin, user11);
     const members = await this.roomService.findroommembers(roomname);
     for (let i = 0; i < members.members.length; i++)
-      this.websocketService.emitToUser(String(members.members[i].id), "newmember");
+    {
+      const memberstatus = await this.roomService.getstatusofthemember(room,members.members[i]);
+      if(!memberstatus.status || memberstatus.status =="muted")
+        this.websocketService.emitToUser(String(members.members[i].id), "newmember");
+
+    }
   }
   @SubscribeMessage('banuser')
   async banuser(client: Socket, payload: { id: number, name: string }) {
@@ -191,6 +207,12 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     const members = await this.roomService.findroommembers(roomname);
     for (let i = 0; i < members.members.length; i++) {
       this.websocketService.emitToUser(String(members.members[i].id), "newmember");
+      if(members.members[i].id == payload.id )
+      {
+        console.log(usertoban.login)
+        this.websocketService.emitToUser(payload.id.toString(), "ileaved");
+
+      }
     }
   }
   @SubscribeMessage('muteuser')

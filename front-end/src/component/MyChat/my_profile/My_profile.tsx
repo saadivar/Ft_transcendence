@@ -292,7 +292,7 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
         SetTotal('')
       
     },[MesagesById])
-
+    RoomNotifs && console.log("room notifs = ",RoomNotifs)
     const [TotalRoomNotifs, Settotalrooms] = useState('')
     useEffect(()=> {
       let total = 0;
@@ -309,6 +309,9 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
         Settotalrooms('')
     }, [RoomNotifs])
     
+
+
+
   return (
     <div className="Myprofile">
       <MyData profileData={profileData}

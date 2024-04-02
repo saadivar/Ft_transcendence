@@ -69,6 +69,7 @@ export class FriendsService {
       });
       const users = await Promise.all(friendships.map(async (friendship) => {
         const chatid = await this.chatservice.findChatByFriendshipId({friends:friendship,rooms:null});
+        
         const lastmessage = await this.chatservice.findMessagesByChatId(chatid.id);
         const lastm =lastmessage[lastmessage.length - 1] ? lastmessage[lastmessage.length - 1].content : null;
         if(friendship.user1.id == user.id)
