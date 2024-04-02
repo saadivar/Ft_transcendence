@@ -24,18 +24,18 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
   }
 
 
-    const handleroomClick = (room , roomId) => {
-      if( selectedroom && room.name !== selectedroom.name){
-        SetMessagesRoom(null);
-        socket?.emit('chatroomdeselected', selectedroom.name);
-      }
-      if (selectedroom && selectedroom.name != room.name)
-        SetMessagesRoom(null);
-      // setSelectedroom(room);
-      RoomSelect(room);
-      socket?.emit('notifroom', room.name);
-      socket?.emit('chatroomselected', room.name);
-    };
+  const handleroomClick = (room , roomId) => {
+    if( selectedroom && room.name !== selectedroom.name){
+      SetMessagesRoom(null);
+      socket?.emit('chatroomdeselected', selectedroom.name);
+    }
+    if (selectedroom && selectedroom.name != room.name)
+      SetMessagesRoom(null);
+    // setSelectedroom(room);
+    RoomSelect(room);
+    socket?.emit('notifroom', room.name);
+    socket?.emit('chatroomselected', room.name);
+  };
     
 
     useEffect(() => {
