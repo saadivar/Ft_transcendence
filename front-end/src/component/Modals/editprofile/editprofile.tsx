@@ -47,12 +47,13 @@
 //   );
 // };
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 
 import "./editprofile.css"
+import axios from 'axios';
 
-function EditProfile({ ShowEdit, onSubmit, onCancel }) {
+function EditProfile({ user,ShowEdit, Setedit, onCancel }) {
     if (!ShowEdit) {
       return null;
     }
@@ -73,29 +74,44 @@ function EditProfile({ ShowEdit, onSubmit, onCancel }) {
         }
     }
 
-    const [name, setName] = useState('');
-    const [image, setImage] = useState(null);
-    const [imagePreviewUrl, setImagePreviewUrl] = useState('');
+    const [name, setName] = useState(user.login);
+    const [image, setImage] = useState(user.avatar);
+    const [imagePreviewUrl, setImagePreviewUrl] = useState(user.avatar);
 
     const handleNameChange = (e) => {
         setName(e.target.value);
     };
 
-   const handleImageChange = (e) => {
-     const file = e.target.files[0];
-     if (file) {
-       setImage(file);
-       const reader = new FileReader();
-      
-       reader.onloadend = () => {
-         setImagePreviewUrl(reader.result);
-       };
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+        setImage(file);
+        const reader = new FileReader();
+        
+        reader.onloadend = () => {
+            setImagePreviewUrl(reader.result);
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+    
+    const handleSubmit = async (e) => {
+        Setedit(false);
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('avatar', image); 
+        
+        const response = await axios.post(`${import.meta.env.VITE_url_back}/api/auth/update_user`, formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+    };
 
-       reader.readAsDataURL(file);
-     }
-   };
-
-
+   
+  
     return (
         <AnimatePresence>
 
@@ -114,13 +130,13 @@ function EditProfile({ ShowEdit, onSubmit, onCancel }) {
                         <p className='chooseimg'>choose an avatar</p>
                         <div className='avatarChose'>
                             <input className='avatimg' type="file" onChange={handleImageChange} /> 
-                            <img className='preview'  src={imagePreviewUrl} alt="Image preview"  />
+                            <img className='preview'  src={imagePreviewUrl} />
                         </div>
                    
                 </div>
 
                 <div className="butt-add-modal">
-                    <div className="But-modal submit-But-modal"onClick={onSubmit}>
+                    <div className="But-modal submit-But-modal"onClick={handleSubmit}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="36"

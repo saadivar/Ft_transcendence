@@ -16,7 +16,7 @@ import { useSocket }  from "../../component/Socket"
 const images = [im1, im2, im3, im4];
 
 
-const Punk = () => {
+const Punk = ({user}) => {
   const socket = useSocket();
 
   
@@ -26,7 +26,7 @@ const Punk = () => {
         <div className='page'>
           
 
-            <Infos/>
+            <Infos user={user}/>
 
         
             <Friends />

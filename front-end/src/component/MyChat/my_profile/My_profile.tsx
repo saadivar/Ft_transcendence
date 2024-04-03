@@ -170,8 +170,7 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
     };
     getRoomData();
   }, [brodcast]);
-  
-  RoomData && console.log("rooms = " ,RoomData);
+ 
   const [NotRoomsdata ,SetNotRoomsdata] = useState(null);
 
   useEffect(() => {
@@ -212,7 +211,7 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
   useEffect(() => {
     const getData = async () => {
       try {
-        // Set Axios default configuration to include credentials
+
         const instance = axios.create({
           withCredentials: true,
           baseURL: `${import.meta.env.VITE_url_back}/api`,
@@ -253,7 +252,7 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
 
   const [totalMessages, SetTotal] = useState('');
   const [selectedFriendId, setSelectedFriendId] = useState(null);
-    console.log("ehhhh boy = ", totalMessages);
+
   const [MesagesById, SetMessagesById] = useState({});
 
     useEffect(() => {
@@ -270,30 +269,27 @@ const My_profile = ({ RoomSelceted, selectedroom,selectedUser, UserSelceted, Pro
     
       SetMessagesById(CountMessages);
   
-       
+
     }, [Notifs]);
   
   
     useEffect(() => {
   
       const messagesValues = Object.values(MesagesById);
-      let totalNotifications = 0; 
-      if (messagesValues.length > 0) 
-      {
-        for (let i = 0; i < messagesValues.length; i++) {
-            totalNotifications += messagesValues[i];
-        } 
-      }
+      let totalNotifications = messagesValues.reduce((acc, curr) => acc + curr, 0);
+      
       if (totalNotifications > 9)
         SetTotal("+9")
       else if (totalNotifications > 0)
-        SetTotal(totalNotifications .toString())
+       SetTotal(totalNotifications.toString())
       else
         SetTotal('')
       
+      
     },[MesagesById])
-    RoomNotifs && console.log("room notifs = ",RoomNotifs)
+
     const [TotalRoomNotifs, Settotalrooms] = useState('')
+
     useEffect(()=> {
       let total = 0;
       if (RoomNotifs) {

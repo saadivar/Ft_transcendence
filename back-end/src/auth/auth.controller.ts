@@ -1,4 +1,4 @@
-import { Body, Controller,ForbiddenException,Get, HttpCode, Inject, NotFoundException, Param, ParseIntPipe, Post, Req, Res, SetMetadata, UnauthorizedException, UseGuards } from "@nestjs/common";
+import { Body, Controller,ForbiddenException,Get, HttpCode, HttpException, HttpStatus, Inject, NotFoundException, Param, ParseIntPipe, Post, Req, Res, SetMetadata, UnauthorizedException, UseGuards } from "@nestjs/common";
 import { IntraAuthGuard } from "./intra42/intraguard";
 import { AuthService } from "./auth.service";
 import { JwtService } from "@nestjs/jwt";
@@ -8,6 +8,14 @@ import { RoomMember } from "src/typeorm/entities/RoomMember";
 import { jwtguard } from "../guards/jwtguqrd";
 import { passlogin } from "./intra42/passlogin";
 import { TwoFactorAuthenticationService } from "./2fa.service";
+import {  UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import * as path from  'path'
+
+import { User } from "src/typeorm/entities/User";
+import * as fs from 'fs';
+
 
 
 
@@ -53,9 +61,48 @@ export class AuthController
         
     } 
     @Post('update_user')
-    async updateuser(@Req() req:Request,@Res() res:Response, @Body() body: any)
+    @UseGuards(jwtguard)
+    @UseInterceptors(FileInterceptor('avatar', {
+        storage: diskStorage({
+          destination: './avatars', // Adjust the path as necessary
+          filename: (req, file, callback) => {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+            const filename = `${uniqueSuffix}${path.extname(file.originalname)}`;
+            callback(null, filename);
+          },
+        }),
+      }))
+
+    async updateuser(@Req() req:Request,@Res() res:Response,  @UploadedFile() file: Express.Multer.File,@Body() body: any)
     {
-        console.log(body);
+        const user = req.user as User;
+        if(user.login != body.name )
+        {
+            const isexist = await this.authService.findUserbylogin(body.name);
+            if(isexist)
+            {
+                this.websocketService.emiterrorToUser(user.id.toString(),`${body.name} name is already exist`)
+                return ;
+            }
+            else
+                user.login = body.name;
+        }
+        user.avatar = `${process.env.url_back}/api/auth/${file.path}`;
+        console.log(user.avatar);
+        await this.authService.saveuser(user);
+        this.websocketService.emitToUser(user.id.toString(),"updated");
+        res.status(200);
+        
+    }
+    
+    @Get("avatars/:filename")
+    @UseGuards(jwtguard)
+    viewFiles(@Param("filename") filename: string, @Res() res) {
+        const file = path.join(__dirname, '../../', 'avatars', filename)
+        if (!fs.existsSync(file)) {
+            throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
+        }
+        res.sendFile(file);
     }
     @Get('user')
     async getUser(@Req() req:Request,@Res() res:Response) {

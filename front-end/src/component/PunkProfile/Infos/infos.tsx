@@ -5,55 +5,28 @@ import pl from "../../../assets/logo1.svg"
 import pl1 from "../../../assets/MonPlayer.svg"
 import EditProfile from "../../Modals/editprofile/editprofile";
 
-const Infos = () => {
+const Infos = ({user}) => {
 
 
-  const [profileData, setProfileData] = useState(null);
-  const [ShowEdit, Setedit] = useState(false);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        // Set Axios default configuration to include credentials
-        const instance = axios.create({
-          withCredentials: true,
-          baseURL: `${import.meta.env.VITE_url_back}/api`,
-        });
-        instance
-          .get("/auth/user")
-          .then((res) => {
-            const dat = res.data;
-
-            setProfileData(dat);
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
-      } catch (error) {
-        console.error("Error fetching player data:", error);
-      }
-    };
-    getData();
-  }, []);
   
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    Setedit(false);
-  };
+  const [ShowEdit, Setedit] = useState(false);
+
+  
 
   const handleCancel = () => {
     Setedit(false);
   };
-
+  
   return (
     <div className="profile-container">
         <div className="player-infos">
-          {profileData ? (
+          {user ? (
             <>
               <div className="ImgProfile">
-                <img src={profileData.avatar} alt="Profile" />
+                <img src={user.avatar} alt="Profile" />
               </div>
               <div className="name">
-                <p>{profileData.login}</p>
+                <p>{user.login}</p>
               </div>
               <div className="edit-profile">
                 <div className="edit" onClick={()=>(Setedit(true))}>
@@ -77,7 +50,7 @@ const Infos = () => {
             </div>
           </div>
         </div>
-        <EditProfile ShowEdit={ShowEdit} onSubmit={handleFormSubmit } onCancel={handleCancel}/>
+        <EditProfile user={user} ShowEdit={ShowEdit} Setedit={Setedit} onCancel={handleCancel}/>
     </div>
   );
 

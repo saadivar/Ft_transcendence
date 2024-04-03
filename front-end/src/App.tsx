@@ -12,10 +12,23 @@ import UserProfile from './component/UserProfile/UserProfile';
 function App() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const socket = useSocket();
+  const[fetchuser,setfetchuser] = useState(0);
+
+  useEffect(()=>{
+    socket?.on('updated', ()=> {
+    
+      setfetchuser((prevIsBool) => prevIsBool + 1)});
+  }, [socket])
+
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+   
+
         const resp = await axios.get(`${import.meta.env.VITE_url_back}/api/auth/user`, { withCredentials: true });
         setUser(resp.data);
         
@@ -24,11 +37,11 @@ function App() {
       }
     };
     fetchData();
-  }, []);
+  }, [fetchuser]);
 
-console.log("url back = " , import.meta.env.VITE_url_back);
-  const [errorMessage, setErrorMessage] = useState('');
-  const socket = useSocket();
+
+
+
 
   useEffect(() => {
     const handleError = () => {
@@ -42,7 +55,7 @@ console.log("url back = " , import.meta.env.VITE_url_back);
     socket?.on('error', handleError);
 
     return () => {
-      socket?.off('error', handleError);
+      socket?.off('error');
     };
   }, [socket]);
 
@@ -74,7 +87,7 @@ console.log("url back = " , import.meta.env.VITE_url_back);
               <>
                 <Route path="/2fa" element={<TwoFa user={user} setError={setError}/>} />
                 <Route path="/" element={<Login user={user} />} />
-                <Route path="/Home" element={<Punk />} />
+                <Route path="/Home" element={<Punk user={user} />} />
                 <Route path="/Game" element={<StartGame/>} />
                 <Route path="/Chat" element={<Chat />} />
                 <Route path="/profile/:userId" element={<UserProfile />} />

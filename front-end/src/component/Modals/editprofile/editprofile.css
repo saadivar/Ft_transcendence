@@ -67,9 +67,17 @@
     .avatimg {
         grid-area: 1 / 1 / 2 / 2;
         margin-top: 40%;
+        margin-left: 13%;
     }
         
     .preview {
-        grid-area: 1 / 2 / 2 / 3; 
-        margin-top: 40%;
+        grid-area: 1 / 2 / 2 / 3;
+        margin-top: 24%;
+        width: 10vmin;
+        height: 10vmin;
+        border-radius: 50%;
+        text-align: center;
+        border: 2px solid #8BD9D1;
+        object-fit: cover;
+        margin-left: 30%;
     }

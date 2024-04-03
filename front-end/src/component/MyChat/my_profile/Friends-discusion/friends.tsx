@@ -21,8 +21,6 @@ const Friends_discusion = ({friendsData ,selectedUser,userSelect, SetNotifs, Not
   };
   
 
-  console.log("data -> ",friendsData);
-  //  converts the object's values into an array
   return ( 
     <div>
       {friendsData && friendsData.map((friend) => (

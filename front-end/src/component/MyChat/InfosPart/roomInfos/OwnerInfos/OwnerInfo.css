@@ -2,7 +2,7 @@
         grid-area: 1 / 1 / 2 / 2;
         border-bottom: 1px solid #8BD9D1;
         display: grid;
-        grid-template-columns: 1fr 0.2fr 0.2fr 0.2fr;
+        grid-template-columns: 1fr 0.2fr 0.2fr 0.2fr 0.2fr;
         grid-template-rows: 1fr;
         grid-column-gap: 0px;
         grid-row-gap: 0px;
@@ -11,7 +11,15 @@
         
     }
 
-.logsowner { grid-area: 1 / 3 / 2 / 4; }
+    .roomSettings {
+        grid-area: 1 / 5 / 2 / 6;
+    }
+    .roomSettings > svg {
+        color: black;
+        width: 2vmin;
+
+    }
+    .logsowner { grid-area: 1 / 3 / 2 / 4; }
 
     .leaveowner{
         grid-area: 1 / 4 / 2 / 5;

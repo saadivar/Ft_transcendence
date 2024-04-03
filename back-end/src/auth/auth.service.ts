@@ -44,6 +44,10 @@ export class AuthService{
         this.userRepository.save(user);
         return user;
     }
+    async saveuser(user:User)
+    {
+       return await this.userRepository.save(user);
+    }
     async findUserbylogin(login)
     {
         const user= await this.userRepository.findOneBy({login});
