@@ -8,6 +8,7 @@ import axios from 'axios';
 import StartGame from './component/game/StartGame';
 import { useSocket } from './component/Socket';
 import UserProfile from './component/UserProfile/UserProfile';
+import ChangeProfile from './component/ChangeInfos/ChangeInfos';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -89,6 +90,7 @@ function App() {
                 <Route path="/Home" element={<Punk user={user} />} />
                 <Route path="/Game" element={<StartGame/>} />
                 <Route path="/Chat" element={<Chat user={user}/>} />
+                {user && <Route path="/Changeinfo" element={<ChangeProfile user={user} />} />}
                 <Route path="/profile/:userId" element={<UserProfile />} />
               </>
             )

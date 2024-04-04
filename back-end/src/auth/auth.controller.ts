@@ -53,9 +53,10 @@ export class AuthController
             if(us.isNew)
             {
                 this.authService.updateUser(req.user.id);
-                //redirect to page where gonna enter his data;
+                res.redirect(`${process.env.url_front}/Changeinfo`);
+                return;
+
             }
-            
             res.redirect(`${process.env.url_front}/Home`);
         }
         
@@ -75,6 +76,7 @@ export class AuthController
 
     async updateuser(@Req() req:Request,@Res() res:Response,  @UploadedFile() file: Express.Multer.File,@Body() body: any)
     {
+        console.log("here");
         const user = req.user as User;
         if(user.login != body.name )
         {
@@ -93,7 +95,8 @@ export class AuthController
         }
         await this.authService.saveuser(user);
         this.websocketService.emitToUser(user.id.toString(),"updated");
-        res.status(200);
+        console.log(user);
+        res.status(200).send("ok");
         
     }
     
