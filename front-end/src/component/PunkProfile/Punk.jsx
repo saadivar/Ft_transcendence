@@ -36,8 +36,9 @@ const Punk = ({user}) => {
 
 
         </div>
-
-        <MenuBar/>
+      {
+        user &&  <MenuBar user={user}/>
+      }
     </div>
   )
 }

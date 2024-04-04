@@ -58,65 +58,71 @@
 
 
 
+.modal-content-twfa{
+  background: rgb(175, 185, 185, 0.2);
+  border: 1px solid #8BD9D1;
+  margin: 2% auto;
+  padding: 20px;
+  max-width: 598px;
+  border-radius: 10px;
+  width: 20vw;
+  height: 43vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 0.1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+
+}
 /* ///modal/// */
-.modal {
-    /* display: none; Hide modal by default */
-    position: fixed; /* Position the modal */
-    z-index: 1; /* Make sure it appears on top of everything */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scrolling if needed */
-    background-color: rgba(0,0,0,0.4); /* Black background with transparency */
-  }
-  
-  /* Modal Content */
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    max-width: 598px;
-    border-radius: 10px;
-    width: 50vw;
-    height: 50vh;
-    position: relative;
-  }
-  .modal-content > h1 {
-    color: black;
+
+.modal-content-twfa .close{
+  position: absolute;
+  left: 47%;
+
+}
+
+.modal-content-twfa > h1{
+  font-size: 2vmin;
   position: absolute;
   top: 10%;
-  }
-  .modal-content > p {
-    color: black;
-    position: absolute;
-    top: 20%;
-  }
-  .enable{
-    color: red;
-    width: fit-content;
-    height: fit-content;
-    position: absolute;
-    top: 30%;
-    left: 45%;
-  }
-  .Qr {
-    width: 10vw;
-    height: 18vh;
-    position: absolute;
-    top: 40%;
-    left: 36%;
-  }
-  /* Close Button */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    width: fit-content;
-    height: fit-content;
-  }
+  left: 18%;
+  color: white;
+}
+
+.enable{
+  color: white;
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 24%;
+  left: 39%;
+  padding: 0.5vmin;
+  background: rgb(4, 53, 53);
+  border: 1px solid #8BD9D1;
+  border-radius: 5px;
+}
+.enable:hover {
+
+  background: rgb(36, 185, 185);
+  cursor: pointer;
+  transition: 1s ease;
+}
+
+.Qr {
+  width: 2vw;
+  height: 8vh;
+  position: absolute;
+}
+
+.close {
+  color: #ffffff;
+  font-size:3vmin;
+  font-weight: bold;
+  width: fit-content;
+  height: fit-content;
+}
   
   .close:hover,
   .close:focus {
@@ -128,15 +134,31 @@
   .input-code
   {
     position: absolute;
-    width: 10vw;
-    height: 2vh;
-    top: 80%;
-    left: 36%;
+    width: 53%;
+    height: 5%;
+    top: 75%;
+    left: 22%;
+    border-radius: 5px;
+    border: 1px solid #8BD9D1;
+    background: rgb(4, 53, 53);
+    color: #ffffff;
   }
   
  .saveBut{
-    width: fit-content;
-    height: fit-content;
-    position: absolute;
-    top: 90%;
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 87%;
+  left: 44%;
+  padding: 0.5vmin;
+  background: rgb(4, 53, 53);
+  border: 1px solid #8BD9D1;
+  border-radius: 5px;
+  color: white;
  }
+ .saveBut:hover {
+
+  background: rgb(36, 185, 185);
+  cursor: pointer;
+  transition: 1s ease;
+}

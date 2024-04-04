@@ -28,7 +28,6 @@ function App() {
     const fetchData = async () => {
       try {
    
-
         const resp = await axios.get(`${import.meta.env.VITE_url_back}/api/auth/user`, { withCredentials: true });
         setUser(resp.data);
         
@@ -89,7 +88,7 @@ function App() {
                 <Route path="/" element={<Login user={user} />} />
                 <Route path="/Home" element={<Punk user={user} />} />
                 <Route path="/Game" element={<StartGame/>} />
-                <Route path="/Chat" element={<Chat />} />
+                <Route path="/Chat" element={<Chat user={user}/>} />
                 <Route path="/profile/:userId" element={<UserProfile />} />
               </>
             )

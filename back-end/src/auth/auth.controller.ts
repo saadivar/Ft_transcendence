@@ -87,8 +87,10 @@ export class AuthController
             else
                 user.login = body.name;
         }
-        user.avatar = `${process.env.url_back}/api/auth/${file.path}`;
-        console.log(user.avatar);
+        if(user.avatar != body.avatar)
+        {
+            user.avatar = `${process.env.url_back}/api/auth/${file.path}`;
+        }
         await this.authService.saveuser(user);
         this.websocketService.emitToUser(user.id.toString(),"updated");
         res.status(200);

@@ -11,10 +11,10 @@ import { useSocket } from "../Socket";
 import axios from "axios";
 
 
-const Chat = () => {
+const Chat = ({user}) => {
  
   const socket = useSocket()
-  const [User, SetUser] = useState(null);
+  const [User, SetUser] = useState(user);
   const [Room, SetRoom] = useState(null);
 
 
@@ -104,7 +104,6 @@ const Chat = () => {
       <div className="chat">
         
         <My_profile 
-
           UserSelceted={handleUser} 
           RoomSelceted={handleRoom}
           selectedUser={User}
@@ -145,7 +144,7 @@ const Chat = () => {
         </div>
       </div>
 
-      <MenuBar />
+      {user && <MenuBar user={user}/>}
     </div>
   );
 };
