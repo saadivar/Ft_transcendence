@@ -1,71 +1,50 @@
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
-@font-face {
-  font-family: Cyber;
-  src: url("https://assets.codepen.io/605876/Blender-Pro-Bold.otf");
-  font-display: swap;
-}
+
+
 
 .cont {
-  /* justify-content: center; */
-  position: relative;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-image: url("../../assets/Super.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  
-  overflow: hidden;
-
-}
-
-.title {
-  position: relative;
-  clip-path: polygon(9% 0, 100% 0%, 91% 100%, 0% 100%);
-  width: 40vw;
-  height: 25vh;
-  background-color: rgba(255,255, 255, 0.2);
-  top: 45%;
-  left: 10%;
-  /* border: 0.1px solid rgb(252, 249, 249); */
-}
-
-.butt {
-  position: relative;
-  clip-path: polygon(9% 0, 100% 0%, 91% 100%, 0% 100%);
-  width: 5vw;
-  height: 5vh;
-  background-color: rgb(201, 245, 8);
-  top: 42.5%;
-  left: 34%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  /* border: 0.1px solid rgb(252, 249, 249); */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Set the height of the container */
 }
 
-.butt > p {
-  position: relative;
+.container {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 35vw;
+  height: 45vh;
+  border: 1px solid #8BD9D1;
+  border-radius: 5px;
+  background: rgb(175, 185, 185, 0.1);
+
+}
+
+.login-button {
+  padding: 1vmin 2vmin;
+  background:rgba(29, 242, 182, 1);
+  color: #000000;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 2vmin;
+  transition: background-color 1s ease;
+  margin: 0vmin 0vmin 15vmin 28vmin;
+  width: fit-content;
+  height: fit-content;
   font-family: 'Cyber', sans-serif;
-  font-weight: bold; /* Font weight */
-  font-size: 120%;
-  top : 25%;
+
+}
+.login-button:hover {
+  background-color: #134e27;
 }
 
 .game-title{
-  position: absolute; 
-  top: 25%; 
-  left: 9%;
-  color: white;
-  font-size: 500%; 
-  font-weight: bold; 
+  color:rgba(29, 242, 182, 1);
+  font-size: 7vmin;
+  font-weight: bold;
   font-family: 'Cyber', sans-serif;
+  margin-top: 7vmin;
 }
 
 .wfa-container

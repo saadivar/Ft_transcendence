@@ -47,7 +47,7 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
 
                             <div className="text">
                                 <p className='friend-nm'>{user.login}</p>
-                                {/* <p className='friend-stat'>online</p> */}
+                                <p className='friend-stat'>{user.status}</p>
                             </div>
                         </>
                     }

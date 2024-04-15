@@ -43,15 +43,12 @@ export const Login = ({user}) => {
     return <Navigate to="/Home" replace />;
   return (
     <div className='cont'>
-
-        <div className='title'>
-          <p></p>
-        </div>
-        {/* <a  className="button-link"></a> */}
-        <a href={`${import.meta.env.VITE_url_back}/api/auth/42`}>
-          <p>Login</p>
-        </a>
+      <div className='container'>
         <p className='game-title'>Heroes PingPong</p>
+        <a  className='login-button' href={`${import.meta.env.VITE_url_back}/api/auth/42`}>
+          <p>Login with intra</p>
+        </a>
+      </div>
     </div>
   )
 }

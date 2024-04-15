@@ -26,23 +26,28 @@
      
 }
 .Otherimg {
-    grid-area: 2 / 1 / 3 / 2;;
+    grid-area: 2 / 1 / 3 / 2;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.Otherimg img { 
+  }
+  
+  .img-cont {
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+  
+  .Otherimg img {
     content: "";
     position: absolute;
     width: 60px;
     height: 60px;
     border-radius: 50%;
     text-align: center;
-    border: 2px solid #8BD9D1; 
+    border: 2px solid #8BD9D1;
     object-fit: cover;
-}
+    cursor: pointer;
+  }
 
 .Othername {
     grid-area: 3 / 1 / 4 / 2;

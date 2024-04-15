@@ -55,8 +55,8 @@
 
 .img-cont > img {
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 4vmin;
+    height: 4vmin;
     border: 1px solid #8BD9D1;
     object-fit: cover;
 
@@ -68,7 +68,7 @@
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     position: relative;
-
+    margin-left: 1vmin;
 }
 
 .text .friend-nm {
@@ -76,12 +76,14 @@
     position: absolute;
     top:30%;
     color: white;
+    font-size: 2.5vmin;
+
 }
 
 .text .friend-stat {
     grid-area: 2 / 1 / 3 / 2; 
     color: rgb(172, 171, 171);
-   font-size: 13px;
+    font-size: 1.5vmin;
 }
 
   
@@ -133,13 +135,13 @@
     max-width: 60%;
     word-wrap: break-word;
     box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
-    font-size: 1vmin;
+    font-size: 2vmin;
 }
 
 .mine {
     margin: 0.5rem 1rem 0rem auto;
-
 }
+
 .sender-img {
     width: 2.5vmin;
     height: 2.5vmin;
@@ -149,8 +151,7 @@
 }
 
 .mine .sender-img {
-    order: 2;
-   
+    order: 2;   
 }
 
 .other .sender-img {
@@ -187,18 +188,18 @@
 
 .usermessage {
     box-sizing: border-box;
-    padding: 0.5rem 1rem;
-    margin: 1rem;
-    background:rgba(29, 242, 182, 1);
+    padding: 0.5vmin 2vmin;
+    margin: 1vmin;
+    background: rgba(29, 242, 182, 1);
     border-radius: 1.125rem 1.125rem 1.125rem 0;
-    min-height: 2.25rem;
+    min-height: 2vmin;
     width: fit-content;
     height: fit-content;
     max-width: 50%;
     word-wrap: break-word;
     /* overflow-y: auto; */
     box-shadow: 0 0 2rem rgba(0, 0, 0, 0.075), 0rem 1rem 1rem -1rem rgba(0, 0, 0, 0.1);
-    font-size: small;
+    font-size: 2vmin;
 }
 
 .parker{

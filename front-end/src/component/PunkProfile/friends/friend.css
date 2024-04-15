@@ -92,6 +92,7 @@
     position: relative;
     top: 4%;
     font-size: 2vmin;
+    font-family: unset;
 }
 
 /*/////////////search//////*/

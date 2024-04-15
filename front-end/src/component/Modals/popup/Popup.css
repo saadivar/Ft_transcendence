@@ -1,0 +1,28 @@
+.group {
+    position: relative;
+  }
+  
+  .group:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .tooltip {
+    width: fit-content;
+    height: fit-content;
+    visibility: hidden;
+    font-size: 2vmin;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #000000;; /* Blue background */
+    background-color: #165953; /* White text */
+    padding: 1vmin 1vmin; /* Padding */
+    border-radius: 4px; /* Rounded corners */
+    position: absolute; /* Positioning */
+    top: calc(100% + 8px); /* Position below the container */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    white-space: nowrap; /* Prevent line breaks */
+    z-index: 100;
+  }
+  

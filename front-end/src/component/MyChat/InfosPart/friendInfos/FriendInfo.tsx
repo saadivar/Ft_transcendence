@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import "./FriendInfo.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Popup from '../../../Modals/popup/Popup';
 
 const FriendInfo = ({user ,profile, UserSelceted}) => {
 
@@ -41,9 +42,13 @@ return (
               <p>Infos</p>
             </div>
 
-            <div className="Otherimg">
-              <img src={user.avatar} onClick={goToprofile}/>
-            </div>
+              <div className="Otherimg">
+                <Popup tooltip='visit profile'>
+                    <div className='img-cont'>  
+                      <img src={user.avatar} onClick={goToprofile}/>
+                    </div>
+                </Popup>
+              </div>
 
             <div className="Othername">
               <p> {user.login} </p>
@@ -54,49 +59,53 @@ return (
               <div className="friend-options">
                 
                 <div className="opt block-option" onClick={() => handleBlock(user.id)}>
-                  
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="36"
-                    height="36"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="ai ai-Block"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M5 19L19 5" />
-                  </svg>
-                
+                  <Popup tooltip='block'>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="36"
+                      height="36"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="ai ai-Block"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M5 19L19 5" />
+                    </svg>
+                  </Popup>
+
                 </div>
 
                 <div className="opt unfriend-option" onClick={() => handleUnfriend(user.id)}>
-                  
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="36"
-                    height="36"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="ai ai-PersonCross"
-                  >
-                    <circle cx="12" cy="7" r="5" />
-                    <path d="M17 22H5.266a2 2 0 0 1-1.985-2.248l.39-3.124A3 3 0 0 1 6.649 14H7" />
-                    <path d="M21 18l-3-3m3 0l-3 3" />
-                  
-                  </svg>
-                
+
+                  <Popup tooltip='unfriend'>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="36"
+                      height="36"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="ai ai-PersonCross"
+                    >
+                      <circle cx="12" cy="7" r="5" />
+                      <path d="M17 22H5.266a2 2 0 0 1-1.985-2.248l.39-3.124A3 3 0 0 1 6.649 14H7" />
+                      <path d="M21 18l-3-3m3 0l-3 3" />
+                    
+                    </svg>
+                  </Popup>
+
                 </div>
 
                 <div className="opt play-option">
 
+                <Popup tooltip='play a game'>
                   <svg fill="#ffffff" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                     viewBox="0 0 297 297" xml:space="preserve">
                   <g>
@@ -108,13 +117,10 @@ return (
                       c4.607-0.362,9.171-0.989,13.673-1.865L36.525,100.857C35.649,105.359,35.022,109.923,34.66,114.53z"/>
                   </g>
                   </svg>
+                </Popup>
 
                 </div>
               </div>
-
-              {/* handle adding new Friend */}
-
-              <div className="add-new-friend"></div>
 
             </div>
           </>) 
