@@ -97,6 +97,17 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     await this.roomService.updatenroomotification(user, roomname);
     this.websocketService.emitToUser(client.data.user.id, "notifroommessage");
   }
+  @SubscribeMessage('invitegame')
+  async invitegame(client: Socket, payload : { id: number}) {
+
+    const user = await this.authService.findUser(client.data.user.id);
+    const toplaywith = await this.authService.findUser(payload.id);
+    if(toplaywith.status !== "ingame")
+      this.websocketService.emitToUser(payload.id.toString(), "invitegame");
+    else
+      this.websocketService.emiterrorToUser(client.data.user.id, `${toplaywith.login} is already in game`);
+
+  }
   @SubscribeMessage('newroom')
   async brodcastroom(client: Socket) {
     this.server.to("brodcast").emit('brodcast');
@@ -116,7 +127,7 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
   @SubscribeMessage('newmemberinroom')
   async userjoinroom(client: Socket, payload: { name: string, password: string }) {
 
-
+   
 
     const user11 = await this.authService.findUser(client.data.user.id);
     const roomname = payload.name;

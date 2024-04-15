@@ -31,7 +31,7 @@ export class RoomController {
 
         const user = req.user as User;
         const us = await this.roomservice.findPublicRoomsNotJoined(user);
-        const b = JSON.stringify(us);
+        const b =  JSON.stringify(us);
         return res.send(b);
     }
     @Post("createroom")
@@ -57,6 +57,7 @@ export class RoomController {
 
         myroom.chat = chat;
         this.roomservice.updatechatroom(myroom);
+        
         res.send("ok");
 
     }
@@ -105,12 +106,13 @@ export class RoomController {
     }
     
     @Post("inviteforprivateroom")
-    async inviteforprivateroom(@Req() req: Request, @Res() res: Response, @Body() body: { id: number, name: string }) {
+    async inviteforprivateroom(@Req() req: Request, @Res() res: Response, @Body() body: { username: string, name: string }) {
         const user11 = req.user as User;
-        const usertoinvite = await this.authService.findUser(body.id);
+        const usertoinvite = await this.authService.findUserbylogin(body.username);
         const roomname = body.name;
         const room = await this.roomservice.findroom(roomname);
         const user = await this.roomservice.joinusertoroom(room, usertoinvite);
+        this.websocketService.emitToUser(usertoinvite.id.toString(),"newmember");
         res.send("ok");
     }
     @Get('roomnotifications')

@@ -22,10 +22,10 @@ interface Props {
 }
 
 const My_profile: React.FC<Props> = ({
-  RoomSelceted,
-  selectedroom,
-  selectedUser,
   UserSelceted,
+  RoomSelceted,
+  selectedUser,
+  selectedroom,
   Profile,
   optionSelected,
   SetOption,
@@ -150,7 +150,6 @@ const My_profile: React.FC<Props> = ({
 
   useEffect(() => {
     socket?.on("newmember", () => {
-      console.log("it seted -> ");
       Setbrodcast((prevIsBool) => prevIsBool + 1);
     });
 

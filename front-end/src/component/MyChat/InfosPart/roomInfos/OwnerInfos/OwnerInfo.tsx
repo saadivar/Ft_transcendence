@@ -181,6 +181,7 @@ const Owner = ({room, RoomSelceted}) => {
   };
 
   const handleFormSubmit = () => {
+    const resp =  axios.post(`${import.meta.env.VITE_url_back}/api/room/inviteforprivateroom`, {username: friendName, name: room.name},{withCredentials: true})
     setShowAdd(false);
     setFriendName("");
    

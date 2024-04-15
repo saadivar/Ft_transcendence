@@ -14,7 +14,7 @@ import axios from "axios";
 const Chat = ({user}) => {
  
   const socket = useSocket()
-  const [User, SetUser] = useState(user);
+  const [User, SetUser] = useState(null);
   const [Room, SetRoom] = useState(null);
 
 
@@ -114,11 +114,11 @@ const Chat = ({user}) => {
           SetMessages={SetMessages}
           SetMessagesRoom={SetMessagesRoom}
           />
-
+     
         <Messages 
           optionSelected={optionSelected} 
-          user={User}
           room={Room}
+          user={User}
           profile={MyProfile}
           MessagesData={MessagesData}
           MessagesRoom={MessagesRoom}

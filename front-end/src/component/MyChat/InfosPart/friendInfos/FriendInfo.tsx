@@ -3,9 +3,10 @@ import "./FriendInfo.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Popup from '../../../Modals/popup/Popup';
+import { useSocket } from '../../../Socket';
 
 const FriendInfo = ({user ,profile, UserSelceted}) => {
-
+  const socket = useSocket()
   const handleBlock = async (userid : number) => {
         try {
             const resp = await axios.post(`${import.meta.env.VITE_url_back}/api/friends/block`, {id: userid}, {withCredentials:true});
@@ -15,6 +16,10 @@ const FriendInfo = ({user ,profile, UserSelceted}) => {
         catch (error){
             console.log(error);
         }
+  }
+
+  const handlegamerequest = (userid: number) =>{
+    socket?.emit('invitegame', {id : userid})
   }
 
   const handleUnfriend = async (userid : number) => {
@@ -103,7 +108,7 @@ return (
 
                 </div>
 
-                <div className="opt play-option">
+                <div className="opt play-option" onClick={() => handlegamerequest(user.id) }>
 
                 <Popup tooltip='play a game'>
                   <svg fill="#ffffff" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 

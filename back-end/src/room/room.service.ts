@@ -63,6 +63,9 @@ export class RoomService {
         const status = await this.getstatusofthemember(room, user);
         if(!status)
           return true;
+        if(status.acceptedtojoin == false)
+          if(status.status !== "banned")
+            return false;
         return status.status !== "banned";
       }
       return false; 
@@ -96,7 +99,7 @@ export class RoomService {
   {
     
       const allmembers = await this.roommmemberrepository.find({relations:["user"],where:{
-        room:room
+        room:room,acceptedtojoin:true
   }})
   const members = []; 
 
@@ -169,13 +172,17 @@ allmembers.forEach((mem) => {
 
   }
   async joinusertoroom(room: Room, user: User) {
+    console.log(room);
     if (room.type == "private") {
+    
+
       const already = await this.roommmemberrepository.findOne({
         where: {
           room: room, user: user,
         }
       })
       if (already) {
+      
         already.acceptedtojoin = true;
         return await this.roommmemberrepository.save(already);
       }

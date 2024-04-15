@@ -9,6 +9,7 @@ import StartGame from './component/game/StartGame';
 import { useSocket } from './component/Socket';
 import UserProfile from './component/UserProfile/UserProfile';
 import ChangeProfile from './component/ChangeInfos/ChangeInfos';
+import GameRequest from './component/Modals/GameRequest/gamereq';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -16,15 +17,22 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const socket = useSocket();
   const[fetchuser,setfetchuser] = useState(0);
-
+  const [showRequest, SetShow] = useState(false);
   useEffect(()=>{
     socket?.on('updated', ()=> {
     
       setfetchuser((prevIsBool) => prevIsBool + 1)});
   }, [socket])
 
-
-
+  useEffect(()=>{
+    socket?.on('invitegame', ()=> {
+    
+      SetShow(true)});
+      setTimeout(() => {
+        SetShow(false);
+      }, 3000);
+  }, [socket])
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,7 +41,7 @@ function App() {
         setUser(resp.data);
         
       } catch (error) {
-        setError(error.response.data.message || 'An error occurred');
+        setError(error.response.data.message );
       }
     };
     fetchData();
@@ -44,8 +52,9 @@ function App() {
 
 
   useEffect(() => {
-    const handleError = () => {
-      setErrorMessage("An error occurred.");
+    const handleError = (mssg) => {
+      console.log(mssg);
+      setErrorMessage(`An error occurred: ${mssg.type}`);
       setTimeout(() => {
         setErrorMessage('');
       }, 1000);
@@ -58,9 +67,18 @@ function App() {
       socket?.off('error');
     };
   }, [socket]);
+  const canceling = () => {
+    SetShow(false);
+  }
+
+  const matching = () => {
+  }
 
   return (
     <Router>
+        {
+          showRequest && <GameRequest onSubmit={matching} onCancel={canceling}/>
+        }
         {
           errorMessage && (
           <div className='error-container'>

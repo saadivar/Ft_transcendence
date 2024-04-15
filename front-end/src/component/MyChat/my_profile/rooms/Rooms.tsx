@@ -15,7 +15,7 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
   const [joined, Setjoined] = useState(null);
   
   const Joinroom = async (room) => {
-    if (room.type === 'public') {
+    if (room.type !== 'protected') {
         socket?.emit("newmemberinroom", { name: room.roomname, password: '' });
       } else if (room.type === 'protected') {
         Setjoined(room);

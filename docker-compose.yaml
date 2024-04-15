@@ -56,7 +56,7 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/$USER/data/postgres_db'
+      device: '$PWD/postgres_db'
   back-end:
     driver: local
     driver_opts:

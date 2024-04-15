@@ -33,7 +33,8 @@ export class FriendsController {
         if(response == "")
         {
           this.websocketService.emiterrorToUser(users.id.toString(),`${body["login"]} already your friend`);
-
+          return ;
+          
 
         }
         else if(response == "not")

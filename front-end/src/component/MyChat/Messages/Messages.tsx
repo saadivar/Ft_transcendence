@@ -30,7 +30,7 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
     useEffect(()=>{
         socket?.on('muted', setstat)
     }, [socket])
-
+    user && console.log(user);
   return (
 
     <div className='messages-container'> 

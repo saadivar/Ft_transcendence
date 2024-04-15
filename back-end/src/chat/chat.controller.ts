@@ -103,7 +103,6 @@ export class ChatController {
     {
         const user= req.user as User;
         const noti =  await this.authService.getnotifications(user);
-        console.log("nn = ",noti);
         res.send(noti)
     }
     
