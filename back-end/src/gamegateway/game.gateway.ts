@@ -47,24 +47,9 @@ export class GameGateway implements OnGatewayInit {
         client.join(client.data.user.login);
         clients.push(client.data.user.login);
       }
-
     }
-  @SubscribeMessage('JOINROOM')
-    joinRoom(client : Socket, data : string[]){ // data[0] ==> roomNAma && data[1] ==> USERNAME
+  // @SubscribeMessage('gameRequest')
 
-      if (this.rooms.has(data[0])){
-        if (this.rooms.get(data[0]).client2 != undefined)
-        {
-          return;
-        }
-        this.rooms.get(data[0]).client2 = client;
-        this.rooms.get(data[0]).client2Name = data[1];
-        client.join(data[0]);
-        // removeGameList(data[0]);
-      }
-      else 
-        {}
-    }
     @SubscribeMessage('index')
       getIndex(client : Socket, roomName : string){
         if (this.rooms.get(roomName)?.client1.id == client.id)
@@ -86,9 +71,9 @@ export class GameGateway implements OnGatewayInit {
   playerMoves(@MessageBody() data : [any, any, string, number]){
     let room = this.rooms.get(data[2]);
     if (data[3] == 0)
-      room.client2.emit('PlayerMoves', data[0], data[1])
+      room.client2?.emit('PlayerMoves', data[0], data[1])
     else if (data[3] == 1)
-      room.client1.emit('PlayerMoves', data[0], data[1]);
+      room.client1?.emit('PlayerMoves', data[0], data[1]);
     else
       {}
   }
@@ -96,7 +81,7 @@ export class GameGateway implements OnGatewayInit {
   handlePlayer2Moves(@MessageBody() data : [string, number]){
     this.rooms.get(data[0]).client1.emit('moveX', data[1]);
   }
-  @SubscribeMessage('moveX')
+  @SubscribeMessage('moveZ')
   handlePlayerMoveZ(@MessageBody() data : [string, number]){
     this.rooms.get(data[0]).client1.emit('moveZ', data[1]);
   }
@@ -113,23 +98,33 @@ export class GameGateway implements OnGatewayInit {
   @SubscribeMessage('speed')
   ballSpeed(@MessageBody() data : [string, number]){
       
-    if (data[1] < -200){
-      this.rooms.get(data[0])?.client1?.emit('speed', 10);
-      this.rooms.get(data[0])?.client1?.emit('falligPoint', 3);
-
-    }
-    else if (data[1] < -150){
-      this.rooms.get(data[0])?.client1?.emit('speed', 7);
-      this.rooms.get(data[0])?.client1?.emit('falligPoint', 3);
+    if (data[1] < -150){
+      this.rooms.get(data[0])?.client1?.emit('speed', 3);
+      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
+      this.rooms.get(data[0])?.client1?.emit('falligPoint', 3.5);
 
     }
     else if (data[1] < -100){
-      this.rooms.get(data[0])?.client1?.emit('speed', 6);
-      this.rooms.get(data[0])?.client1?.emit('falligPoint', 3);
+      this.rooms.get(data[0])?.client1?.emit('speed', 2.8);
+      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
+      this.rooms.get(data[0])?.client1?.emit('falligPoint', 3.8);
+
+
+    }
+    else if (data[1] < -25){
+      this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
+      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
+      this.rooms.get(data[0])?.client1?.emit('falligPoint', 4);
+    }
+    else if (data[1] < -3){
+      this.rooms.get(data[0])?.client1?.emit('speed', 2.2);
+      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
+      this.rooms.get(data[0])?.client1?.emit('falligPoint', 5);
     }
     else{
-      this.rooms.get(data[0])?.client1?.emit('speed', 3);
-      this.rooms.get(data[0])?.client1?.emit('falligPoint', 4);
+      this.rooms.get(data[0])?.client1?.emit('speed', 1.7);
+      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/46);
+      this.rooms.get(data[0])?.client1?.emit('falligPoint', 6);
     }
 
   }
@@ -140,7 +135,7 @@ export class GameGateway implements OnGatewayInit {
 
   @SubscribeMessage('endGame')
   async endGame(@MessageBody() playerScore : any[]){
-    this.server.to(playerScore[2]).emit('endGame', playerScore);
+    // this.server.to(playerScore[2]).emit('endGame', playerScore);
 
     const p1 = await this.authService.findUserbylogin(this.rooms.get(playerScore[2]).client1Name);
     const p2 = await this.authService.findUserbylogin(this.rooms.get(playerScore[2]).client2Name);
@@ -151,11 +146,15 @@ export class GameGateway implements OnGatewayInit {
     game.score2 = playerScore[1];
     if(playerScore[0] > playerScore[1])
     {
+      this.rooms.get(playerScore[2]).client1.emit('endGame' ,"You Win ");
+      this.rooms.get(playerScore[2]).client2.emit('endGame' ,"You Lose ");
       game.winner = p1;
       game.loser = p2;
     }
     else
     {
+      this.rooms.get(playerScore[2]).client1.emit('endGame' ,"You Lose ");
+      this.rooms.get(playerScore[2]).client2.emit('endGame' ,"You Win ");
       game.winner = p2;
       game.loser = p1;
     }
@@ -174,7 +173,7 @@ export class GameGateway implements OnGatewayInit {
     const valuesArray = Array.from(this.gamesList.values());
     this.server.emit('GamesList', valuesArray);
     const clientRoom = this.getClientRoomName(client.id);
-    this.server.to(clientRoom)?.emit('endGame', [5, 4]);
+    this.server.to(clientRoom)?.emit('endGame', "You Win ");
     if (clients[0] == client.data.user.login)//! mzl matistat
       clients = clients.slice(1);
   }  

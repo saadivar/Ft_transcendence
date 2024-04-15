@@ -1,36 +1,20 @@
 import { useState,  useEffect } from "react";
-import io, { Socket } from 'socket.io-client';
-import { GamesList } from "./GamesList";
-import './StartGame.css'
+import io from 'socket.io-client';
+import './style/StartGame.css'
 import FirstPage from "./FirstPage";
 import axios from "axios";
-
-
-interface gameScore{
-  player1Name : string;
-  player2Name : string;
-  player1Score : number;
-  player2Score : number;
-}
-
-
+import { Navigate } from "react-router-dom";
 
 function StartGame() {
-  
-  
-  const [socket,setsocket] = useState()
-  let [gameslist, setGamesList] = useState<string[]>([]);
+  const [socket,setsocket] = useState(io());
   const [start, setStart] = useState(false);
-  const [infos, setInfos] = useState();
-
+  const [infos, setInfos] = useState<string[]>([]);
   const [practice, setPractice] = useState(false);
-
   const [endGame, setendGame] = useState(false);
-
+  const [result, setResult] = useState("");
   const [waiting, setWaiting] = useState(false);
-
-  // gameslist = ["0xMonster", "0xZero"];
   const [user, setUser] = useState(null);
+  const [back, setBack] = useState(false);
   
   useEffect(()=>{
     const getUser = async () =>{
@@ -50,84 +34,67 @@ function StartGame() {
     }
     getUser();
   },[])
-  
-  socket?.on('endGame',  (score : gameScore) =>{
+
+  socket?.on('endGame',  (res : string) =>{
     setendGame(true);
     setStart(false);
     setPractice(false);
-    console.log("END Game PAGE ",  score);
+    setResult(res);
   });
-  socket?.on('GamesList', (gamesList : string[]) => {
-    setGamesList(gamesList);
-  });
-  // socket?.on('connect', ()=>{
-  //   socket.emit('connectEvent');
-  // });
-  // socket?.on('disconnect', ()=>{
-  //   socket.emit('connectEvent');
 
-  // })
 
   socket?.on('start', (roomInfos)=>{
-    console.log("roomNAME : ", roomInfos);
       setInfos(roomInfos);
       setStart(true);
       setWaiting(false);
   })
   if (user){
-    console.log("USER : ", user);
-  if (waiting){
-    return(<div style={{backgroundImage: `url('https://www.couleurdenuit.com/img/cms/Match-de-ping-pong-23.jpg')`, backgroundSize : 'cover', backgroundPosition: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh'}}>
-     <head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"></link></head>
-      <div style={{marginLeft : '50px', paddingBottom : '100px'}}>
-      <span className="spinner-grow spinner-grow-sm" style={{ marginBottom : '100px' , marginRight : '150px' , fontSize : '250%', color: '#DB8C1B'}}>Waiting...</span>
-      <div className="spinner-border" style={{color : '#DB8C1B', width: '3rem', height: '3rem'}} role="status"></div>
-      <div className="spinner-grow" style={{color : '#DB8C1B' , width: '3rem', height: '3rem'}} role="status"></div>
-      </div>
-    </div>);
-  }
-  else if (start){
-    return(
-        <FirstPage infos={infos} mode="online" socket={socket}/>
-    )
-  }
-  else if (practice){
-    return(
-      <FirstPage infos={infos} mode="practice" socket={socket}/>)
-  }
-  else if (endGame){
+    if (waiting){
+      return(<div style={{backgroundImage: `url('https://www.couleurdenuit.com/img/cms/Match-de-ping-pong-23.jpg')`, backgroundSize : 'cover', backgroundPosition: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh'}}>
+      <head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"></link></head>
+        <div style={{marginLeft : '50px', paddingBottom : '100px'}}>
+        <span className="spinner-grow spinner-grow-sm" style={{ marginBottom : '100px' , marginRight : '150px' , fontSize : '250%', color: '#DB8C1B'}}>Waiting...</span>
+        <div className="spinner-border" style={{color : '#DB8C1B', width: '3rem', height: '3rem'}} role="status"></div>
+        <div className="spinner-grow" style={{color : '#DB8C1B' , width: '3rem', height: '3rem'}} role="status"></div>
+        </div>
+        <button id="exit" onClick={()=>{window.location.reload()}}> Exit </button>
+      </div>);
+    }
+    else if (back){
       return(
-        <div className="end-game">
-          <div className="game-over">
-            <button> Go back </button>
-          </div>
-        </div>
+        <Navigate to='/home' replace/>
       )
-  }
-  else {
-    return (
-        <div className="game-container">
-          {!start && !endGame && !waiting && (
-            <button className="practice-button" onClick={() => setPractice(true)}></button>
-          )}
-          <button className="create-button" onClick={() => { socket.emit('CREATEROOM'); setWaiting(true);  }}></button>
-          {gameslist.length > 0 && <GamesList list={gameslist} user={user} socket={socket}/>}
-        </div>
-      );
-    
-  }
+    }
+    else if (start){
+      return(
+          <FirstPage infos={infos} mode="online" socket={socket}/>)
+    }
+    else if (practice){
+      return(
+            <FirstPage infos={infos} mode="practice" socket={socket}/>);
+    }
+    else if (endGame){
+        return(
+          <div className="end-game">
+            <div className="game-over">
+              <h3> {result} </h3>
+              <button onClick={()=> {window.location.reload()}}> Go back </button>
+            </div>
+          </div>
+        )
+    }
+    else {
+      return (
+          <div className="game-container">
+            {!start && !endGame && !waiting && (
+            <button className="practice-button" onClick={() => setPractice(true)}> Practice </button>)}
+            <button className="online-button" onClick={() => { socket.emit('CREATEROOM'); setWaiting(true);}}> Online </button>
+            <img src="../../src/assets/logo1.svg" className="pong-logo"></img>
+            <button className="back-button" onClick={()=>{setBack(true)}}> Go Back </button>
+          </div>
+        );
+    }
 }
-  // return (
-  //   <div className={start ? "game" : ""}>
-
-
-  //   </div>
-  // )
-
 };
 
-
 export default StartGame;
-
-
-//saad-ADAM2014

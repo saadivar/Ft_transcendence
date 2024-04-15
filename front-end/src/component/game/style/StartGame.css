@@ -1,0 +1,159 @@
+
+body{
+  background-color: #0D1526;
+
+}
+
+
+
+.back-button{
+  position: absolute;
+  width: 100vw;
+  height: 20vh;
+  left: 2vw;
+  margin-top: 66vh;
+}
+
+.game-container {
+    background-image: url("../assets/pong.png");
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .pong-logo{
+    position: absolute;
+    width: 25vw;
+    height: 25vh;
+    left: 35%;
+  }
+  .practice-button {
+    position: absolute;
+    width: 100vw;
+    height: 20vh;
+    left: 2vw;
+    margin-top: 5vh;
+  }
+  
+  .online-button {
+    position: absolute;
+    width: 100vw;
+    height: 20vh;
+    left: 2vw;
+    margin-top: 35vh;
+  }
+
+  .online-button, .practice-button, .back-button{
+    background-color: rgb(2, 19, 31);
+    border: solid 2px rgb(6, 109, 87);
+    border-radius: 20px;
+    width: 30%;
+    font-size: 5vw;
+    color: aliceblue;
+    font-weight: 200;
+}
+
+.game-back-button{
+  position: absolute;
+  height: 10vh;
+  width: 20vw;
+  top: 10vh;
+}
+
+.online-button:hover, .practice-button:hover, .back-button:hover {
+
+    box-shadow: 10px 5px 50px rgb(7, 48, 41),
+                5px  5px 50px rgb(7, 48, 41),
+                0 -5px 5px rgb(7, 48, 41),
+                -5px 0 50px rgb(7, 48, 41);
+    transform: rotate(-2deg);
+
+}
+
+.games-list{
+    position: relative;
+    top: 70vh;
+    left: 34vw;
+    height: 20vh;
+    width: 30vw;
+    overflow: scroll; 
+    overflow-x: hidden;
+}
+
+
+li{
+  position: relative;
+  list-style-type: none;
+  margin-bottom:  1vh;
+  height: 12vh;
+  border: 2px solid rgb(54, 3, 105);
+}
+
+
+li a{
+  position: absolute;
+  width: 10vw;
+  height: 5vh;
+  left: 10vw;
+  top: 2vh;
+  font-size: 350%;
+  color: blanchedalmond;
+}
+
+li img{
+
+  width: 8vw;
+  height: inherit;
+}
+
+
+
+.end-game{
+  width: 100vw;;
+  height: 100vh;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
+  backdrop-filter: blur(3px);
+}
+
+.game-over{
+  position: absolute;
+  top: 10vw;
+  left: 25vw;
+  margin: 0;
+  padding: 0;
+  width: 50vw;
+  height: 70vh;
+  color: wheat;
+  font-size: 50%;
+  border-radius: 30px;
+  background-color: rgb(14, 19, 43);
+}
+
+.game-over button{
+  color: blueviolet;
+  width: 40%;
+  height: 20vh;
+  position: absolute;
+  left: 28%;
+  top: 50%;
+  background-color: #051b4d;
+  border: 2px solid rebeccapurple;
+  font-size: 5vw;
+  text-shadow: 0 0 10px #0df3f3;
+  border-radius: 20px;
+}
+
+.game-over h3{
+  position: absolute;
+  height: 10vh;
+  width: 50%;
+  left: 30%;
+  top: 10%;
+  font-size: 5vw;
+  color: rgb(15, 106, 148);
+}
+
+
