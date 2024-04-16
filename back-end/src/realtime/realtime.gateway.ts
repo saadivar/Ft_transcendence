@@ -118,6 +118,21 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
 
 
   }
+  @SubscribeMessage('autocomplete')
+  async handleautocomplete(client: Socket, str: string) {
+   let userProfiles
+    if(str !== ''){
+
+      const users = await this.authService.findAllUserswith(str);
+      userProfiles = users.map(user => ({
+        login: user.login,     
+        avatar: user.avatar   
+    }));
+  }
+  this.websocketService.emitusersToUser(client.data.user.id,userProfiles);
+
+
+  }
   @SubscribeMessage('chatroomdeselected')
   handleLeavechatRoom(client: Socket, roomname: string): void {
     client.leave(roomname);

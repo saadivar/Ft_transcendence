@@ -65,7 +65,6 @@ const UserProfile = () => {
     const location = useLocation();
     const userData = location.state.userData;
 
-    console.log(" user Data => " ,userData)
   return (
     <div className='Userprofile'>
         <div className='page'>
@@ -78,7 +77,7 @@ const UserProfile = () => {
         <ListMatch />
         </div>
  
-        {/* <MenuBar/> */}
+        { <MenuBar user={userData}/> }
     </div>
   )
 }

@@ -11,7 +11,7 @@ import { Message } from "src/typeorm/entities/message";
 import { Notif } from "src/typeorm/entities/notif";
 import { Room } from "src/typeorm/entities/rooms";
 import { BlockedDtails, ChatDtails, FriendsDtails, MessageDtails, NotifDtails, RoomDtails, RoomMemberDtails, UserDetails } from "src/types/types";
-import { Not, Repository} from "typeorm";
+import { ILike, Like, Not, Repository} from "typeorm";
 
 @Injectable()
 export class AuthService{
@@ -159,6 +159,14 @@ export class AuthService{
       return this.userRepository.update(userId, {
         isTwoFactorAuthenticationEnabled: false
       });}
+      async findAllUserswith(str :string){
+
+        const users = await  this.userRepository.find({where:{
+          login: Like(`${str}%`)
+          
+        }})
+        return users;
+      }
     
   
   

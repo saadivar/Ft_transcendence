@@ -2,6 +2,18 @@ import React, { useEffect, useState } from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 
 import "./addfriend.css"
+import { useSocket } from '../../Socket';
+const FriendHelper = ( { image, name , FriendId} ) => {
+  
+    return (
+      <div className='friend-helper'>
+        <div className='profileImg-helper'>
+          <img src={image} alt={name} />
+        </div>
+        <div className='friend-name-helper'>{name}</div>
+      </div>
+    );
+  }
 
 function AddFriendModal({ show, friendName, setFriendName, onSubmit, onCancel }) {
     if (!show) {
@@ -23,7 +35,31 @@ function AddFriendModal({ show, friendName, setFriendName, onSubmit, onCancel })
             transition : {delay: 0.5}
         }
     }
+    const socket = useSocket()
+    const [help, Sethelp] = useState(null);
+
+    useEffect(() => {
+        socket?.on("autocomplete", (payload) => {
+            console.log(payload);
+            Sethelp(payload.users);
+            
+        });
+
+        return () => {
+            socket?.off("autocomplete");
+        };
+    },[socket])
+    const handleInputChange = (e) => {
+        setFriendName(e.target.value);
     
+
+            socket?.emit('autocomplete', e.target.value)
+        
+
+    };
+
+    help && console.log("help -> ", help);
+
     return (
         <AnimatePresence>
 
@@ -38,9 +74,17 @@ function AddFriendModal({ show, friendName, setFriendName, onSubmit, onCancel })
                     className="input-add-modal"
                     type="text"
                     value={friendName}
-                    onChange={(e) => setFriendName(e.target.value)}
+                    onChange={handleInputChange}
                     placeholder="Enter friend's name"
                 />
+
+                <div className='autoComplete'>
+                    {help ? (
+                    help.map((friend, index) => (
+                        <FriendHelper key={index} image={friend.avatar} name={friend.login} FriendId={friend.id} /> ))
+                    ) : ( <p> No friends </p>)}
+                </div>
+
                 <div className="butt-add-modal">
                     <div className="But-modal submit-But-modal"onClick={onSubmit}>
                         <svg

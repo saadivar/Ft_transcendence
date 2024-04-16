@@ -1,5 +1,6 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { Socket } from 'socket.io';
+import { User } from 'src/typeorm/entities/User';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class WebsocketService {
@@ -64,6 +65,17 @@ export class WebsocketService {
         
       }   
   }
+  emitusersToUser(userId: string,user:any[]): void {
+    for (const userID of WebsocketService.connectedUsers.keys()) {
+      if (userId == userID)
+      {
+        const userSocket = WebsocketService.connectedUsers.get(userID);
+        if(userSocket)
+            userSocket.emit("autocomplete", {users:user});
+        }
+      }   
+  }
+
    checking(userid :string,roomname: string ): boolean
   {
     for (const userID of WebsocketService.connectedUsers.keys()) {

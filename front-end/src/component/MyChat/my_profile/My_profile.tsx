@@ -88,7 +88,6 @@ const My_profile: React.FC<Props> = ({
   useEffect(() => {
     socket?.on("notif", (payload) => {
       SetNotifs((prevNotifs) => [...prevNotifs, { type: payload.type, senderid: payload.senderid }]);
-      Notifs.length > 0 && console.log("hey bro = ", Notifs);
     });
     return () => {
       socket?.off("notif");

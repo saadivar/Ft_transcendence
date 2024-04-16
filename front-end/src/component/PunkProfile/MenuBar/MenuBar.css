@@ -84,10 +84,10 @@
 }
 
 .modal-content-twfa > h1{
-  font-size: 2vmin;
+  font-size: 3vmin;
   position: absolute;
   top: 10%;
-  left: 18%;
+  left: 15%;
   color: white;
 }
 
@@ -102,6 +102,7 @@
   background: rgb(4, 53, 53);
   border: 1px solid #8BD9D1;
   border-radius: 5px;
+  font-size: 2vmin;
 }
 .enable:hover {
 
@@ -111,9 +112,11 @@
 }
 
 .Qr {
-  width: 2vw;
-  height: 8vh;
+  width: 7vw;
+  height: 13vh;
   position: absolute;
+  top: 39%;
+  left: 34%;
 }
 
 .close {
@@ -134,8 +137,8 @@
   .input-code
   {
     position: absolute;
-    width: 53%;
-    height: 5%;
+    width: 55%;
+    height: 6%;
     top: 75%;
     left: 22%;
     border-radius: 5px;
@@ -155,6 +158,8 @@
   border: 1px solid #8BD9D1;
   border-radius: 5px;
   color: white;
+  font-size: 2vmin;
+
  }
  .saveBut:hover {
 
