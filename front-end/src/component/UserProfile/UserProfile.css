@@ -5,15 +5,20 @@
     grid-template-rows: 1fr;
     grid-column-gap: 5px;
     grid-row-gap: 5px;
-
     background: #0D1526;
     overflow: hidden;
 }
+
 .stat-title{
     margin: -29vmin 0vmin 0vmin 49vmin;
     color: white;
     font-size: 2vmin;
 }
+
+.ImgProfile {
+    top: 6%;
+}
+
 .stats-container {
     grid-area: 1 / 1 / 2 / 2;
     position: relative;

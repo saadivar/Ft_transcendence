@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./infos.css";
 import pl from "../../../assets/logo1.svg"
-import pl1 from "../../../assets/MonPlayer.svg"
+
 import EditProfile from "../../Modals/editprofile/editprofile";
 
 const Infos = ({user}) => {

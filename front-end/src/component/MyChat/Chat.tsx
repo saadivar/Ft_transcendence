@@ -3,7 +3,7 @@ import MenuBar from "../PunkProfile/MenuBar/MenuBar";
 import "./Chat.css";
 import My_profile from "./my_profile/My_profile";
 import Messages from "./Messages/Messages";
-import PingIcon from "../../assets/pingIcon.svg"
+
 import FriendInfo from "./InfosPart/friendInfos/FriendInfo";
 import RoomInfo from "./InfosPart/roomInfos/OwnerInfos/OwnerInfo";
 import { useSocket } from "../Socket";

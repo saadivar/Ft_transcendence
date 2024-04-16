@@ -74,12 +74,11 @@ const UserProfile = () => {
 
         
         {/* <Friends /> */}
-            <Achievement />
-
+        <Achievement />
         <ListMatch />
         </div>
  
-        <MenuBar/>
+        {/* <MenuBar/> */}
     </div>
   )
 }
