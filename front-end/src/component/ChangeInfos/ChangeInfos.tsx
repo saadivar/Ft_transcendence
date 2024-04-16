@@ -16,6 +16,7 @@ function ChangeProfile({ user })
 
     if(!user.isNew)
         navigate("/Home", { replace: true });
+    
     const handleNameChange = (e) => {
         setName(e.target.value);
     };
