@@ -192,6 +192,12 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     }
 
   }
+  @SubscribeMessage("changeinfodone")
+  async changeinfodone(client: Socket)
+  {
+      const user11 = await this.authService.findUser(client.data.user.id);
+      await this.authService.updateUser(user11.id);
+  }
   @SubscribeMessage('setadmin')
   async setadmin(client: Socket, payload: { id: number, name: string }) {
     const user11 = await this.authService.findUser(client.data.user.id);

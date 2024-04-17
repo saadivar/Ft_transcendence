@@ -52,7 +52,7 @@ export class AuthController
         {
             if(us.isNew)
             {
-                this.authService.updateUser(req.user.id);
+                
                 res.redirect(`${process.env.url_front}/Changeinfo`);
                 return;
 
@@ -160,13 +160,19 @@ export class AuthController
             
     }
     
-    @Post('logout')
-    async logout(@Res() res:Response)
-    {
-        console.log(res.clearCookie('jwt', {httpOnly: true,}));
-        
-        return{message: "success" }
-    } 
+   
+    @Get('logout')
+        @UseGuards(jwtguard)
+        async logout(@Req() req:Request,@Res() res:Response)
+        {
+            const user = req.user as User;
+            
+            res.clearCookie('jwt');
+            user.status = "offline";
+            this.authService.update(user);
+            res.send("ok");
+        } 
+
    
     //////////////////////////////
     

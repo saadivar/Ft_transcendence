@@ -58,6 +58,7 @@ export class WebsocketService {
     for (const userID of WebsocketService.connectedUsers.keys()) {
       if(userId == userID)
       {
+            console.log("herre");
             const userSocket = WebsocketService.connectedUsers.get(userID);
             if(userSocket)
                 userSocket.emit("error",{type:type});

@@ -29,6 +29,7 @@ export class TwoFactorAuthenticationService {
     return toFileStream(stream, otpauthUrl);
   }
   public isTwoFactorAuthenticationCodeValid(twoFactorAuthenticationCode: string, user: User) {
+    console.log(user.twoFactorAuthenticationSecret);
     return authenticator.verify({
       token: twoFactorAuthenticationCode,
       secret: user.twoFactorAuthenticationSecret
