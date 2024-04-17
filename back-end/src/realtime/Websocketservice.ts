@@ -65,6 +65,17 @@ export class WebsocketService {
         
       }   
   }
+  emitgameToUser(userId: string,user:User): void {
+    for (const userID of WebsocketService.connectedUsers.keys()) {
+      if(userId == userID)
+      {
+            const userSocket = WebsocketService.connectedUsers.get(userID);
+            if(userSocket)
+                userSocket.emit("invitegame",user);
+        }
+        
+      }   
+  }
   emitusersToUser(userId: string,user:any[]): void {
     for (const userID of WebsocketService.connectedUsers.keys()) {
       if (userId == userID)

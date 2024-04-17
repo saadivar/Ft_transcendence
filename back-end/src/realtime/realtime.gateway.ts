@@ -102,10 +102,12 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
 
     const user = await this.authService.findUser(client.data.user.id);
     const toplaywith = await this.authService.findUser(payload.id);
-    if(toplaywith.status !== "ingame")
-      this.websocketService.emitToUser(payload.id.toString(), "invitegame");
-    else
+    if(toplaywith.status == "online")
+      this.websocketService.emitgameToUser(payload.id.toString(), user);
+    else if(toplaywith.status == "ingame")
       this.websocketService.emiterrorToUser(client.data.user.id, `${toplaywith.login} is already in game`);
+    else
+      this.websocketService.emiterrorToUser(client.data.user.id, `${toplaywith.login} is offline`);
 
   }
   @SubscribeMessage('newroom')

@@ -44,6 +44,7 @@ const My_profile: React.FC<Props> = ({
   const HandleSetOption = (option: string) => {
     UserSelceted(null);
     RoomSelceted(null);
+    setSelectedFriendId(null);
     if (selectedroom) socket?.emit("chatroomdeselected", selectedroom.name);
     if (option === "padding") {
       SetNotifs((prevNotifs) => prevNotifs.filter((notif: any) => notif.type === "message"));

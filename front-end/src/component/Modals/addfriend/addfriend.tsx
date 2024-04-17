@@ -40,7 +40,6 @@ function AddFriendModal({ show, friendName, setFriendName, onSubmit, onCancel })
 
     useEffect(() => {
         socket?.on("autocomplete", (payload) => {
-            console.log(payload);
             Sethelp(payload.users);
             
         });

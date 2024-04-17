@@ -19,6 +19,7 @@ function App() {
   const socket = useSocket();
   const[fetchuser,setfetchuser] = useState(0);
   const [showRequest, SetShow] = useState(false);
+  const [gameRequestSender, SetSender] = useState(null);
   useEffect(()=>{
     socket?.on('updated', ()=> {
     
@@ -26,8 +27,8 @@ function App() {
   }, [socket])
 
   useEffect(()=>{
-    socket?.on('invitegame', ()=> {
-    
+    socket?.on('invitegame', (user)=> {
+      SetSender(user);
       SetShow(true)});
       setTimeout(() => {
         SetShow(false);
@@ -78,7 +79,7 @@ function App() {
   return (
     <Router>
         {
-          showRequest && <GameRequest  user={user} onSubmit={matching} onCancel={canceling}/>
+          showRequest && gameRequestSender != null &&  <GameRequest  gameRequestSender={gameRequestSender} onSubmit={matching} onCancel={canceling}/>
         }
         {
           errorMessage && (

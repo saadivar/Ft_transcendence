@@ -3,7 +3,7 @@ import {motion, AnimatePresence} from 'framer-motion'
 
 import "./gamereq.css"
 
-function GameRequest({user, onSubmit, onCancel}) {
+function GameRequest({gameRequestSender, onSubmit, onCancel}) {
 
     const backdrop = {
         visible : {opacity: 1},
@@ -33,8 +33,8 @@ function GameRequest({user, onSubmit, onCancel}) {
             <motion.div className="modal-content-inv"
             variants={modal}>
                 <p className='INVIT'>GAME INVITATION</p>
-                <img src={user.avatar} className='INV-IMG'></img>
-                <p className='INV-NAME'>{user.login}</p>
+                <img src={gameRequestSender.avatar} className='INV-IMG'></img>
+                <p className='INV-NAME'>{gameRequestSender.login}</p>
                 <p className='INV-text'>invited you to play a game</p>
                 <div className="butt-add-modal">
                     <div className="But-modal submit-But-modal"onClick={onSubmit}>
