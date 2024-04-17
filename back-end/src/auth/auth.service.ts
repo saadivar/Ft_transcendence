@@ -143,6 +143,7 @@ export class AuthService{
     }
    
     async setTwoFactorAuthenticationSecret(secret: string, userId: number) {
+      console.log(secret);
       return this.userRepository.update(userId, {
         twoFactorAuthenticationSecret: secret
       });

@@ -5,6 +5,7 @@ import {motion, AnimatePresence} from 'framer-motion'
 import "./ChangeInfos.css"
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useSocket } from '../Socket';
 
 function ChangeProfile({ user })
 {
@@ -13,7 +14,7 @@ function ChangeProfile({ user })
     const [name, setName] = useState(user.login);
     const [image, setImage] = useState(user.avatar);
     const [imagePreviewUrl, setImagePreviewUrl] = useState(user.avatar);
-
+    const socket = useSocket()
     if(!user.isNew)
         navigate("/Home", { replace: true });
     
@@ -72,7 +73,12 @@ function ChangeProfile({ user })
         e.preventDefault();
         Setchange(true); 
     }
-  
+    useEffect(() => {
+    
+        return () => {
+            socket?.emit('changeinfodone');
+        };
+    }, []);
     return (
 
         <motion.div className="modal-backdrop-change">

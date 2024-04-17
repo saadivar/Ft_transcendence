@@ -10,12 +10,16 @@
     margin : 7vmin 0vmin 0vmin 3vmin;
     height: 90vh;
     padding: 0px 10px 0px 0px;
-    background: rgba(22, 89, 83,0.1);
-    border: 1px solid #8BD9D1;
     overflow:hidden;
     position: relative;
     justify-items: center;
     align-items: center;
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.29);
 }
 
 .No-conv
@@ -25,12 +29,15 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); 
-    background: rgba(43, 158, 148, 0.1);
-    border: 1px solid #8BD9D1;
     height: fit-content;
     width: fit-content;
     padding: 3%;
     border-radius: 5px;
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .headPart {
@@ -40,7 +47,7 @@
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    padding-left: 2%;
+    margin-left: 1%;
     border-bottom:  2px solid #8BD9D1;
     min-height: 8vh;
 }

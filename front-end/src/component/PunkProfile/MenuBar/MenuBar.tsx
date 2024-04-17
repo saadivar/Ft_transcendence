@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 
 function Modal({ onClose, isTwoFactorEnabled }) {
+
   const [Qr, SetQr] = useState(null);
   const [showQr, SetShowQr] = useState(false);
   const [code, setcode] = useState("");
@@ -125,7 +126,7 @@ function Modal({ onClose, isTwoFactorEnabled }) {
               <button
                 className="saveBut"
                 onClick={(e) => {
-                  e.stopPropagation(); // Stop event propagation
+                  e.stopPropagation();
                   sendConde(code);
                 }}
               >
@@ -174,7 +175,7 @@ const MenuBar = ({ user }) => {
   };
   
   const handlogOut = () =>{
-    axios.post(`${import.meta.env.VITE_url_back}/api/auth/logout`, { withCredentials: true })
+    axios.get(`${import.meta.env.VITE_url_back}/api/auth/logout`, { withCredentials: true })
   }
 
   return (

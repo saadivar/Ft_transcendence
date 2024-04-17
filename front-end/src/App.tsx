@@ -20,9 +20,11 @@ function App() {
   const[fetchuser,setfetchuser] = useState(0);
   const [showRequest, SetShow] = useState(false);
   const [gameRequestSender, SetSender] = useState(null);
+
+
+
   useEffect(()=>{
     socket?.on('updated', ()=> {
-    
       setfetchuser((prevIsBool) => prevIsBool + 1)});
   }, [socket])
 
@@ -49,10 +51,6 @@ function App() {
     fetchData();
   }, [fetchuser]);
 
-
-
-
-
   useEffect(() => {
     const handleError = (mssg) => {
       console.log(mssg);
@@ -69,12 +67,15 @@ function App() {
       socket?.off('error');
     };
   }, [socket]);
+  
   const canceling = () => {
     SetShow(false);
   }
 
   const matching = () => {
+    
   }
+
   const [goGame, SetgoGame] = useState(false);
   return (
     <Router>

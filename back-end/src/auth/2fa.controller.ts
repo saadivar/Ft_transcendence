@@ -46,6 +46,8 @@ import { WebsocketService } from 'src/realtime/Websocketservice';
     
       const user = request.user as User;
       console.log(body.twofa);
+      console.log(user);
+
     const isCodeValid = this.twoFactorAuthenticationService.isTwoFactorAuthenticationCodeValid(
         body.twofa, user
       );

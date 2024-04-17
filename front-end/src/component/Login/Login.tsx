@@ -17,6 +17,7 @@ export const TwoFa = ({user ,setError}) =>
     return <Navigate to="/Home" replace />;
   const saveData = async () => {
     const data = await axios.post(`${import.meta.env.VITE_url_back}/api/2fa/authenticate`, {twofa:code},{withCredentials: true})
+    
     if(data.status == 200)
     {
       setError('');

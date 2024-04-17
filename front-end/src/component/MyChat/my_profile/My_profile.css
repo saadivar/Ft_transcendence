@@ -10,8 +10,12 @@
     width: 21vw;
     height: 90vh;
     border-radius: 5px;
-    background: rgb(175, 185, 185, 0.2);
-    border: 1px solid #8BD9D1;
+    background: rgba(255, 255, 255, 0.30);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.29);
 }
 
      /* selection part */
@@ -23,8 +27,7 @@
     grid-template-rows: 1fr;
     justify-items: center;
     align-items: center;
-    padding-top: 0.7vmin;
-    border-top: 1px solid #8BD9D1;
+    margin-left: 2vmin;
     position: relative;
 }
 
@@ -133,13 +136,11 @@
     width: 100%;
     background: rgba(139, 217, 209, 0.3);
     transition: 0.5s ease;
-    border: 1px solid #8BD9D1;
 }
 
 .message-active {
     cursor: pointer;
     width: 100%;
-    background: rgba(139, 217, 209, 0.3);
+    background: rgba(22, 89, 83, 1);
     transition: 0.5s ease;
-    border: 1px solid #8BD9D1;
 }
