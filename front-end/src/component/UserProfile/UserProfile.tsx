@@ -77,7 +77,7 @@ const UserProfile = () => {
         <ListMatch />
         </div>
  
-        { <MenuBar user={userData}/> }
+        {/* { <MenuBar user={userData}/> } */}
     </div>
   )
 }

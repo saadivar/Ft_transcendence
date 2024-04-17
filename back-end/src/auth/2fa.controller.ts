@@ -45,19 +45,15 @@ import { WebsocketService } from 'src/realtime/Websocketservice';
   ) {
     
       const user = request.user as User;
-      console.log(body.twofa);
-      console.log(user);
 
     const isCodeValid = this.twoFactorAuthenticationService.isTwoFactorAuthenticationCodeValid(
         body.twofa, user
       );
-      console.log(isCodeValid);
       if (!isCodeValid) {
         
         this.websocketService.emiterrorToUser(user.id.toString(),"Wrong authentication code")
         return;
       }
-      console.log("valide");
     await this.authService.turnOnTwoFactorAuthentication(user.id);
     
   }
@@ -101,8 +97,8 @@ import { WebsocketService } from 'src/realtime/Websocketservice';
         body.twofa, user
     );
     if (!isCodeValid) {
-        console.log("error");
-      throw new UnauthorizedException('Wrong authentication code');
+      this.websocketService.emiterrorToUser(user.id.toString(),"Wrong authentication code")
+      return;
     }
     user.HasAccess = true; 
     await this.authService.update(user);

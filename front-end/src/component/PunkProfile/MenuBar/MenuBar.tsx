@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./MenuBar.css";
 import logo from "../../../assets/logoPIngpong.svg";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 
@@ -164,18 +164,20 @@ function Modal({ onClose, isTwoFactorEnabled }) {
   );
 }
 
-const MenuBar = ({ user }) => {
+const MenuBar = ({ user ,setUser }) => {
   const [Settings, SetSettings] = useState(false);
 
   const [isTwoFactorEnabled, setIsTwoFactorEnabled] =
     user && useState(user.isTwoFactorAuthenticationEnabled);
-
+  const navigate = useNavigate()
   const handleModal = () => {
     SetSettings(!Settings);
   };
   
-  const handlogOut = () =>{
-    axios.get(`${import.meta.env.VITE_url_back}/api/auth/logout`, { withCredentials: true })
+  const handlogOut = async () =>{
+    await axios.get(`${import.meta.env.VITE_url_back}/api/auth/logout`, { withCredentials: true });
+    setUser(null)
+    navigate("/", { replace: true });
   }
 
   return (
