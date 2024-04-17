@@ -39,8 +39,25 @@
       max-height: 70.6vh; 
       border-radius: 5px;
       backdrop-filter: blur(25px);
+
+
   }
-  
+  .suggestion{
+    position: absolute;
+    top: 40%;
+    left: 36%;
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid #FFF;
+    padding: 1vmin;
+    border-radius: 5px;
+    color: black;
+    background-color: rgba(255,255,255,0.2);
+  }
+  .autoComplete > p {
+    color: white;
+    position: absolute;
+  }
   
   .friend-helper
   {

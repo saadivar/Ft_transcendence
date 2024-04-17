@@ -5,11 +5,12 @@ import './App.css';
 import Punk from './component/PunkProfile/Punk';
 import Chat from './component/MyChat/Chat';
 import axios from 'axios';
-import StartGame from './component/game/StartGame';
 import { useSocket } from './component/Socket';
 import UserProfile from './component/UserProfile/UserProfile';
 import ChangeProfile from './component/ChangeInfos/ChangeInfos';
 import GameRequest from './component/Modals/GameRequest/gamereq';
+import FirstPage from './component/game/FirstPage';
+import OnlineMatching from './component/game/OnlineMatching';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -73,11 +74,11 @@ function App() {
 
   const matching = () => {
   }
-
+  const [goGame, SetgoGame] = useState(false);
   return (
     <Router>
         {
-          showRequest && <GameRequest onSubmit={matching} onCancel={canceling}/>
+          showRequest && <GameRequest  user={user} onSubmit={matching} onCancel={canceling}/>
         }
         {
           errorMessage && (
@@ -105,8 +106,9 @@ function App() {
               <>
                 <Route path="/2fa" element={<TwoFa user={user} setError={setError}/>} />
                 <Route path="/" element={<Login user={user} />} />
-                <Route path="/Home" element={<Punk user={user} />} />
-                <Route path="/Game" element={<StartGame/>} />
+                <Route path="/Home" element={<Punk user={user} SetgoGame={SetgoGame}/>} />
+                <Route path="/practice" element={<FirstPage infos={[]} mode='practice' goGame={goGame}/>} />
+                <Route path="/online" element={<OnlineMatching goGame={goGame}/>} />
                 <Route path="/Chat" element={<Chat user={user}/>} />
                 {user && <Route path="/Changeinfo" element={<ChangeProfile user={user} />} />}
                 <Route path="/profile/:userId" element={<UserProfile />} />

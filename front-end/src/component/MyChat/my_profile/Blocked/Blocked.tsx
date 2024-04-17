@@ -2,7 +2,7 @@ import React from 'react'
 import "./Blocked.css"
 import axios from 'axios'
 
-const Blocked = ({Blocked, setboolblock,  userSelect}) => {
+const Blocked = ({blocked, setboolblock,  userSelect}) => {
 
  
   userSelect(null);
@@ -19,7 +19,7 @@ const Blocked = ({Blocked, setboolblock,  userSelect}) => {
   return (
     <>
     {
-      Blocked && Blocked.map((friend) => (
+      blocked && blocked.map((friend) => (
 
         <div className="discussion-blocked" key={friend.id}>
                     

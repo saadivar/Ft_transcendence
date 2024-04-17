@@ -4,6 +4,7 @@ import MenuBar from "./MenuBar/MenuBar";
 
 import Friends from "./friends/friend"
 import Infos from "./Infos/infos"
+import GameModes from "../game/GameModes/GameModes"
 
 
 
@@ -12,7 +13,7 @@ import { useSocket }  from "../../component/Socket"
 
 
 
-const Punk = ({user}) => {
+const Punk = ({user, SetgoGame}) => {
   const socket = useSocket();
 
   
@@ -28,7 +29,7 @@ const Punk = ({user}) => {
             <Friends />
           
 
-         
+            <GameModes SetgoGame={SetgoGame}/>
 
 
         </div>

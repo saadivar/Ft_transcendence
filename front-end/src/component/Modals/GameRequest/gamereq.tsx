@@ -3,7 +3,7 @@ import {motion, AnimatePresence} from 'framer-motion'
 
 import "./gamereq.css"
 
-function GameRequest({onSubmit, onCancel}) {
+function GameRequest({user, onSubmit, onCancel}) {
 
     const backdrop = {
         visible : {opacity: 1},
@@ -30,9 +30,12 @@ function GameRequest({onSubmit, onCancel}) {
             initial="hidden"
             animate="visible"
         >
-            <motion.div className="modal-content-add"
+            <motion.div className="modal-content-inv"
             variants={modal}>
-                <p>you have new game request</p>
+                <p className='INVIT'>GAME INVITATION</p>
+                <img src={user.avatar} className='INV-IMG'></img>
+                <p className='INV-NAME'>{user.login}</p>
+                <p className='INV-text'>invited you to play a game</p>
                 <div className="butt-add-modal">
                     <div className="But-modal submit-But-modal"onClick={onSubmit}>
                         <svg

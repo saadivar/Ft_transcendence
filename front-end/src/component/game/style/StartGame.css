@@ -107,7 +107,7 @@ li img{
 
 
 
-.end-game{
+#end-game{
   width: 100vw;;
   height: 100vh;
   position: absolute;
@@ -118,7 +118,7 @@ li img{
   backdrop-filter: blur(3px);
 }
 
-.game-over{
+#game-over{
   position: absolute;
   top: 10vw;
   left: 25vw;
@@ -132,7 +132,7 @@ li img{
   background-color: rgb(14, 19, 43);
 }
 
-.game-over button{
+#game-over button{
   color: blueviolet;
   width: 40%;
   height: 20vh;
@@ -146,7 +146,7 @@ li img{
   border-radius: 20px;
 }
 
-.game-over h3{
+#game-over h3{
   position: absolute;
   height: 10vh;
   width: 50%;

@@ -1,14 +1,13 @@
 import * as THREE from 'three';
 import { FBXLoader, GLTFLoader, OrbitControls } from 'three/examples/jsm/Addons.js';
 import './style/playersInfo.css'
-import { Socket } from 'socket.io-client';
-import { Navigate } from 'react-router-dom';
-import { GLTF } from 'three/examples/jsm/Addons.js';
+import { Socket, io } from 'socket.io-client';
+import { useLocation , Navigate} from 'react-router-dom';
 
 interface props{
 	infos : string[];
     mode : string;
-	socket : Socket;
+	goGame : boolean;
 };
 
 export class Player
@@ -23,14 +22,15 @@ export class Player
 	goals : any;
 	name : any;
 }
-let i = 0;
 
 
-function FirstPage({infos , mode, socket} : props){
-			if (i == 1){
-				return ;
-			}
-			i++;
+
+function FirstPage({infos , mode, goGame} : props){
+	if(!goGame){
+		return <Navigate to="/Home" replace />;
+	}
+	if ( !document.querySelector('canvas[data-engine="three.js r162"]')){
+			
 			let tableWidth : number;
 			let tableHeight: number;
 			let p2Speed =  2;
@@ -39,6 +39,7 @@ function FirstPage({infos , mode, socket} : props){
 			let initclientX = window.innerWidth / 2;
 			let initClientY = window.innerHeight / 2;
 			let index : number;
+			let stopAnimate = false;
 			
 			scene = new THREE.Scene();
 			renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
@@ -46,71 +47,45 @@ function FirstPage({infos , mode, socket} : props){
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			renderer.shadowMap.enabled = true;
 			const root = document.getElementById('root');
-			const container = document.createElement('div');
-			container.id = 'player-info'; 
-			container.style.position = 'absolute';
-			container.style.top = '0px';
-			container.style.left = '0px';
-			container.style.padding = '10px';
-			const player1Info = document.createElement('div');
-			const player2Info = document.createElement('div');
-			const player1Name = document.createElement('a');
-			const player2Name = document.createElement('a');
-			const player1Img = document.createElement('img');
-			const player2Img = document.createElement('img');
-			const player1Score = document.createElement('span');
-			const player2Score = document.createElement('span');
-			const scoreInfo = document.createElement('div');
 			const exit = document.createElement('button');
 			const starting = document.createElement('div');
-			
-			// const htmlContent = `<div id="starting" style="background-image: url('https://www.couleurdenuit.com/img/cms/Match-de-ping-pong-23.jpg'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; min-height: 100vh;"><head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"></head><div style="margin-left: 50px; padding-bottom: 100px;"><span class="spinner-grow spinner-grow-sm" style="margin-bottom: 100px; margin-right: 150px; font-size: 250%; color: #DB8C1B;">Waiting...</span><div class="spinner-border" style="color: #DB8C1B; width: 3rem; height: 3rem;" role="status"></div><button id="exit-button">Exit</button>`;
-			// starting.innerHTML = htmlContent;
-			// starting.style.pointerEvents = 'none';
+
 			exit.id = 'exit-button';
 			exit.innerText = "Exit";
 			exit.onclick = () => {
-				window.location.reload();
+				root?.removeChild(renderer.domElement);
+				root?.removeChild(exit);
+				scene.children.forEach(child => {
+					scene.remove(child);
+					console.log("DELETE");
+				});
+				renderer.dispose();
+				stopAnimate = true;
+
+				renderer.setAnimationLoop(null);
+				renderer.domElement.remove(); 
+				renderer.forceContextLoss();
+				renderer.dispose();
+				controls.dispose();
+				window.history.back();
 			}
-			container.style.pointerEvents = 'none';
-			if (mode == 'online'){
-				player1Score.id = "player1-score";
-				player2Score.id = "player2-score";
-				player1Score.innerText = "0";
-				player2Score.innerText = "0";
 
-				scoreInfo.append(player1Score);
-				scoreInfo.append(player2Score);
+			window.addEventListener('popstate', function(event) {
+				root?.removeChild(renderer.domElement);
+				root?.removeChild(exit);
+				scene.children.forEach(child => {
+					scene.remove(child);
+					console.log("DELETE");
+				});
+				renderer.dispose();
+				stopAnimate = true;
 
-				scoreInfo.id = "score-info"
-				container.append(scoreInfo);
-				player1Img.src = infos[2];
-				player2Img.src = infos[3];
-				player1Name.innerText = infos[0];
-
-				player1Info.appendChild(player1Name)
-				player1Info.appendChild(player1Img)
-
-				player1Info.id = 'player1-info';
-				player2Name.innerText = infos[1];
-
-				player2Info.appendChild(player2Name);
-				player2Info.appendChild(player2Img);
-
-				player2Info.id = 'player2-info';
-
-				container.appendChild(player1Info);
-				container.appendChild(player2Info);
-			}
-			if (root) {
-				root.appendChild(renderer.domElement);
-				root.appendChild(container);
-				root.appendChild(exit);
-				// root.appendChild(starting);
-
-			} else {
-				console.log("Element with ID 'root' not found.");
-			}
+				renderer.setAnimationLoop(null);
+				renderer.domElement.remove(); 
+				renderer.forceContextLoss();
+				renderer.dispose();
+				controls.dispose();
+			});
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 5000 );
 			camera.position.set(
 				0,
@@ -138,25 +113,33 @@ function FirstPage({infos , mode, socket} : props){
 				moveY : -0.1,
 				object : {position : { x: 0, y: 0, z: 0, }},
 			}
-			glbloader.load('src/component/game/assets/table.glb', (gltf)=>{
-				table = gltf.scene;
-				table.castShadow = true;
-				table.scale.set(30, 30, 30);
-				boundingBox = new THREE.Box3().setFromObject(table);
-				tableWidth = (boundingBox?.max.x - boundingBox?.min.x);
-				tableHeight = boundingBox?.max.z - boundingBox?.min.z;
-				scene.add(table);
-			})
+
 
 			const clock = new THREE.Clock();
 			let mixer:any;
 
+			if (root) {
+				root.appendChild(renderer.domElement);
+				root.appendChild(exit);
+
+			} else {
+				console.log("Element with ID 'root' not found.");
+			}
 			base();
 			logic();
 
 			function logic(){
 
-				// scene.add(new THREE.AxesHelper(100))
+				glbloader.load('src/component/game/assets/table.glb', (gltf)=>{
+					console.log("TAble : !!");
+					table = gltf.scene;
+					table.castShadow = true;
+					table.scale.set(30, 30, 30);
+					boundingBox = new THREE.Box3().setFromObject(table);
+					tableWidth = (boundingBox?.max.x - boundingBox?.min.x);
+					tableHeight = boundingBox?.max.z - boundingBox?.min.z;
+					scene.add(table);
+				})
 				setTimeout(() =>{
 					glbloader.load( 'src/component/game/assets/tennis_ball_blue.glb', function ( gltf : any ) {
 					
@@ -192,10 +175,6 @@ function FirstPage({infos , mode, socket} : props){
 					});
 				}, 1000)
 
-				setTimeout(() => {
-					starting.innerHTML = "";
-				}, 4000);
-
 				glbloader.load('src/component/game/assets/basketball_-_aizismus.glb', (gltf) => {
 
 					gltf.scene.rotation.y = Math.PI / 2;
@@ -205,8 +184,13 @@ function FirstPage({infos , mode, socket} : props){
 					gltf.scene.rotation.y -= Math.PI/2;
 
 					// gltf.scene.scale.set(0.9, 0.9, 0.9);
+					console.log("ADD scene");
 					scene.add(gltf.scene);
 				})
+				setTimeout(() => {
+					starting.innerHTML = "";
+				}, 4000);
+				
 
 				renderer.domElement.addEventListener('mousemove', onMouseMove);
 
@@ -226,41 +210,30 @@ function FirstPage({infos , mode, socket} : props){
 								player1.raquete.rotation.z  = Math.PI / 6;
 							else
 								player1.raquete.rotation.z  = 0;
-
-							if (mode == 'online')
-								socket.emit('PlayerMoves', [player1.raquete.position, player1.raquete.rotation, infos[0], index]);
-							if (index == 1)
-							{
-								socket.emit('moveX', [infos[0] ,stepX]);
-								socket.emit('moveZ', [infos[0] ,moveZ]);
-								socket.emit('speed', [infos[0], event.clientY - initClientY]);
+							if (event.clientY - initClientY < -150){
+								p1Speed =  -3;
+								p1deltaT = 1 / 45;
+								player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.5;
 							}
-							else{
-								if (event.clientY - initClientY < -150){
-									p1Speed =  -3;
-									p1deltaT = 1 / 45;
-									player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.5;
-								}
-								else if (event.clientY - initClientY < -100){
-									p1Speed =  -2.8;
-									p1deltaT = 1 / 45;
-									player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.8;
-								}
-								else if (event.clientY - initClientY < -25){
-									p1Speed =  -2.5;
-									p1deltaT = 1 / 45;
-									player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
-								}
-								else if (event.clientY - initClientY < -3){
-									p1Speed =  -2.2;
-									p1deltaT = 1 / 45;
-									player1fp = (boundingBox.max.z - boundingBox.min.z) / 5;
-								}
-								else {
-									p1Speed =  -1.7;
-									p1deltaT = 1 / 46;
-									player1fp = (boundingBox.max.z - boundingBox.min.z) / 6;
-								}
+							else if (event.clientY - initClientY < -100){
+								p1Speed =  -2.8;
+								p1deltaT = 1 / 45;
+								player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.8;
+							}
+							else if (event.clientY - initClientY < -25){
+								p1Speed =  -2.5;
+								p1deltaT = 1 / 45;
+								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
+							}
+							else if (event.clientY - initClientY < -3){
+								p1Speed =  -2.2;
+								p1deltaT = 1 / 45;
+								player1fp = (boundingBox.max.z - boundingBox.min.z) / 5;
+							}
+							else {
+								p1Speed =  -1.7;
+								p1deltaT = 1 / 46;
+								player1fp = (boundingBox.max.z - boundingBox.min.z) / 6;
 							}
 							initclientX = event.clientX ;
 							initClientY = event.clientY;
@@ -274,19 +247,7 @@ function FirstPage({infos , mode, socket} : props){
 					if (ball.object.position.x < minX)
 						ball.object.position.x = -35;
 
-					if (mode == 'online'){
-						if ((stepZ > 0 && lastFallingZ > 0) || (stepZ < 0 && !lastFallingZ)) {
-							player1.goals++;
-							player1Score.innerText = player1.goals;
-						} else if ((stepZ < 0 && lastFallingZ < 0) || (stepZ > 0 && !lastFallingZ)) {
-							player2.goals++;
-							player2Score.innerText = player2.goals;
-						}
-						socket.emit('score', [player1.goals, player2.goals, infos[0]]);
-						ball.object.position.z = -(boundingBox?.max.z - boundingBox?.min.z) * 0.4 *  (stepZ < 0 ? 1 : -1);
-					}
-					else
-						ball.object.position.z = -(boundingBox?.max.z - boundingBox?.min.z) * 0.4;
+					ball.object.position.z = -(boundingBox?.max.z - boundingBox?.min.z) * 0.4;
 					ball.dirX = 0;
 					lastFallingZ = 0;
 					stepZ  = 0;
@@ -297,11 +258,7 @@ function FirstPage({infos , mode, socket} : props){
 					p1deltaT = 1/50;
 					touchNet = false;
 					move = false;
-					if (mode == "practice")
-						player2.raquete.position.z = (boundingBox?.max.z - boundingBox?.min.z) * 0.5;
-					if (player1.goals > 10 || player2.goals > 10){
-						socket.emit('endGame',[player1.goals, player2.goals, infos[0]]);
-					}
+					player2.raquete.position.z = (boundingBox?.max.z - boundingBox?.min.z) * 0.5;
 				}
 					
 				let maxZ : number;
@@ -343,8 +300,7 @@ function FirstPage({infos , mode, socket} : props){
 				let touchNet = false;
 				let lastFallingZ = 0;
 		function animate() {
-				if (index == undefined && mode == 'online')
-					socket.emit('index', infos[0]);
+				if (stopAnimate) return;
 				if (tableHeight && !maxZ){
 					maxZ = tableHeight / 2;
 					minZ = tableHeight / -2;
@@ -356,8 +312,7 @@ function FirstPage({infos , mode, socket} : props){
 						if (floorY != 0 &&  !touchNet && stepZ >= 0 && Math.abs(player2.raquete.position.z - ball.object.position.z) < 12 && touchRaquete(player2.raquete.position.x, player2.raquete.rotation.z))
 						{
 							falligPoint = player2fp;
-							if (mode == "practice")
-								falligPoint = (boundingBox.max.z - boundingBox.min.z) / 3.5;
+							falligPoint = (boundingBox.max.z - boundingBox.min.z) / 3.5;
 							middle = ball.object.position.z - falligPoint;   
 							stepZ = p2Speed;
 							move = true;
@@ -368,11 +323,9 @@ function FirstPage({infos , mode, socket} : props){
 							moveX = 0;
 							deltaT = p2deltaT;
 							lastFallingZ = 0;
-							if (mode == "practice"){
-								ball.dirX  = 0;
-								player2.raquete.position.z -= (boundingBox.max.z - boundingBox.min.z) * 0.1;
-								stepZ = -2;
-							}
+							ball.dirX  = 0;
+							player2.raquete.position.z -= (boundingBox.max.z - boundingBox.min.z) * 0.1;
+							stepZ = -2;
 						}
 						if (floorY != 0 && !touchNet && stepZ <= 0 && Math.abs(player1.raquete.position.z - ball.object.position.z) < 12 && touchRaquete(player1.raquete.position.x, player1.raquete.rotation.z))
 						{
@@ -387,8 +340,7 @@ function FirstPage({infos , mode, socket} : props){
 							stepX = 0;
 							deltaT = p1deltaT;
 							lastFallingZ = 0;
-							if (mode == "practice")
-								player2.raquete.position.z = (boundingBox.max.z - boundingBox.min.z) * 0.5;
+							player2.raquete.position.z = (boundingBox.max.z - boundingBox.min.z) * 0.5;
 						}
 						if (ball.object.position.z > tableHeight * 3 || ball.object.position.z < tableHeight * -3){
 							reset();
@@ -446,8 +398,6 @@ function FirstPage({infos , mode, socket} : props){
 							player2.raquete.position.x =  ball.object.position.x ;
 						}
 						}
-						if (ball.object && mode == "online" && index == 0)
-							socket.emit('data', [{x : ball.object.position.x, y : ball.object.position.y, z : ball.object.position.z}, infos[0]]);
 						requestAnimationFrame( animate );
 						renderer.render( scene, camera );
 
@@ -484,47 +434,7 @@ function FirstPage({infos , mode, socket} : props){
 						}
 					}
 				}
-				
 
-				socket.on('data', (message : any)=> {
-					if (index == 1 && ball.object){
-						ball.object.position.x = message[0].x;
-						ball.object.position.y = message[0].y;
-						ball.object.position.z = -message[0].z;
-					}
-				})
-
-				socket.on('moveX', (mx : number) => {
-					moveX = mx;
-				})
-
-				socket.on('p2deltaT', (dt : number) =>{
-					p2deltaT = dt;
-				});
-
-				socket.on('moveZ', (mz : number) => {
-					player2.raquete.position.z -= mz;
-				})
-
-				socket.on('PlayerMoves', (pos : any, rot : any) => {
-					player2.raquete.position.x = pos.x;
-					player2.raquete.position.y = pos.y;
-					player2.raquete.position.z = -pos.z;
-					player2.raquete.rotation.copy(rot);
-				})
-
-
-				socket.on('index', (i) =>{
-					index = i;
-				})
-				socket.on('speed', (spd) => {
-					p2Speed = spd;
-				})
-				500
-				
-				socket.on('falligPoint', (fp) =>{
-					player2fp = (boundingBox.max.z - boundingBox.min.z) / fp;
-				});
 				animate();
 			}
 			function base() {
@@ -583,12 +493,7 @@ function FirstPage({infos , mode, socket} : props){
 				renderer.setSize( window.innerWidth, window.innerHeight );
 			}
 
-			socket.on('score', (score : any[]) => {
-				player1.goals = score[0];
-				player1Score.innerText = score[0];
-				player2.goals = score[1];
-				player2Score.innerText = score[1];
-			})
+		}
     }
 
 export default FirstPage;

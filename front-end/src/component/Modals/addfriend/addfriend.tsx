@@ -3,10 +3,10 @@ import {motion, AnimatePresence} from 'framer-motion'
 
 import "./addfriend.css"
 import { useSocket } from '../../Socket';
-const FriendHelper = ( { image, name , FriendId} ) => {
+const FriendHelper = ( { image, name , FriendId, onFriendClick} ) => {
   
     return (
-      <div className='friend-helper'>
+      <div className='friend-helper' onClick={() => onFriendClick(name)}>
         <div className='profileImg-helper'>
           <img src={image} alt={name} />
         </div>
@@ -51,14 +51,13 @@ function AddFriendModal({ show, friendName, setFriendName, onSubmit, onCancel })
     },[socket])
     const handleInputChange = (e) => {
         setFriendName(e.target.value);
-    
-
-            socket?.emit('autocomplete', e.target.value)
+        socket?.emit('autocomplete', e.target.value)
         
-
     };
 
-    help && console.log("help -> ", help);
+const friendClick = (login : string)=>{
+    setFriendName(login);
+}
 
     return (
         <AnimatePresence>
@@ -81,8 +80,8 @@ function AddFriendModal({ show, friendName, setFriendName, onSubmit, onCancel })
                 <div className='autoComplete'>
                     {help ? (
                     help.map((friend, index) => (
-                        <FriendHelper key={index} image={friend.avatar} name={friend.login} FriendId={friend.id} /> ))
-                    ) : ( <p> No friends </p>)}
+                        <FriendHelper key={index} image={friend.avatar} name={friend.login} FriendId={friend.id} onFriendClick={friendClick}/> ))
+                    ) : ( <div className='suggestion'><p> No Suggestion </p></div>)}
                 </div>
 
                 <div className="butt-add-modal">
