@@ -27,7 +27,7 @@ export const TwoFa = ({user ,setError}) =>
   }
 
   if (isVerified)
-   return <Navigate to="/Home" replace />;
+    return <Navigate to="/Home" replace />;
 
   return (
     <div className='wfa-container'>

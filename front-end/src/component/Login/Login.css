@@ -10,15 +10,15 @@
 
 .container {
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   width: 35vw;
   height: 45vh;
   border: 1px solid #8BD9D1;
   border-radius: 5px;
-  background: rgb(175, 185, 185, 0.1);
-
+  background: rgba(175, 185, 185, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
 }
 
 .login-button {
@@ -27,9 +27,9 @@
   color: #000000;
   text-decoration: none;
   border-radius: 5px;
-  font-size: 2vmin;
+  font-size: 1.5vmin;
   transition: background-color 1s ease;
-  margin: 0vmin 0vmin 15vmin 28vmin;
+  margin: 0vmin 0vmin 12vmin 0vmin;
   width: fit-content;
   height: fit-content;
   font-family: 'Cyber', sans-serif;
@@ -41,7 +41,7 @@
 
 .game-title{
   color:rgba(29, 242, 182, 1);
-  font-size: 7vmin;
+  font-size: 5vmin;
   font-weight: bold;
   font-family: 'Cyber', sans-serif;
   margin-top: 7vmin;

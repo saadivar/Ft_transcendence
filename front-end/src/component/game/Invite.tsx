@@ -6,7 +6,6 @@ import Online from "./Online";
 interface props{
     baseSocket : Socket;
     inviter : any;
-    receiver : any;
 }
 
 
