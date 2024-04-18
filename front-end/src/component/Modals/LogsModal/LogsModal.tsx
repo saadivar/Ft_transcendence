@@ -18,7 +18,7 @@ function LogsModal({show, room, onCancel}) {
             setBanned(bannedMembers);
         }
     }, [room]);
-    banned.length > 0 && console.log(banned);
+    
     const backdrop = {
         visible : {opacity: 1},
         hidden: {opacity: 0}
@@ -53,8 +53,9 @@ function LogsModal({show, room, onCancel}) {
             variants={modal}>
                 <div className='banned-container'>
                 {
-                    banned && banned.map((friend) => (
-
+                    banned.length > 0 ? 
+                    ( 
+                        banned.map((friend) => (
                         <div className="banned-members" key={friend.id}>
                                     
                             <div className="amis-image">
@@ -69,6 +70,11 @@ function LogsModal({show, room, onCancel}) {
                     
                         </div>
                     ))
+                    )
+                    : 
+                    (
+                        <div className='no-logs'> NO LOGS</div>
+                    )
                 }
                 </div>
 

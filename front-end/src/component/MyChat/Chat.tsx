@@ -80,7 +80,7 @@ const Chat = ({user}) => {
                 }
             }
             catch(error){
-                console.log(error)
+                (error)
             }
         }
         getMessages();
@@ -144,7 +144,7 @@ const Chat = ({user}) => {
         </div>
       </div>
 
-      {/* {user && <MenuBar user={user}/>} */}
+      {user && <MenuBar user={user}/>}
     </div>
   );
 };

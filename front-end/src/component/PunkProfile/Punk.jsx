@@ -32,7 +32,7 @@ const Punk = ({ SetgoGame }) => {
             <Friends />
             <GameModes SetgoGame={SetgoGame} />
           </div>
-          <MenuBar user={user} setUser={setUser}/>
+          <MenuBar user={user} />
         </div>
       )}
     </div>

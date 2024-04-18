@@ -13,12 +13,11 @@
 
 
   .modal-content-room {
-    background: rgb(175, 185, 185, 0.2);
-    border: 1px solid #8BD9D1;
+ 
     margin: 8% auto;
     padding: 20px;
     max-width: 598px;
-    border-radius: 10px;
+ 
     width: 16vw;
     height: 28vh;
 
@@ -27,6 +26,10 @@
     grid-template-rows: repeat(4, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+    border-radius: 30px;
+    background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+    box-shadow:   5px 5px 10px rgba(13, 21, 38, 1),
+                  -5px -5px 10px rgba(22, 89, 83, 1);
   }
 
 

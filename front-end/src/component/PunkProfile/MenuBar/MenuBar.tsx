@@ -164,7 +164,7 @@ function Modal({ onClose, isTwoFactorEnabled }) {
   );
 }
 
-const MenuBar = ({ user ,setUser }) => {
+const MenuBar = ({ user }) => {
   const [Settings, SetSettings] = useState(false);
 
   const [isTwoFactorEnabled, setIsTwoFactorEnabled] =
@@ -176,7 +176,7 @@ const MenuBar = ({ user ,setUser }) => {
   
   const handlogOut = async () =>{
     await axios.get(`${import.meta.env.VITE_url_back}/api/auth/logout`, { withCredentials: true });
-    setUser(null)
+    // setUser(null)
     navigate("/", { replace: true });
   }
 

@@ -61,7 +61,7 @@ const friendClick = (login : string)=>{
     return (
         <AnimatePresence>
 
-        <motion.div className="modal-backdrop"
+        <motion.div className="modal-backdrop-add"
             variants={backdrop}
             initial="hidden"
             animate="visible"

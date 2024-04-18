@@ -44,7 +44,6 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
       
           socket?.on('ileaved', () => {
 
-              console.log("herrrrre = ", selectedroom)
               RoomSelect(null);
               socket?.emit('chatroomdeselected', selectedroom.name);
             }

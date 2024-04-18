@@ -27,7 +27,7 @@ const MyData = ({profileData}) => {
             const resp = await axios.post(`${import.meta.env.VITE_url_back}/api/friends/sendrequest`, {login: friendName}, {withCredentials:true});
             setShowAdd(false);
             setFriendName("");
-            console.log("response friends = ", resp.data)
+          
 
         }
         catch(error){

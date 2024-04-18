@@ -21,13 +21,13 @@
 
 .inputPart .send-message-button {
     background: rgb(15, 14, 14);
-    height: 30px;
-    min-width: 30px;
+    height: 4vmin;
+    width: 4vmin;
+    min-width: 4vmin;
     border-radius: 50%;
     transition: 0.3s ease;
     position: relative;
     cursor: pointer;
-    width: 30px;
     border: 0;
     outline: none;
     cursor: pointer;
@@ -39,7 +39,7 @@
     outline: none;
     position: relative;
     color: rgb(0, 0, 0);
-    font-size: 13px;
+    font-size: 1.5vmin;
     background: transparent;
     border: 0;
     font-family: "Lato", sans-serif;

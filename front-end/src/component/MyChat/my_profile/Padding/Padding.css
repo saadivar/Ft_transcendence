@@ -31,8 +31,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); 
-
-
     height: fit-content;
     width: fit-content;
     padding: 3%;
@@ -40,7 +38,7 @@
     background: rgba(255, 255, 255, 0.16);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    -webkit-backdrop-filter: blur(2px);
+
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .amis-stat .accept {

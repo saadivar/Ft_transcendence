@@ -41,7 +41,6 @@ export const TwoFa = ({user ,setError}) =>
 }
 
 export const Login = ({user}) => {
-  console.log("hhhh -> ",user)
   if(user)
     return <Navigate to="/Home" replace />;
   return (

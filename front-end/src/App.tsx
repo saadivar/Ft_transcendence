@@ -53,7 +53,7 @@ function App() {
 
   useEffect(() => {
     const handleError = (mssg) => {
-      console.log(mssg);
+      
       setErrorMessage(`An error occurred: ${mssg.type}`);
       setTimeout(() => {
         setErrorMessage('');

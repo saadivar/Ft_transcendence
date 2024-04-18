@@ -13,12 +13,11 @@
 
 
 .modal-content-logs {
-  background: rgb(175, 185, 185, 0.2);
-  border: 1px solid #8BD9D1;
+
   margin: 3% auto;
   padding: 1%;
   max-width: 598px;
-  border-radius: 10px;
+
   width: 19vw;
   height: 43vh;
   position: relative;
@@ -27,6 +26,26 @@
   grid-template-rows: 1fr 0.1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px; 
+  border-radius: 30px;
+  background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+  box-shadow:   5px 5px 10px rgba(13, 21, 38, 1),
+                -5px -5px 10px rgba(22, 89, 83, 1);
+}
+.no-logs{
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  height: fit-content;
+  width: fit-content;
+  padding: 3%;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+ 
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .bannned-container{
   

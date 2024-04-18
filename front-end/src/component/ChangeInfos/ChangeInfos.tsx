@@ -49,10 +49,10 @@ function ChangeProfile({ user })
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log("resp = ", response); 
+          
     
             if (response.status === 200) {
-                console.log("here llll");
+                
                 Setchange(true);
             }
         } catch (error) {
