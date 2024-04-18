@@ -26,6 +26,7 @@ function App() {
 
   useEffect(()=>{
     socket?.on('updated', ()=> {
+      console.log('nice herre')
       setfetchuser((prevIsBool) => prevIsBool + 1)});
   }, [socket])
 
@@ -59,6 +60,7 @@ function App() {
         setErrorMessage('');
       }, 1000);
     };
+    
     
 
     socket?.on('error', handleError);
@@ -106,7 +108,7 @@ function App() {
               <>
                 <Route path="/2fa" element={<TwoFa user={user} setError={setError}/>} />
                 <Route path="/" element={<Login user={user} />} />
-                <Route path="/Home" element={<Punk SetgoGame={SetgoGame}/>} />
+                <Route path="/Home" element={<Punk SetgoGame={SetgoGame} user={user}/>} />
                 
                 <Route path="/practice" element={<FirstPage infos={[]} mode='practice' goGame={goGame}/>} />
                 <Route path="/online" element={<OnlineMatching goGame={goGame}/>} />
@@ -117,6 +119,7 @@ function App() {
                 <Route path="/profile/:userId" element={<UserProfile />} />
               </>
             )
+
 
           }
         </Routes>

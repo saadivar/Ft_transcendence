@@ -6,8 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { Acheivment } from 'src/typeorm/entities/acheivment';
 @Module({
-  imports:[AuthModule,TypeOrmModule.forFeature([Game]),JwtModule.register({
+  imports:[AuthModule,TypeOrmModule.forFeature([Game,Acheivment]),JwtModule.register({
     secret: "secret",
     signOptions: { expiresIn: '1d' }
   })],

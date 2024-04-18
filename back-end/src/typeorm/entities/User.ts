@@ -6,6 +6,7 @@ import { Blocked } from "./blocked";
 import { Room } from "./rooms";
 import { Notif } from "./notif";
 import { Game } from "./game";
+import { Acheivment } from "./acheivment";
 
 
 @Entity({name: 'users'})
@@ -45,6 +46,8 @@ export class User {
     blocked2: Blocked[];
     @OneToMany(() => Message, (message) => message.sender)
     messages: Message[];
+    @OneToMany(() => Acheivment, (acheivment) => acheivment.belongs)
+    acheivment: Acheivment[];
     
     @OneToMany(() => Notif, (notif) => notif.user)
     notif: Notif[];
@@ -54,11 +57,18 @@ export class User {
     winner: Game;
     @OneToOne(() => Game, (game) => game.loser, { onDelete: 'CASCADE' })
     loser: Game;
-    // @ManyToMany(() => Room, { cascade: true })
+    
+}
+
+
+
+
+
+
+// @ManyToMany(() => Room, { cascade: true })
     // @JoinTable({
     //     name: 'room_members',
     //     joinColumn: { name: 'user_id', referencedColumnName: 'id' },
     //     inverseJoinColumn: { name: 'room_id', referencedColumnName: 'id' },
     // })
     // rooms: Room[];
-}

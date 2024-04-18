@@ -65,7 +65,7 @@ function Modal({ onClose, isTwoFactorEnabled }) {
       }
     }
   };
-
+  console.log('is to factor -> ', isTwoFactorEnabled);
   return (
     <AnimatePresence>
       <motion.div
@@ -167,8 +167,7 @@ function Modal({ onClose, isTwoFactorEnabled }) {
 const MenuBar = ({ user }) => {
   const [Settings, SetSettings] = useState(false);
 
-  const [isTwoFactorEnabled, setIsTwoFactorEnabled] =
-    user && useState(user.isTwoFactorAuthenticationEnabled);
+
   const navigate = useNavigate()
   const handleModal = () => {
     SetSettings(!Settings);
@@ -268,10 +267,10 @@ const MenuBar = ({ user }) => {
         </div>
         {/* </div> */}
       </div>
-      {Settings && (
+      {Settings && user && (
         <Modal
           onClose={handleModal}
-          isTwoFactorEnabled={isTwoFactorEnabled}
+          isTwoFactorEnabled={user.isTwoFactorAuthenticationEnabled}
         ></Modal>
       )}
     </>

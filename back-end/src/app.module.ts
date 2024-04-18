@@ -24,6 +24,7 @@ import { Notif } from './typeorm/entities/notif';
 import { Game } from './typeorm/entities/game';
 import { GameModule } from './game/game.module';
 import { GameGateway } from './gamegateway/game.gateway';
+import { Acheivment } from './typeorm/entities/acheivment';
 
 
 @Module({
@@ -34,7 +35,7 @@ import { GameGateway } from './gamegateway/game.gateway';
     username: 'postgres',
     password: 'saad',
     database: 'pingpong_db',
-    entities: [User,Friends,Chat,Message,Blocked,Room,RoomMember,Notif,Game],
+    entities: [User,Friends,Chat,Message,Blocked,Room,RoomMember,Notif,Game,Acheivment],
     synchronize: true,
   }),JwtModule.register({secret:"secret",
   signOptions:{expiresIn:'1d'}})

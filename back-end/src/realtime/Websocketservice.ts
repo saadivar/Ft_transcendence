@@ -1,4 +1,5 @@
 import { Injectable, Scope } from '@nestjs/common';
+import { log } from 'console';
 import { Socket } from 'socket.io';
 import { User } from 'src/typeorm/entities/User';
 
@@ -20,7 +21,10 @@ export class WebsocketService {
       {
             const userSocket = WebsocketService.connectedUsers.get(userID);
             if(userSocket)
+              {
+                console.log(event ," to ",userID);
                 userSocket.emit(event);
+              }
         }
         
       }   

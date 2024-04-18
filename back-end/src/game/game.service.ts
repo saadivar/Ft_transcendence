@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/typeorm/entities/User';
+import { Acheivment } from 'src/typeorm/entities/acheivment';
 import { Game } from 'src/typeorm/entities/game';
 import { GameDetails } from 'src/types/types';
 import { Repository } from 'typeorm';
@@ -9,12 +10,14 @@ import { Repository } from 'typeorm';
 export class GameService {
 
     constructor(
-        @InjectRepository(Game) private readonly GameRepository : Repository<Game>,
+        @InjectRepository(Game) private readonly GameRepository : Repository<Game>,@InjectRepository(Acheivment)  private readonly acheivmentrepository : Repository<Acheivment>
     ){}
 
     async savegamedata(game:Game)
     {
         await this.GameRepository.save(game);
+        //acheivment
+
     }
     async findgames(user:User)
     {

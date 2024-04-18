@@ -55,6 +55,8 @@ import { WebsocketService } from 'src/realtime/Websocketservice';
         return;
       }
     await this.authService.turnOnTwoFactorAuthentication(user.id);
+    this.websocketService.emitToUser(user.id.toString(),"updated");
+
     
   }
   @UseGuards(jwtguard)
@@ -75,6 +77,8 @@ import { WebsocketService } from 'src/realtime/Websocketservice';
 
       }
     await this.authService.turnOffTwoFactorAuthentication(user.id);
+    this.websocketService.emitToUser(user.id.toString(),"updated");
+
     
   }
 

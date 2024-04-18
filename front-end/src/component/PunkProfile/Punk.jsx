@@ -7,21 +7,21 @@ import Infos from "./Infos/infos";
 import GameModes from "../game/GameModes/GameModes";
 import { useSocket } from "../../component/Socket";
 
-const Punk = ({ SetgoGame }) => {
+const Punk = ({ SetgoGame , user}) => {
   const socket = useSocket();
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resp = await axios.get(`${import.meta.env.VITE_url_back}/api/auth/user`, { withCredentials: true });
-        setUser(resp.data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const resp = await axios.get(`${import.meta.env.VITE_url_back}/api/auth/user`, { withCredentials: true });
+  //       setUser(resp.data);
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <div>
