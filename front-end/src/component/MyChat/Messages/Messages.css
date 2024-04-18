@@ -132,7 +132,8 @@
 }
 
 .message {
-    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    padding: 0.5vmin 2vmin;
     background: rgba(29, 242, 182, 1);
     border-radius: 1.125rem 1.125rem 1.125rem 0;
     min-height: 2vmin;
