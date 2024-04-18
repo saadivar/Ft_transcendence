@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import Online from "./Online";
+import { useSocket } from "../Socket";
 
 
 interface props{
-    baseSocket : Socket;
     inviter : any;
 }
 
 
-export default function Invite({baseSocket ,inviter} : props){
+export default function Invite({inviter} : props){
 
     const [gameSocket, setGameSocket] = useState(io())
     const [start, setStart] = useState(false)
-
+    const baseSocket = useSocket();
     const [infos, setInfos] = useState<string[]>([]);
     useEffect(()=>{
         const getSocket = async () =>{
@@ -31,17 +31,23 @@ export default function Invite({baseSocket ,inviter} : props){
         getSocket();
     },[])
 
-        gameSocket?.emit('InviteMatching', inviter.login);
-        
-        gameSocket?.on('start', (roomInfos)=>{
-            setInfos(roomInfos);
-            setStart(true);
-        });
+    if (inviter) {
+        useEffect(()=>{
+            gameSocket?.on('success', () => {
+                baseSocket.emit('acceptGame', inviter.id);
+            });
+        },[])
+        useEffect(()=>{
+            gameSocket?.emit('InviteMatching', inviter.login);
+        },[])
+        useEffect(()=>{
+            gameSocket?.on('start', (roomInfos)=>{
+                setInfos(roomInfos);
+                setStart(true);
+            });
+        },[])
+    }
     
-    gameSocket?.on('success', () => {
-        baseSocket.emit('accept');
-    });
-
     return(
         start && <Online infos={infos} mode="online" socket={gameSocket}/>
     )

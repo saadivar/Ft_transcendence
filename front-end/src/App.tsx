@@ -61,8 +61,6 @@ function App() {
       }, 1000);
     };
     
-    
-
     socket?.on('error', handleError);
 
     return () => {
@@ -75,6 +73,12 @@ function App() {
   }
 
  
+  useEffect(()=>{
+    socket?.on('acceptGame', (recieverName) => {
+      console.log("app acceptGame");
+  
+    })
+  } ,[socket])
 
   const [goGame, SetgoGame] = useState(false);
   return (

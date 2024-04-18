@@ -29,7 +29,16 @@ export class WebsocketService {
         
       }   
   }
-  
+  emitgameacccepttouser(userId: string,userlogin:string): void {
+    for (const userID of WebsocketService.connectedUsers.keys()) {
+      if (userId == userID)
+      {
+        const userSocket = WebsocketService.connectedUsers.get(userID);
+        if(userSocket)
+            userSocket.emit("acceptGame", {userlog:userlogin});
+        }
+      }   
+  }
   emitmessgaetouser(client: Socket, payload: {from:string;fromid:string; to: string; content: string }): void {
     const {from,fromid ,to, content } = payload;
     for (const userID of WebsocketService.connectedUsers.keys()) {

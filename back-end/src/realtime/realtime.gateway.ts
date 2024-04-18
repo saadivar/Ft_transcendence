@@ -114,6 +114,14 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
   async brodcastroom(client: Socket) {
     this.server.to("brodcast").emit('brodcast');
   }
+
+  @SubscribeMessage('acceptGame')
+  async acceptGame(client: Socket,id:string)
+  {
+    this.websocketService.emitgameacccepttouser(id,client.data.user.login);
+    console.log("gateway acceptGame");
+  }
+  
   @SubscribeMessage('chatroomselected')
   handleJoinchatRoom(client: Socket, roomname: string): void {
     client.join(roomname);
