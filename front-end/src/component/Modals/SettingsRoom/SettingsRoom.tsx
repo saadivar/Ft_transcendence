@@ -19,8 +19,8 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
     
     const handleRoomCreat = async (e) => {
         e.preventDefault();
-
-
+        await axios.post(`${import.meta.env.VITE_url_back}/api/room/updateroom`, {id:room.id , roomname: RoomName ,type : roomType, password : roomPassword}, {withCredentials:true});
+        socket?.emit('newroom')
         setShowSettings(false);
         setRoomName("");
     };
@@ -44,6 +44,7 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
     const handleRoomTypeChange = (type : string) => {
         setRoomType(type);
         setShowPasswordInput(type === 'protected');
+
     }
 
     return (

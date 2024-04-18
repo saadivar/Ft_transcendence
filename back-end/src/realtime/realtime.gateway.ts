@@ -121,10 +121,25 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     this.websocketService.emitgameacccepttouser(id,client.data.user.login);
     console.log("gateway acceptGame");
   }
-  
+
   @SubscribeMessage('chatroomselected')
   handleJoinchatRoom(client: Socket, roomname: string): void {
     client.join(roomname);
+
+
+  }
+  @SubscribeMessage('autocompleteroom')
+  async autocompleteroom(client: Socket,payload : { str: string, roomname:string}) {
+   let userProfiles
+    if(payload.str !== ''){
+     
+      const allmembers = await this.roomService.findroommembersautocom(payload.roomname,payload.str);
+      userProfiles = allmembers.members.map(user => ({
+        login: user.login,     
+        avatar: user.avatar   
+    }));
+  }
+  this.websocketService.emitusersToUserroom(client.data.user.id,userProfiles);
 
 
   }

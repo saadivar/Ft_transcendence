@@ -9,6 +9,8 @@ import { ChatService } from 'src/chat/chat.service';
 import { User } from 'src/typeorm/entities/User';
 import { jwtguard } from 'src/guards/jwtguqrd';
 import { CreateRoomDto } from './createroomdto';
+import { UpdateRoomDto } from './updtateroomdto';
+import { all } from 'axios';
 
 @UseGuards(jwtguard)
 @Controller('room')
@@ -36,6 +38,7 @@ export class RoomController {
     }
     @Post("createroom")
     async firstrom(@Req() req, @Res() res, @Body(ValidationPipe) createroomdto: CreateRoomDto) {
+        console.log("here");
         const user = req.user as User;
         if (createroomdto.type === "protected") {
             if (createroomdto.password !== "")
@@ -47,7 +50,11 @@ export class RoomController {
         }
         const myroom = await this.roomservice.createroom(createroomdto, user);
         if (!myroom)
-            throw new UnauthorizedException();
+            {
+                this.websocketService.emiterrorToUser(user.id.toString(),"room already exist");
+                return;
+
+            }
         const roomMember = new RoomMember();
         roomMember.user = user; 
         roomMember.room = myroom;
@@ -58,6 +65,32 @@ export class RoomController {
         myroom.chat = chat;
         this.roomservice.updatechatroom(myroom);
         
+        res.send("ok");
+
+    }
+    @Post("updateroom")
+    async updateroom(@Req() req, @Res() res, @Body() body : {id:number,roomname: string ,type : any, password : string}) {
+        const user = req.user as User;
+        let room = await this.roomservice.findroomid(body.id);
+
+        if(body.roomname != room.roomname)
+        {
+            const allrooms = await this.roomservice.findallrooms();
+            for(const roo of allrooms)
+            {
+                if(roo.roomname == body.roomname)
+                {
+                    this.websocketService.emiterrorToUser(user.id.toString(),"name already exist");
+                    return;
+                }
+            }
+        }
+        
+        await this.roomservice.ubdateroom(room,{roomname:body.roomname,type:body.type,password:body.password});
+         room = await this.roomservice.findroomid(body.id);
+        console.log(room);
+        const members = await this.roomservice.findroommembers(room.roomname);
+
         res.send("ok");
 
     }

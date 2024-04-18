@@ -241,6 +241,7 @@ const Owner = ({room, RoomSelceted}) => {
         />
 
       <SetOwnerModal
+          room={room}
           show={showSetOwner}
           NewOwner={NewOwner}
           setNewOwner={setNewOwner}

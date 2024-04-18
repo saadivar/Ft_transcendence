@@ -4,7 +4,7 @@ import { RoomMember } from 'src/typeorm/entities/RoomMember';
 import { User } from 'src/typeorm/entities/User';
 import { Room } from 'src/typeorm/entities/rooms';
 import { RoomDtails, RoomMemberDtails } from 'src/types/types';
-import { In, Repository } from 'typeorm';
+import { In, Like, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Console } from 'console';
 import { CreateRoomDto } from './createroomdto';
@@ -14,6 +14,7 @@ import { WebsocketService } from 'src/realtime/Websocketservice';
 import { spec } from 'node:test/reporters';
 import { AuthService } from 'src/auth/auth.service';
 import { ChatService } from 'src/chat/chat.service';
+import { UpdateRoomDto } from './updtateroomdto';
 @Injectable()
 export class RoomService {
   constructor(@InjectRepository(Room) private readonly roomrepository: Repository<Room>,private readonly authservice:AuthService,private readonly websocketService:WebsocketService,
@@ -24,6 +25,14 @@ export class RoomService {
   }
   async findroom(roomname: string) {
     const room = await this.roomrepository.findOneBy({ roomname });
+    return room;
+  }
+  async findroomid(id: number) {
+    const room = await this.roomrepository.findOneBy({ id });
+    return room;
+  }
+  async findallrooms() {
+    const room = await this.roomrepository.find();
     return room;
   }
   async findroommembers(roomname: string) {
@@ -118,6 +127,16 @@ allmembers.forEach((mem) => {
    return members;
 
   }
+  async ubdateroom(room:Room,roomdetails:RoomDtails)
+  {
+    room.roomname = roomdetails.roomname;
+    room.type = roomdetails.type;
+    if(room.type == "protected")
+    {
+      room.password =  await this.hashPassword(roomdetails.password);;
+    }
+    return this.roomrepository.save(room);
+  }
   async leaveroom(roomname: string, user: User,username:string = "") {
 
     const room = await this.roomrepository.findOne({ where: { roomname: roomname }, relations: ['members'] });
@@ -128,7 +147,7 @@ allmembers.forEach((mem) => {
       if (mymy.role == "owner")
       {
         const newowner = await this.authservice.findUserbylogin(username);
-        if(newowner)
+        if(newowner && newowner.login != user.login)
         {
           const member = await this.roommmemberrepository.findOne({where:{
             user:newowner,room:room,
@@ -142,7 +161,7 @@ allmembers.forEach((mem) => {
         else
         {
 
-          this.websocketService.emiterrorToUser(user.id.toString(),`${username} not found`);
+          this.websocketService.emiterrorToUser(user.id.toString(),`error`);
           return null;
 
         }
@@ -432,4 +451,11 @@ allmembers.forEach((mem) => {
     return notificationsArray;
 }
 
+async findroommembersautocom(roomname:string , str:string)
+  {
+    const room = await this.roomrepository.findOne({relations:["members"],where:{roomname:roomname,members:{login : Like(`${str}%`)}}});
+    return room;
+  }
+
 }
+

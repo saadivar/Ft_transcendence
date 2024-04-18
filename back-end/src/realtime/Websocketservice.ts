@@ -29,6 +29,7 @@ export class WebsocketService {
         
       }   
   }
+  
   emitgameacccepttouser(userId: string,userlogin:string): void {
     for (const userID of WebsocketService.connectedUsers.keys()) {
       if (userId == userID)
@@ -97,6 +98,16 @@ export class WebsocketService {
         const userSocket = WebsocketService.connectedUsers.get(userID);
         if(userSocket)
             userSocket.emit("autocomplete", {users:user});
+        }
+      }   
+  }
+  emitusersToUserroom(userId: string,user:any[]): void {
+    for (const userID of WebsocketService.connectedUsers.keys()) {
+      if (userId == userID)
+      {
+        const userSocket = WebsocketService.connectedUsers.get(userID);
+        if(userSocket)
+            userSocket.emit("autocompleteroom", {users:user});
         }
       }   
   }

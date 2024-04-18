@@ -293,7 +293,6 @@ const My_profile: React.FC<Props> = ({
     else if (total > 0) Settotalrooms(total.toString());
     else Settotalrooms("");
   }, [RoomNotifs]);
-  Notifs && console.log("chat not-",Notifs)
   return (
     <div className="Myprofile">
       <MyData profileData={profileData}
