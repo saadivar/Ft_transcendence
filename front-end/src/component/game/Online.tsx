@@ -630,6 +630,11 @@ function Online({infos , mode, socket} : props) {
 			player2Score.innerText = score[1];
 		})
 	}
+	return(
+		<>
+		
+		</>
+	)
     }
 
 export default Online;

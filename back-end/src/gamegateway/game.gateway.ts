@@ -10,6 +10,7 @@ import { GameService } from 'src/game/game.service';
 
 
 let clients = [];
+const inGame = [];
 
 @WebSocketGateway({ cors: true  , namespace: 'game' })
 export class GameGateway implements OnGatewayInit {
@@ -27,6 +28,37 @@ export class GameGateway implements OnGatewayInit {
             return (roomName);
       }
     }
+
+  @SubscribeMessage('InviteMatching')
+  inviteMatching(client : Socket, inveterName : string){
+    if (!inGame.includes(inveterName)){
+      const newRoom = new Room(client.data.user.login);
+      newRoom.client1 = client;
+      newRoom.client1Name = client.data.user.login;
+      newRoom.client1Avatar = client.data.user.avatar;
+      this.rooms.set(client.data.user.login, newRoom);
+      client.join(client.data.user.login);
+      inGame.push(inveterName);
+      console.log("client 1 create : ", client.data.user.login);
+      client.emit('success');
+    }
+    else{
+      client.emit('error');
+      console.log("player already in game");
+    }
+  }
+
+  @SubscribeMessage('InviterJoining')
+  inviterJoining(client : Socket, roomName : string){
+    this.rooms.get(roomName).client2 = client;
+    this.rooms.get(roomName).client2Name = client.data.user.login;
+    this.rooms.get(roomName).client2Avatar = client.data.user.avatar;
+    client.join(roomName);
+    this.rooms.get(roomName).client1?.emit('start', [roomName, client.data.user.login, this.rooms.get(roomName).client1Avatar, this.rooms.get(roomName).client2Avatar]);
+    this.rooms.get(roomName).client2?.emit('start', [roomName, client.data.user.login, this.rooms.get(roomName).client1Avatar, this.rooms.get(roomName).client2Avatar]);
+  }
+
+
   @SubscribeMessage('CREATEROOM')
   createRoom(client: Socket) {
       console.log("clients lenght : ", clients?.length);
@@ -39,6 +71,7 @@ export class GameGateway implements OnGatewayInit {
           this.rooms.get(clients[0]).client1?.emit('start', [clients[0], client.data.user.login, this.rooms.get(clients[0]).client1Avatar, this.rooms.get(clients[0]).client2Avatar]);
           this.rooms.get(clients[0]).client2?.emit('start', [clients[0], client.data.user.login, this.rooms.get(clients[0]).client1Avatar, this.rooms.get(clients[0]).client2Avatar]);
           clients = clients.slice(1);
+          inGame.push(client.data.user.login);
       }
       else if (clients.length == 0){
         const newRoom = new Room(client.data.user.login);
@@ -48,6 +81,7 @@ export class GameGateway implements OnGatewayInit {
         this.rooms.set(client.data.user.login, newRoom);
         client.join(client.data.user.login);
         clients.push(client.data.user.login);
+        inGame.push(client.data.user.login);
         console.log("client create ", clients);
       }
     }
@@ -174,12 +208,12 @@ export class GameGateway implements OnGatewayInit {
   }
 
   handleDisconnect(client : Socket){
+    console.log("inGame : ", inGame);
     console.log("Client Disconnected ");
     const clientRoom = this.getClientRoomName(client.id);
-
     this.rooms.delete(clientRoom);
     clients.splice(clients.indexOf(client.data.user.login), 1);
-
+    inGame.splice(clients.indexOf(client.data.user.login), 1);
 
     this.server.to(clientRoom)?.emit('endGame', "You Win ");
   }  

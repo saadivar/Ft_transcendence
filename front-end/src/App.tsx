@@ -11,6 +11,7 @@ import ChangeProfile from './component/ChangeInfos/ChangeInfos';
 import GameRequest from './component/Modals/GameRequest/gamereq';
 import FirstPage from './component/game/FirstPage';
 import OnlineMatching from './component/game/OnlineMatching';
+import Invite from './component/game/Invite';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -71,15 +72,13 @@ function App() {
     SetShow(false);
   }
 
-  const matching = () => {
-    
-  }
+ 
 
   const [goGame, SetgoGame] = useState(false);
   return (
     <Router>
         {
-          showRequest && gameRequestSender != null &&  <GameRequest  gameRequestSender={gameRequestSender} onSubmit={matching} onCancel={canceling}/>
+          showRequest && gameRequestSender != null &&  <GameRequest SetShow={SetShow} gameRequestSender={gameRequestSender}  onCancel={canceling}/>
         }
         {
           errorMessage && (
@@ -108,8 +107,11 @@ function App() {
                 <Route path="/2fa" element={<TwoFa user={user} setError={setError}/>} />
                 <Route path="/" element={<Login user={user} />} />
                 <Route path="/Home" element={<Punk SetgoGame={SetgoGame}/>} />
+                
                 <Route path="/practice" element={<FirstPage infos={[]} mode='practice' goGame={goGame}/>} />
                 <Route path="/online" element={<OnlineMatching goGame={goGame}/>} />
+                <Route path="/invite" element={<Invite baseSocket={socket} inviter={gameRequestSender} />} /> 
+                
                 <Route path="/Chat" element={<Chat user={user}/>} />
                 {user && <Route path="/Changeinfo" element={<ChangeProfile user={user} />} />}
                 <Route path="/profile/:userId" element={<UserProfile />} />

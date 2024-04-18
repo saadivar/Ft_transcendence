@@ -27,7 +27,6 @@ function OnlineMatching({goGame}){
                     transports: ['websocket']
                 });
                 setSocket(newsocket);
-                
             }
             catch(e){
                 console.log(e);

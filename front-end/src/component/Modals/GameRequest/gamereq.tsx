@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 
 import "./gamereq.css"
+import { useNavigate } from 'react-router-dom'
 
-function GameRequest({gameRequestSender, onSubmit, onCancel}) {
+function GameRequest({SetShow ,gameRequestSender, onCancel}) {
 
     const backdrop = {
         visible : {opacity: 1},
@@ -20,7 +21,12 @@ function GameRequest({gameRequestSender, onSubmit, onCancel}) {
             transition : {delay: 0.5}
         }
     }
-    
+    const navigate = useNavigate(); 
+    const handleSubmit =()=>{
+        SetShow(false);
+        navigate("/invite", { replace: true });
+    }
+
     
     return (
         <AnimatePresence>
@@ -37,7 +43,7 @@ function GameRequest({gameRequestSender, onSubmit, onCancel}) {
                 <p className='INV-NAME'>{gameRequestSender.login}</p>
                 <p className='INV-text'>invited you to play a game</p>
                 <div className="butt-add-modal">
-                    <div className="But-modal submit-But-modal"onClick={onSubmit}>
+                    <div className="But-modal submit-But-modal"onClick={handleSubmit}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="36"
