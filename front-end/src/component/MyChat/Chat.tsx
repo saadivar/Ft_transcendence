@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Dispatch } from "react";
 import MenuBar from "../PunkProfile/MenuBar/MenuBar";
 import "./Chat.css";
 import My_profile from "./my_profile/My_profile";
@@ -10,25 +10,46 @@ import { useSocket } from "../Socket";
 
 import axios from "axios";
 
+interface User {
+  id : number;
+  isTwoFactorAuthenticationEnabled : boolean
+  avatar: string;
+  login: string;
+  status: string;
+}
 
-const Chat = ({user}) => {
+interface Room {
+  name: string;
+  mestatus: string;
+}
+
+interface Profile {
+
+}
+
+interface ChatProps {
+  user : User | null ;
+  setUser : React.Dispatch<React.SetStateAction<null>>
+}
+
+const Chat = ({user, setUser} :ChatProps) => {
  
   const socket = useSocket()
-  const [User, SetUser] = useState(null);
-  const [Room, SetRoom] = useState(null);
+  const [User, SetUser] = useState<User | null>(null);
+  const [Room, SetRoom] = useState<Room | null>(null);
 
 
-  const handleUser = (user) => {
+  const handleUser = (user : User) => {
     SetUser(user);
   }
-  const handleRoom = (room) => {
+  const handleRoom = (room: Room) => {
     SetRoom(room);
   }
 
-  const [MyProfile, SetProfile] = useState(null);
+  const [MyProfile, SetProfile] = useState<Profile | null>(null);
 
 
-  const handleProfile = (profile) => {
+  const handleProfile = (profile: Profile) => {
     SetProfile(profile);
   }
   const [optionSelected, SetOption] = useState("friends");
@@ -144,7 +165,7 @@ const Chat = ({user}) => {
         </div>
       </div>
 
-      {user && <MenuBar user={user}/>}
+      { user && <MenuBar user={user} setUser={setUser}/> }
     </div>
   );
 };

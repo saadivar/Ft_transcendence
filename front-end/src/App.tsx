@@ -112,15 +112,15 @@ function App() {
               <>
                 <Route path="/2fa" element={<TwoFa user={user} setError={setError}/>} />
                 <Route path="/" element={<Login user={user} />} />
-                <Route path="/Home" element={<Punk SetgoGame={SetgoGame} user={user}/>} />
+                <Route path="/Home" element={<Punk SetgoGame={SetgoGame} user={user} setUser={setUser}/>} />
                 
                 <Route path="/practice" element={<FirstPage infos={[]} mode='practice' goGame={goGame}/>} />
                 <Route path="/online" element={<OnlineMatching goGame={goGame}/>} />
                 <Route path="/invite" element={<Invite baseSocket={socket} inviter={gameRequestSender} />} /> 
                 
-                <Route path="/Chat" element={<Chat user={user}/>} />
+                <Route path="/Chat" element={<Chat user={user} setUser={setUser}/>} />
                 {user && <Route path="/Changeinfo" element={<ChangeProfile user={user} />} />}
-                <Route path="/profile/:userId" element={<UserProfile />} />
+                <Route path="/profile/:userId" element={<UserProfile setUser={setUser}/>} />
               </>
             )
 

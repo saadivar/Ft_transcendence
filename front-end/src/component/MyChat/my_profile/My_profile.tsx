@@ -38,7 +38,7 @@ const My_profile: React.FC<Props> = ({
 
   const socket = useSocket();
   const [Notifs, SetNotifs] = useState<{ type: any; senderid: any; }[]>([]);
-  const [RoomNotifs, SetRoomNotifs] = useState<Array<{ count: number }>>([]);
+  const [RoomNotifs, SetRoomNotifs] = useState<Array<{ count: number , roomname: String}>>([]);
   const [countByType, setCountByType] = useState<Record<string, number>>({});
   
   const [refreshnotifs, Setrefreshnotifs] = useState(0);
@@ -319,7 +319,7 @@ const My_profile: React.FC<Props> = ({
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="ai ai-PeopleMultiple"
+              className="ai ai-PeopleMultiple"
             >
               <circle cx="7" cy="6" r="3" />
               <path d="M10 13H5.818a3 3 0 0 0-2.964 2.537L2.36 18.69A2 2 0 0 0 4.337 21H9" />
@@ -346,7 +346,7 @@ const My_profile: React.FC<Props> = ({
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="ai ai-PeopleGroup"
+              className="ai ai-PeopleGroup"
             >
               <path d="M16.719 19.752l-.64-5.124A3 3 0 0 0 13.101 12h-2.204a3 3 0 0 0-2.976 2.628l-.641 5.124A2 2 0 0 0 9.266 22h5.468a2 2 0 0 0 1.985-2.248z" />
               <circle cx="12" cy="5" r="3" />
@@ -376,7 +376,7 @@ const My_profile: React.FC<Props> = ({
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="ai ai-PersonCross"
+              className="ai ai-PersonCross"
             >
               <circle cx="12" cy="7" r="5" />
               <path d="M17 22H5.266a2 2 0 0 1-1.985-2.248l.39-3.124A3 3 0 0 1 6.649 14H7" />
@@ -402,7 +402,7 @@ const My_profile: React.FC<Props> = ({
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="ai ai-Clock"
+              className="ai ai-Clock"
             >
               <circle cx="12" cy="12" r="10" />
               <path d="M15 16l-2.414-2.414A2 2 0 0 1 12 12.172V6" />
@@ -432,12 +432,9 @@ const My_profile: React.FC<Props> = ({
           <Rooms
             Roomsdata={RoomData}
             selectedroom={selectedroom}
-            SetRoomData={SetRoomData}
             RoomSelect={RoomSelceted}
             NotRoomsdata={NotRoomsdata}
-            SetNotRoomsdata={SetNotRoomsdata}
             RoomNotifs={RoomNotifs} 
-            SetRoomNotifs={SetRoomNotifs}
             SetMessagesRoom={SetMessagesRoom}
           />
         ) : optionSelected === "blocked" ? (
@@ -453,6 +450,7 @@ const My_profile: React.FC<Props> = ({
             />
         ) : null}
       </div>
+      
     </div>
   );
 };

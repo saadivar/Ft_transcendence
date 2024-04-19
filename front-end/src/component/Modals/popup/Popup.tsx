@@ -1,5 +1,5 @@
 import { FC, ReactNode, useRef } from "react";
-import "./Popup.css"; // Import CSS file
+import "./Popup.css";
 
 interface Props {
   children: ReactNode;

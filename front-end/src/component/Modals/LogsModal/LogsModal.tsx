@@ -4,13 +4,31 @@ import {motion, AnimatePresence} from 'framer-motion'
 import "./LogsModal.css"
 import axios from 'axios';
 
-function LogsModal({show, room, onCancel}) {
+interface LogsModalProps {
+    show: boolean;
+    room: {
+      members: {
+        id: string;
+        avatar: string;
+        login: string;
+        status: string;
+      }[];
+      name: string;
+    };
+    onCancel: () => void;
+  }
+function LogsModal({show, room, onCancel} : LogsModalProps) {
     if (!show) {
       return null;
     }
 
 
-    const [banned, setBanned] = useState([]);
+    const [banned, setBanned] = useState<{
+        id: string;
+        avatar: string;
+        login: string;
+        status: string;
+      }[]>([]);
 
     useEffect(() => {
         if (room.members) {
@@ -35,7 +53,7 @@ function LogsModal({show, room, onCancel}) {
         }
     }
 
-    const handleUnban = (friendId) => {
+    const handleUnban = (friendId: string) => {
         console.log("clicked = ",friendId)
         axios.post(`${import.meta.env.VITE_url_back}/api/room/unbanuser`,{id: friendId, name: room.name}, {withCredentials:true});
     
@@ -91,7 +109,7 @@ function LogsModal({show, room, onCancel}) {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Cross"
+                            className="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
                         </svg>
@@ -102,5 +120,6 @@ function LogsModal({show, room, onCancel}) {
       </AnimatePresence>
 
     );
-  }
-  export default LogsModal
+}
+
+export default LogsModal

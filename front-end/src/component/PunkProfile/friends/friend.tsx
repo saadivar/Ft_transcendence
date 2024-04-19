@@ -6,21 +6,28 @@ import "./friend.css"
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
 
-const Friend = ( { image, name , FriendId} ) => {
+interface FriendProps {
+
+  login : string;
+  avatar : string
+
+}
+
+const Friend = ( { avatar, login }:FriendProps ) => {
   
   return (
     <div className='friend'>
       <div className='profileImg'>
-        <img src={image} alt={name} />
+        <img src={avatar} alt={login} />
       </div>
-      <div className='friend-name'>{name}</div>
+      <div className='friend-name'>{login}</div>
       <div className='friend-status'></div>
     </div>
   );
 }
   
 const Friends = () => {
-  const [myFriends, setMyFriends] = useState(null);
+  const [myFriends, setMyFriends] = useState<FriendProps[] | null>(null);
 
   useEffect(() => {
     const getFriends = async () => {
@@ -48,7 +55,7 @@ const Friends = () => {
           <div className='friends-list'>
             {myFriends ? (
               myFriends.map((friend, index) => (
-                <Friend key={index} image={friend.avatar} name={friend.login} FriendId={friend.id} /> ))
+                <Friend key={index} avatar={friend.avatar} login={friend.login} /> ))
             ) : ( <p> No friends </p>)}
           </div>
         </>

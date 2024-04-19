@@ -4,7 +4,24 @@ import { useSocket } from '../../../Socket';
 import axios from "axios";
 import CodeModal from '../../../Modals/RoomCode/RoomCode';
 
-const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, SetNotRoomsdata, RoomNotifs, SetRoomNotifs , SetMessagesRoom}) => {
+interface Room {
+  id: string;
+  type: string;
+  roomname: string;
+  lastmessagecontent: string;
+  name: String;
+}
+
+
+interface RoomsProps {
+  Roomsdata: Room[];
+  selectedroom: Room | null;
+  RoomSelect: (room: any) => void;
+  NotRoomsdata: Room[];
+  RoomNotifs: { count: number; roomname: String;}[] | null;
+  SetMessagesRoom: React.Dispatch<React.SetStateAction<any>>;
+}
+const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , SetMessagesRoom} : RoomsProps) => {
 
 
   const socket = useSocket();
@@ -12,9 +29,10 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
   // userSelect(null)
   const [showPass, SetShow] = useState(false);
   const [Pass, SetPass] = useState('');
-  const [joined, Setjoined] = useState(null);
+  const [joined, Setjoined] = useState<Room | null>(null);
+
   
-  const Joinroom = async (room) => {
+  const Joinroom = async (room : Room) => {
     if (room.type !== 'protected') {
         socket?.emit("newmemberinroom", { name: room.roomname, password: '' });
       } else if (room.type === 'protected') {
@@ -24,7 +42,7 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
   }
 
 
-  const handleroomClick = (room , roomId) => {
+  const handleroomClick = (room: Room) => {
     if( selectedroom && room.name !== selectedroom.name){
       SetMessagesRoom(null);
       socket?.emit('chatroomdeselected', selectedroom.name);
@@ -43,9 +61,8 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
         const memberLeaved = () => {
       
           socket?.on('ileaved', () => {
-
               RoomSelect(null);
-              socket?.emit('chatroomdeselected', selectedroom.name);
+              selectedroom &&  socket?.emit('chatroomdeselected', selectedroom.name);
             }
           );
           
@@ -67,7 +84,7 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
       }
     }
    
-    const handleFormSubmit = async (e) => {
+    const handleFormSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
         try {
           if (joined) {
@@ -93,7 +110,7 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
         {Roomsdata && Roomsdata.map((room) => (
           <div 
             className={`discussion ${selectedroom != null && room.id === selectedroom.id ? 'message-active' : ''}`}
-            onClick={() => handleroomClick(room, room.id)} 
+            onClick={() => handleroomClick(room)} 
           >
             <div className="amis-image">
               <img />
@@ -107,12 +124,12 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
             <div className='room-type'>
                 {room.type}
             </div>
-            {RoomNotifs && (RoomNotifs.find(notification => notification.roomname === room.name)?.count > 0
-            ) ? (
+            {
+              RoomNotifs && (RoomNotifs.find(notification => notification.roomname === room.name)?.count ?? 0) > 0 &&
               <div className="room-notifications">
                 {RoomNotifs.find(notification => notification.roomname === room.name)?.count}
               </div>
-            ) : (null)}
+            }
           </div>
         ))}
       </div>
@@ -129,7 +146,6 @@ const Rooms = ({Roomsdata, SetRoomData, selectedroom, RoomSelect, NotRoomsdata, 
 
               <div className="amis-infos">
                   <p className="amis-name"><p>{room.roomname}</p></p>
-                  {/* <p className="last-message">room.lastMessage</p> */}
               </div>
               <div className="join-room" onClick={() => Joinroom(room)}> join </div>
               </div>

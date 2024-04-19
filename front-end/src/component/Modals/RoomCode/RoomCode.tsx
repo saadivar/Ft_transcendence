@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,KeyboardEvent } from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 
-import "../addfriend/addfriend.css"
-
-function CodeModal({password, setPassword, onSubmit, onCancel }) {
+import "./RoomCode.css"
+interface CodeModalProps {
+    password: string;
+    setPassword: React.Dispatch<React.SetStateAction<string>>;
+    onSubmit: (e: any) => Promise<void>;
+    onCancel: () => void;
+}
+function CodeModal({password, setPassword, onSubmit, onCancel }: CodeModalProps) {
 
     const backdrop = {
         visible : {opacity: 1},
@@ -21,7 +26,12 @@ function CodeModal({password, setPassword, onSubmit, onCancel }) {
             transition : {delay: 0.5}
         }
     }
-    
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+          e.preventDefault(); 
+          onSubmit(e) ;
+        }
+      };
     return (
         <AnimatePresence>
 
@@ -30,16 +40,17 @@ function CodeModal({password, setPassword, onSubmit, onCancel }) {
             initial="hidden"
             animate="visible"
         >
-            <motion.div className="modal-content-add"
+            <motion.div className="modal-content-code"
             variants={modal}>
                 <input
-                    className="input-add-modal"
+                    className="input-code-modal"
                     type="text"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter friend's name"
+                    placeholder="Enter Room Code"
+                    onKeyDown={handleKeyDown}
                 />
-                <div className="butt-add-modal">
+                <div className="butt-code-modal">
                     <div className="But-modal submit-But-modal"onClick={onSubmit}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +62,7 @@ function CodeModal({password, setPassword, onSubmit, onCancel }) {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Check"
+                            className="ai ai-Check"
                         >
                             <path d="M4 12l6 6L20 6" />
                         </svg>
@@ -69,7 +80,7 @@ function CodeModal({password, setPassword, onSubmit, onCancel }) {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Cross"
+                            className="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
                         </svg>

@@ -2,8 +2,27 @@ import {React, useContext, useState, useEffect} from 'react'
 import "./Input.css"
 
 import { useSocket }  from "../../../Socket"
-
-const Input = ({User, Profile, Room}) => {
+interface User {
+    id: string;
+    login: string;
+  }
+  
+  interface Profile {
+    login: string;
+    id: string;
+  }
+  
+  interface Room {
+    name: string;
+  }
+  
+  interface InputProps {
+    User: User | null;
+    Profile: Profile | null;
+    Room: Room | null;
+  }
+  
+const Input = ({User, Profile, Room} : InputProps) => {
 
     const [message, setMessage] = useState('');
     const socket =  useSocket();
@@ -19,7 +38,7 @@ const Input = ({User, Profile, Room}) => {
         }
     }
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
           e.preventDefault(); 
           sendMessage();

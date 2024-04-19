@@ -16,9 +16,13 @@ import Popup from '../Modals/popup/Popup';
 interface ProfileData {
   avatar: string;
   login: string;
+  isTwoFactorAuthenticationEnabled : boolean
+}
+interface UserinfoProps {
+  profileData : ProfileData;
 }
 
-const UserInfos: React.FC<{ profileData: ProfileData | null }> = ({ profileData }) => {
+const UserInfos = ({ profileData } : UserinfoProps) => {
   return (
     <div className="profile-container">
       <div className="player-infos">
@@ -86,8 +90,11 @@ const Achievement: React.FC = () => {
     </div>
   );
 };
+interface props {
+  setUser: React.Dispatch<React.SetStateAction<null>>;
+}
 
-const UserProfile: React.FC = () => {
+const UserProfile = ( {setUser} : props) => {
   const location = useLocation();
   const userData: ProfileData = (location.state as any)?.userData;
 
@@ -102,7 +109,7 @@ const UserProfile: React.FC = () => {
         <Achievement />
         <ListMatch />
       </div>
-      <MenuBar user={userData} />
+      <MenuBar user={userData} setUser={setUser} />
     </div>
   )
 }

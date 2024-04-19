@@ -1,14 +1,24 @@
 import React from 'react'
 import "./Blocked.css"
 import axios from 'axios'
+interface Friend {
+  id: number;
+  login: string;
+  avatar: string;
+}
 
-const Blocked = ({blocked, setboolblock,  userSelect}) => {
+interface BlockedProps {
+  blocked: Friend[] | null;
+  setboolblock: React.Dispatch<React.SetStateAction<number>>;
+  userSelect: (user: any) => void;
+}
+const Blocked = ({blocked, setboolblock,  userSelect} : BlockedProps) => {
 
  
   userSelect(null);
  const handleUnblock = async (friendId : number) => {
   try {
-      const res = await axios.post(`${import.meta.env.VITE_url_back}/api/friends/unblock`, {id: friendId}, { withCredentials: true })
+       await axios.post(`${import.meta.env.VITE_url_back}/api/friends/unblock`, {id: friendId}, { withCredentials: true })
       setboolblock((prevIsBool) => prevIsBool + 1);
   }  
   catch (error) {
@@ -19,7 +29,7 @@ const Blocked = ({blocked, setboolblock,  userSelect}) => {
   return (
     <>
     {
-      blocked ? blocked.map((friend) => (
+      blocked && blocked.length > 0 ? (blocked.map((friend) => (
 
         <div className="discussion-blocked" key={friend.id}>
                     
@@ -34,7 +44,7 @@ const Blocked = ({blocked, setboolblock,  userSelect}) => {
             <div className="amis-status unblock" onClick={() => handleUnblock(friend.id)}>Unblock</div>
     
         </div>
-      )) : (<p className='no-pen'> No Blocked friend </p>)
+      ))) : (<p className='no-pen'> No Blocked friend </p>)
     }
     </>
   )

@@ -1,0 +1,85 @@
+.modal-backdrop-add{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); /* For Safari and other WebKit-based browsers */
+    z-index: 10;
+    
+  }
+  
+
+
+  .modal-content-code {
+    margin: 2% auto;
+    padding: 20px;
+    max-width: 598px;
+    width: 10vw;
+    height: 20vh;
+    position: relative;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows:0.2fr 1fr 0.2fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    border-radius: 30px;
+    background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+    box-shadow:   5px 5px 10px rgba(13, 21, 38, 1),
+                  -5px -5px 10px rgba(22, 89, 83, 1);
+  }
+
+
+  .input-code-modal{
+    grid-area: 1 / 1 / 2 / 2;
+    display: grid;
+    place-items: center;
+    width: 20vmin;
+    height: 3vmin;
+    padding: 1% 3% 1% 3%;
+    border-radius: 12px;
+    background: rgba(29, 242, 182, 1);
+    outline: none;
+    border: 1px solid white;
+ 
+  }
+  
+  .butt-code-modal{
+        grid-area: 3 / 1 / 4 / 2; 
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        justify-items: center;
+    }
+
+    .But-modal {
+        width: 12%;
+        height: 43%;
+        background: rgb(255, 255, 255);
+        padding: 1vh 1vh 0.5vh 1vh;
+        border-radius: 5px;
+    }
+
+
+.But-modal:hover{
+    cursor: pointer;
+    background: rgba(29, 242, 182, 0.5);
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.submit-But-modal{
+    grid-area: 1 / 2 / 2 / 3;
+    color: rgb(6, 78, 6);
+}
+
+.Cancel-But-modal{
+    grid-area: 1 / 1 / 2 / 2; 
+    color: rgb(116, 7, 7);
+}

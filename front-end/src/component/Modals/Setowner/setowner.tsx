@@ -4,7 +4,19 @@ import {motion, AnimatePresence} from 'framer-motion'
 import "../addfriend/addfriend.css"
 import { useSocket } from '../../Socket';
 
-const FriendHelper = ( { image, name , FriendId, onFriendClick} ) => {
+interface Friend {
+    avatar: string;
+    login: string;
+    id: string;
+  }
+  
+  interface FriendHelperProps {
+    image: string;
+    name: string;
+    onFriendClick: (login: string) => void;
+  }
+  
+const FriendHelper = ( { image, name , onFriendClick}:FriendHelperProps ) => {
   
     return (
       <div className='friend-helper' onClick={() => onFriendClick(name)}>
@@ -15,8 +27,17 @@ const FriendHelper = ( { image, name , FriendId, onFriendClick} ) => {
       </div>
     );
   }
-
-function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }) {
+  
+  interface SetOwnerModalProps {
+    room: any; 
+    show: boolean;
+    NewOwner: string;
+    setNewOwner: React.Dispatch<React.SetStateAction<string>>;
+    onSubmit: (e: React.FormEvent) => void;
+    onCancel: () => void;
+  }
+  
+function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }: SetOwnerModalProps) {
     if (!show) {
         return null;
       }
@@ -37,7 +58,7 @@ function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }
           }
       }
       const socket = useSocket()
-      const [help, Sethelp] = useState(null);
+      const [help, Sethelp] = useState<Friend[] | null>(null);
   
       useEffect(() => {
           socket?.on("autocompleteroom", (payload) => {
@@ -51,7 +72,7 @@ function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }
           };
       },[socket])
 
-      const handleInputChange = (e) => {
+      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           setNewOwner(e.target.value);
           socket?.emit('autocompleteroom', {str :e.target.value, roomname: room.name})
           
@@ -60,7 +81,13 @@ function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }
   const friendClick = (login : string)=>{
       setNewOwner(login);
   }
-  
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+      onSubmit(e) ;
+    }
+  };
       return (
           <AnimatePresence>
   
@@ -77,12 +104,13 @@ function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }
                       value={NewOwner}
                       onChange={handleInputChange}
                       placeholder="Enter friend's name"
+                      onKeyDown={handleKeyDown}
                   />
   
                   <div className='autoComplete'>
                       {help ? (
                       help.map((friend, index) => (
-                          <FriendHelper key={index} image={friend.avatar} name={friend.login} FriendId={friend.id} onFriendClick={friendClick}/> ))
+                          <FriendHelper key={index} image={friend.avatar} name={friend.login} onFriendClick={friendClick}/> ))
                       ) : ( <div className='suggestion'><p> No Suggestion </p></div>)}
                   </div>
   
@@ -98,7 +126,7 @@ function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }
                               stroke-width="2"
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              class="ai ai-Check"
+                              className="ai ai-Check"
                           >
                               <path d="M4 12l6 6L20 6" />
                           </svg>
@@ -115,7 +143,7 @@ function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }
                               stroke-width="2"
                               stroke-linecap="round"
                               stroke-linejoin="round"
-                              class="ai ai-Cross"
+                              className="ai ai-Cross"
                           >
                               <path d="M20 20L4 4m16 0L4 20" />
                           </svg>

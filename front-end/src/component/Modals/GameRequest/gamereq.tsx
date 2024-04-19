@@ -4,7 +4,16 @@ import {motion, AnimatePresence} from 'framer-motion'
 import "./gamereq.css"
 import { useNavigate } from 'react-router-dom'
 
-function GameRequest({SetShow ,gameRequestSender, onCancel}) {
+interface GameRequestProps {
+    SetShow: React.Dispatch<React.SetStateAction<boolean>>;
+    gameRequestSender: {
+      avatar: string;
+      login: string;
+    };
+    onCancel: () => void;
+  }
+  
+function GameRequest({SetShow ,gameRequestSender, onCancel} : GameRequestProps) {
 
     const backdrop = {
         visible : {opacity: 1},
@@ -54,7 +63,7 @@ function GameRequest({SetShow ,gameRequestSender, onCancel}) {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Check"
+                            className="ai ai-Check"
                         >
                             <path d="M4 12l6 6L20 6" />
                         </svg>
@@ -71,7 +80,7 @@ function GameRequest({SetShow ,gameRequestSender, onCancel}) {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Cross"
+                            className="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
                         </svg>

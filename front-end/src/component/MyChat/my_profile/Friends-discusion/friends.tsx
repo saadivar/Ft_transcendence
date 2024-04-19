@@ -1,9 +1,32 @@
 import { useState, useEffect } from "react"
 import React  from 'react'
 import "./friends.css"
-import { useSocket } from "../../../Socket";
-// MessagebyId={MessagebyId}
-// setMessageById={setMessagebyId}
+
+
+
+interface Friend {
+  id: number;
+  login: string;
+  avatar: string;
+  status: string;
+  lastmessagecontent: string;
+}
+
+interface FriendsDiscussionProps {
+  friendsData: Friend[];
+  selectedUser: Friend | null;
+  userSelect: (friend: Friend) => void;
+  SetNotifs: React.Dispatch<React.SetStateAction<any[]>>;
+  SetMessagesById: React.Dispatch<React.SetStateAction<Record<number, number>>>;
+  Notifs: any[];
+  SetMessages: React.Dispatch<React.SetStateAction<any[] | null>>;
+  MesagesById: Record<number, number>;
+  selectedFriendId: number | null;
+  setSelectedFriendId: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+
+
 const Friends_discusion = ({
   friendsData ,
   selectedUser,
@@ -15,16 +38,20 @@ const Friends_discusion = ({
   SetMessagesById,
   selectedFriendId,
   setSelectedFriendId
-}) => {
+} : FriendsDiscussionProps) => {
 
-  const socket = useSocket();
+
   
-  const handleFriendClick = (friend , friendId) => {
+  const handleFriendClick = (friend: Friend, friendId: number) => {
     if (selectedUser && selectedUser.id != friend.id)
       SetMessages(null);
     setSelectedFriendId(friendId);
     userSelect(friend);
-    SetMessagesById((...prevMessagesById) => prevMessagesById.filter(notif => notif.senderid !== friendId));
+    SetMessagesById((prevMessagesById ) => {
+      const updatedMessages = { ...prevMessagesById };
+      delete updatedMessages[friendId];
+      return updatedMessages;
+    });
     SetNotifs((prevNotifs) => prevNotifs.filter(notif => notif.senderid !== friendId));
     
   };

@@ -4,8 +4,15 @@ import "./infos.css";
 import pl from "../../../assets/logo1.svg"
 
 import EditProfile from "../../Modals/editprofile/editprofile";
-
-const Infos = ({user}) => {
+interface User {
+  avatar : string
+  login : string
+  id : string
+}
+interface UserProps {
+  user : User
+}
+const Infos = ({user} : UserProps) => {
 
 
   

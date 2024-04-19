@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , KeyboardEvent } from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 
 import "./addfriend.css"
@@ -12,10 +12,11 @@ interface Friend {
   interface FriendHelperProps {
     image: string;
     name: string;
-    FriendId: string;
+
     onFriendClick: (login: string) => void;
   }
-const FriendHelper = ( { image, name , FriendId, onFriendClick} : FriendHelperProps ) => {
+
+const FriendHelper = ( { image, name ,  onFriendClick} : FriendHelperProps ) => {
   
     return (
       <div className='friend-helper' onClick={() => onFriendClick(name)}>
@@ -31,7 +32,7 @@ interface AddFriendModalProps {
     show: boolean;
     friendName: string;
     setFriendName: React.Dispatch<React.SetStateAction<string>>;
-    onSubmit: () => void;
+    onSubmit: (e: React.FormEvent) => Promise<void>;
     onCancel: () => void;
 }
 
@@ -75,17 +76,20 @@ function AddFriendModal({ show, friendName, setFriendName, onSubmit, onCancel }:
         
     };
 
-const friendClick = (login : string)=>{
-    setFriendName(login);
-}
-
-const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault(); 
-      onSubmit();
+    const friendClick = (login : string)=>{
+        setFriendName(login);
     }
-    
-  };
+
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        console.log('Key pressed:', e.key);
+        if (e.key === 'Enter') {
+            console.log('Enter key pressed');
+            e.preventDefault(); 
+            onSubmit(e);
+        }
+    };
+
     return (
         <AnimatePresence>
 
@@ -108,7 +112,8 @@ const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
                 <div className='autoComplete'>
                     {help ? (
                     help.map((friend, index) => (
-                        <FriendHelper key={index} image={friend.avatar} name={friend.login} FriendId={friend.id} onFriendClick={friendClick}/> ))
+                    
+                    <FriendHelper key={index} image={friend.avatar} name={friend.login}  onFriendClick={friendClick}/> ))
                     ) : ( <div className='suggestion'><p> No Suggestion </p></div>)}
                 </div>
 

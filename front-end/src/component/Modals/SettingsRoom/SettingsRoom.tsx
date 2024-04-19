@@ -1,11 +1,27 @@
 import axios from 'axios';
 import React from 'react'
-import { useState } from 'react';
+
+import { useState , ChangeEvent, KeyboardEvent } from 'react';
+
 import { useSocket } from '../../Socket';
 import {motion, AnimatePresence} from 'framer-motion'
 import "./SettingsRoom"
 
-const SettingsRoom = ({show, setShowSettings, room}) => {
+interface Room {
+    id: string;
+    type: 'public' | 'private' | 'protected';
+    password: string;
+    roomname: string;
+    lastmessagecontent: string;
+    name: string;
+}
+  
+interface ASettingsRoomProps {
+    setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
+    show: boolean;
+    room :Room
+}
+const SettingsRoom = ({show, setShowSettings, room} : ASettingsRoomProps) => {
    
     if (!show) {
         return null;
@@ -14,10 +30,10 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
     const socket = useSocket();
     const [showPasswordInput, setShowPasswordInput] = useState(false);
     const [roomPassword, setRoomPassword] = useState(room.password);
-    const [roomType, setRoomType] = useState(room.type);  
+    const [roomType, setRoomType] = useState<'public' | 'private' | 'protected'>(room.type);  
     const [RoomName, setRoomName] = useState(room.name);
     
-    const handleRoomCreat = async (e) => {
+    const handleRoomCreat = async (e: React.FormEvent) => {
         e.preventDefault();
         await axios.post(`${import.meta.env.VITE_url_back}/api/room/updateroom`, {id:room.id , roomname: RoomName ,type : roomType, password : roomPassword}, {withCredentials:true});
         socket?.emit('newroom')
@@ -41,12 +57,17 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
         }
     }
 
-    const handleRoomTypeChange = (type : string) => {
+    const handleRoomTypeChange = (type: 'public' | 'private' | 'protected') => {
         setRoomType(type);
         setShowPasswordInput(type === 'protected');
 
     }
-
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+          e.preventDefault(); 
+          handleRoomCreat(e) ;
+        }
+      };
     return (
 
     <AnimatePresence>
@@ -64,6 +85,7 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
                     value={RoomName}
                     onChange={(e) => setRoomName(e.target.value)}
                     placeholder="Enter Room's name"
+                    onKeyDown={handleKeyDown}
                 />
 
                 <div className="room-types">
@@ -74,6 +96,7 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
                         value="public"
                         checked={roomType === "public"}
                         onChange={() => handleRoomTypeChange('public')}
+                        onKeyDown={handleKeyDown}
                         />
                         <span className="custom-radio"></span>
                         Public
@@ -81,6 +104,7 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
 
                     <label className="room-type-option">
                         <input
+                        onKeyDown={handleKeyDown}
                         type="radio"
                         name="roomType"
                         value="private"
@@ -96,6 +120,7 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
                         type="radio"
                         name="roomType"
                         value="protected"
+                        onKeyDown={handleKeyDown}
                         checked={roomType === "protected"}
                         onChange={() => handleRoomTypeChange('protected')}
                         />
@@ -106,6 +131,7 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
 
                 {showPasswordInput && (
                     <input
+                    onKeyDown={handleKeyDown}
                     className="password-input"
                     type="password"
                     value={roomPassword}
@@ -127,7 +153,7 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Check"
+                            className="ai ai-Check"
                         >
                             <path d="M4 12l6 6L20 6" />
                         </svg>
@@ -145,7 +171,7 @@ const SettingsRoom = ({show, setShowSettings, room}) => {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Cross"
+                            className="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
                         </svg>

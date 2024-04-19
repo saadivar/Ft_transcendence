@@ -8,13 +8,38 @@ import { useSocket } from '../../Socket';
 
 
 
+interface Message {
+    senderId: string;
+    content: string;
+    senderavatar: string;
+  }
+  
+  interface User {
+    id: number;
+    avatar: string;
+    login: string;
+    status: string;
+  }
+  
+  interface Room {
+    name: string;
+    mestatus: string;
+  }
+  
+  interface MessagesProps {
+    optionSelected: any;
+    room: Room | null;
+    user: User | null;
+    profile: any;
+    MessagesData: Message[] | null;
+    MessagesRoom: Message[] | null;
+  }
 
 
+const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRoom} : MessagesProps) => {
 
-const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRoom}) => {
-
-    const messagesEndRef = useRef(null);
-    const messagesRoomEndRef = useRef(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const messagesRoomEndRef = useRef<HTMLDivElement>(null);
     const socket = useSocket()
     useEffect(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -89,7 +114,7 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
 
                             <div className="text">
                                 <p className='friend-nm'>{room.name}</p>
-                                {/* <p className='friend-stat'>online</p> */}
+                              
                             </div>
                         </>
                     }
