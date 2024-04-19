@@ -1,61 +1,75 @@
 
-
-import React, { useState } from 'react'
-import {motion, AnimatePresence} from 'framer-motion'
-
-import "./editprofile.css"
+import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 
-function EditProfile({ user,ShowEdit, Setedit, onCancel }) {
-    if (!ShowEdit) {
-      return null;
-    }
+import './editprofile.css';
 
-    const backdrop = {
-        visible : {opacity: 1},
-        hidden: {opacity: 0}
-    }
+interface User {
+  id: string;
+  login: string;
+  avatar: string;
+}
 
-    const modal = {
-        hidden :{
-            y :"-100vh",
-            opacity: 0 },
-        visible: {
-            y : "200px",
-            opacity: 1,
-            transition : {delay: 0.5}
-        }
-    }
+interface EditProfileProps {
+  user: User;
+  ShowEdit: boolean;
+  Setedit: React.Dispatch<React.SetStateAction<boolean>>;
+  onCancel: () => void;
+}
 
-    const [name, setName] = useState(user.login);
-    const [image, setImage] = useState(user.avatar);
-    const [imagePreviewUrl, setImagePreviewUrl] = useState(user.avatar);
+function EditProfile({ user, ShowEdit, Setedit, onCancel }: EditProfileProps) {
+  if (!ShowEdit) {
+    return null;
+  }
 
-    const handleNameChange = (e) => {
+  const backdrop = {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0 },
+  };
+
+  const modal = {
+    hidden: {
+      y: '-100vh',
+      opacity: 0,
+    },
+    visible: {
+      y: '200px',
+      opacity: 1,
+      transition: { delay: 0.5 },
+    },
+  };
+
+  const [name, setName] = useState(user.login);
+  const [image, setImage] = useState<File | string>(user.avatar);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string>(user.avatar);
+
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
     };
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
         if (file) {
         setImage(file);
         const reader = new FileReader();
         
         reader.onloadend = () => {
-            setImagePreviewUrl(reader.result);
+            setImagePreviewUrl(reader.result as string);
         };
         reader.readAsDataURL(file);
         }
     };
     
-    const handleSubmit = async (e) => {
+    const handleSubmit = async ( e: React.FormEvent) => {
         Setedit(false);
         e.preventDefault();
         const formData = new FormData();
         formData.append('name', name);
         formData.append('avatar', image); 
         
-        const response = await axios.post(`${import.meta.env.VITE_url_back}/api/auth/update_user`, formData, {
+        await axios.post(`${import.meta.env.VITE_url_back}/api/auth/update_user`, formData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -63,7 +77,12 @@ function EditProfile({ user,ShowEdit, Setedit, onCancel }) {
         });
     };
 
-   
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+          e.preventDefault(); 
+          handleSubmit(e) ;
+        }
+      };
   
     return (
         <AnimatePresence>
@@ -77,7 +96,13 @@ function EditProfile({ user,ShowEdit, Setedit, onCancel }) {
             variants={modal}>
                 <div className='New-infos'>
                         <p className='choosename'>choose a name</p>
-                        <input type="text" placeholder='Enter a name' className='newname' maxLength={8} value={name} onChange={handleNameChange} />
+                        <input type="text" placeholder='Enter a name' 
+                            className='newname' 
+                            maxLength={8} 
+                            value={name} 
+                            onChange={handleNameChange} 
+                            onKeyDown={handleKeyDown}
+                            />
                         <div className='maxlenght'>
                         {name.length === 8 && (
                             <p>Maximum length reached !</p>
@@ -86,7 +111,8 @@ function EditProfile({ user,ShowEdit, Setedit, onCancel }) {
         
                         <p className='chooseimg'>choose an avatar</p>
                         <div className='avatarChose'>
-                            <input className='avatimg' type="file" onChange={handleImageChange} /> 
+                           
+                            <input className='avatimg' type="file" onChange={handleImageChange}  onKeyDown={handleKeyDown} /> 
                             <img className='preview'  src={imagePreviewUrl} />
                         </div>
                    
@@ -104,7 +130,7 @@ function EditProfile({ user,ShowEdit, Setedit, onCancel }) {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Check"
+                            className="ai ai-Check"
                         >
                             <path d="M4 12l6 6L20 6" />
                         </svg>
@@ -121,7 +147,7 @@ function EditProfile({ user,ShowEdit, Setedit, onCancel }) {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Cross"
+                            className="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
                         </svg>

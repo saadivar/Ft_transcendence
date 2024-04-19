@@ -63,7 +63,7 @@
     color: white;
     font-size: 3vmin;
 }
-.achievements-container{
+.achievements-container {
     grid-area: 1 / 2 / 3 / 3;
     display: grid;
     grid-template-columns: 1fr;
@@ -71,18 +71,36 @@
     grid-column-gap: 0px;
     grid-row-gap: 2px;
     position: relative;
-}
-
-.achiv{
+  }
+  
+  .achiv {
     height: 76%;
     width: 80%;
     border-radius: 10px;
     border: 1px solid #8BD9D1;
-    background: rgba(22, 89, 83,0.1);
+    background: rgba(22, 89, 83, 0.1);
     position: absolute;
     margin-top: 10.5vmin;
     margin-left: 4vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: auto;
+  }
+  
+.achievement-item {
+    margin: 5vmin 0vmin 1vmin 8vmin;
+    height: fit-content;
 }
+
+.achievement-item img {
+    width: 19vmin;
+    height: auto;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .achi-title{
     color: white;
     margin: 7vmin 0vmin 0vmin 15vmin;

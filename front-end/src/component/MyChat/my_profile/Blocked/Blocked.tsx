@@ -19,7 +19,7 @@ const Blocked = ({blocked, setboolblock,  userSelect}) => {
   return (
     <>
     {
-      blocked && blocked.lenght > 0 ? blocked.map((friend) => (
+      blocked ? blocked.map((friend) => (
 
         <div className="discussion-blocked" key={friend.id}>
                     

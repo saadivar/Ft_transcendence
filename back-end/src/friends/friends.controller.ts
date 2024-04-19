@@ -144,6 +144,8 @@ export class FriendsController {
           const friendship = await this.friendsservice.findfriendship({user1:user11,user2:user22})
           const deleted = await this.friendsservice.deletefriendship(friendship);
           await this.friendsservice.blocking({user1:user11,user2:user22});
+          this.authservice.updatenotification("message",user22,user11.id);
+          this.websocketService.emitToUser(user22.id.toString(),"refreshNotifs");
           
           this.websocketService.emitToUser(
             user22.id.toString(),
@@ -163,6 +165,8 @@ export class FriendsController {
           const user22 = await this.authservice.findUser(friendId);
           const friendship = await this.friendsservice.findfriendship({user1:user11,user2:user22})
           const deleted = await this.friendsservice.deletefriendship(friendship);
+          this.authservice.updatenotification("message",user22,user11.id);
+          this.websocketService.emitToUser(user22.id.toString(),"refreshNotifs");
           this.websocketService.emitToUser(
               user22.id.toString(),
               'friendRequestReceived',

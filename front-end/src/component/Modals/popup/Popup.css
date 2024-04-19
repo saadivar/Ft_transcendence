@@ -15,15 +15,15 @@
     font-size: 2vmin;
     opacity: 0;
     transition: opacity 0.3s ease;
-    color: #000000;; /* Blue background */
-    background-color: #165953; /* White text */
-    padding: 1vmin 1vmin; /* Padding */
-    border-radius: 4px; /* Rounded corners */
-    position: absolute; /* Positioning */
-    top: calc(100% + 8px); /* Position below the container */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
-    white-space: nowrap; /* Prevent line breaks */
+    color: #000000;; 
+    background-color: #86fff5; 
+    padding: 1vmin 1vmin; 
+    border-radius: 4px; 
+    position: absolute;
+    top: calc(100% + 8px); 
+    left: 50%; 
+    transform: translateX(-50%);
+    white-space: nowrap; 
     z-index: 100;
   }
   

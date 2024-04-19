@@ -40,6 +40,8 @@ const My_profile: React.FC<Props> = ({
   const [Notifs, SetNotifs] = useState<{ type: any; senderid: any; }[]>([]);
   const [RoomNotifs, SetRoomNotifs] = useState<Array<{ count: number }>>([]);
   const [countByType, setCountByType] = useState<Record<string, number>>({});
+  
+  const [refreshnotifs, Setrefreshnotifs] = useState(0);
 
   const HandleSetOption = (option: string) => {
     UserSelceted(null);
@@ -53,7 +55,12 @@ const My_profile: React.FC<Props> = ({
     }
     SetOption(option);
   };
-
+  useEffect(()=>{
+    socket?.on("refreshNotifs", () => Setrefreshnotifs((prevIsBool) => prevIsBool + 1));
+    return () => {
+      socket?.off("refreshNotifs");
+    };
+  },[socket])
   useEffect(() => {
     const fetchNotifs = async () => {
       const resp = await axios.get(`${import.meta.env.VITE_url_back}/api/chat/notifications`, {
@@ -62,7 +69,7 @@ const My_profile: React.FC<Props> = ({
       SetNotifs(resp.data);
     };
     fetchNotifs();
-  }, []);
+  }, [refreshnotifs]);
 
   useEffect(() => {
     const fetchNotifs = async () => {

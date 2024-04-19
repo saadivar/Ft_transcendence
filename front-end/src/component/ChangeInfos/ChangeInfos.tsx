@@ -7,35 +7,47 @@ import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSocket } from '../Socket';
 
-function ChangeProfile({ user })
+interface User {
+    id: string;
+    login: string;
+    avatar: string;
+    isNew : Boolean;
+}
+
+interface ChangeProfileprops {
+    user: User;
+}
+
+function ChangeProfile({ user } : ChangeProfileprops)
 {
     const [change, Setchange]  = useState(false)
-    const navigate = useNavigate(); 
     const [name, setName] = useState(user.login);
-    const [image, setImage] = useState(user.avatar);
-    const [imagePreviewUrl, setImagePreviewUrl] = useState(user.avatar);
+    const [image, setImage] = useState<File | string>(user.avatar);
+    const [imagePreviewUrl, setImagePreviewUrl] = useState<string>(user.avatar);
     const socket = useSocket()
+    const navigate = useNavigate(); 
     if(!user.isNew)
         navigate("/Home", { replace: true });
     
-    const handleNameChange = (e) => {
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
     };
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+
         if (file) {
         setImage(file);
         const reader = new FileReader();
         
         reader.onloadend = () => {
-            setImagePreviewUrl(reader.result);
+            setImagePreviewUrl(reader.result as string);
         };
         reader.readAsDataURL(file);
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
         const formData = new FormData();
@@ -69,7 +81,7 @@ function ChangeProfile({ user })
 
 
 
-    const handleCancel = (e) => {
+    const handleCancel = (e: React.FormEvent) => {
         e.preventDefault();
         Setchange(true); 
     }
@@ -79,6 +91,12 @@ function ChangeProfile({ user })
             socket?.emit('changeinfodone');
         };
     }, []);
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+          e.preventDefault(); 
+          handleSubmit(e) ;
+        }
+      };
     return (
 
         <motion.div className="modal-backdrop-change">
@@ -86,7 +104,7 @@ function ChangeProfile({ user })
 
                 <div className='New-infos'>
                         <p className='choosename'>choose a name</p>
-                        <input type="text" placeholder='Enter a name' className='newname' maxLength={8} value={name} onChange={handleNameChange} />
+                        <input type="text" onKeyDown={handleKeyDown} placeholder='Enter a name' className='newname' maxLength={8} value={name} onChange={handleNameChange} />
                         <div className='maxlenght'>
                         {name.length === 8 && (
                             <p>Maximum length reached !</p>
@@ -95,7 +113,7 @@ function ChangeProfile({ user })
         
                         <p className='chooseimg'>choose an avatar</p>
                         <div className='avatarChose'>
-                            <input className='avatimg' type="file" onChange={handleImageChange} /> 
+                            <input className='avatimg' onKeyDown={handleKeyDown} type="file" onChange={handleImageChange} /> 
                             <img className='preview'  src={imagePreviewUrl} />
                         </div>
                    
@@ -113,7 +131,7 @@ function ChangeProfile({ user })
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Check"
+                            className="ai ai-Check"
                         >
                             <path d="M4 12l6 6L20 6" />
                         </svg>
@@ -130,7 +148,7 @@ function ChangeProfile({ user })
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Cross"
+                            className="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
                         </svg>

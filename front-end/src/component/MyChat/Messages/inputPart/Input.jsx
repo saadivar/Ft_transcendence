@@ -19,7 +19,12 @@ const Input = ({User, Profile, Room}) => {
         }
     }
 
-    
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault(); 
+          sendMessage();
+        }
+      };
 
   return (
     <div className="inputPart">
@@ -29,6 +34,7 @@ const Input = ({User, Profile, Room}) => {
                 placeholder="Type a message..."
                 value={message}
                 onChange={(e) =>setMessage(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <button className="send-message-button" onClick={sendMessage}>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-reactid="1036">

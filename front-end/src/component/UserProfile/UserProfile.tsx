@@ -5,6 +5,13 @@ import Infos from '../PunkProfile/Infos/infos';
 import ListMatch from '../PunkProfile/MatchHistory/Match';
 
 import "./UserProfile.css";
+import win1 from '../../assets/1win.png'
+import win2 from  '../../assets/2win.png'
+import win3 from  '../../assets/3wins.png'
+import win4 from  '../../assets/4wins.png'
+import win5 from  '../../assets/5wins.png'
+import Popup from '../Modals/popup/Popup';
+
 
 interface ProfileData {
   avatar: string;
@@ -55,19 +62,38 @@ const UserInfos: React.FC<{ profileData: ProfileData | null }> = ({ profileData 
 }
 
 const Achievement: React.FC = () => {
+  const achievementsList = [
+    { name: 'one', image: win1 },
+    { name: 'two', image: win2 },
+    { name: 'three', image: win3 },
+    { name: 'four', image: win4 },
+    { name: 'five', image: win5 },
+  ];
+
   return (
     <div className='achievements-container'>
       <div className='achi-title'>Achievements</div>
       <div className='achiv'>
 
+        {achievementsList.map((achievement, index) => (
+          <div className='achievement-item' key={index}>
+              <Popup tooltip={`${achievement.name}`}>
+                <img src={achievement.image} alt={`Achievement ${index + 1}`} />
+              </Popup>
+            </div>
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const UserProfile: React.FC = () => {
   const location = useLocation();
   const userData: ProfileData = (location.state as any)?.userData;
+
+
+  // fetch achievment list 
+  // fetch listmatches
 
   return (
     <div className='Userprofile'>

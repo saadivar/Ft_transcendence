@@ -1,11 +1,18 @@
 import axios from 'axios';
 import React from 'react'
-import { useState } from 'react';
+
+
+import { useState , ChangeEvent, KeyboardEvent } from 'react';
 import { useSocket } from '../../Socket';
 import {motion, AnimatePresence} from 'framer-motion'
 import "./addroom.css"
 
-const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
+interface AddroomProps {
+    setShowAddRoomForm: React.Dispatch<React.SetStateAction<boolean>>;
+    showAddRoomForm: boolean;
+  }
+
+const Addroom = ({setShowAddRoomForm, showAddRoomForm} : AddroomProps) => {
    
     if (!showAddRoomForm) {
         return null;
@@ -14,13 +21,13 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
     const socket = useSocket();
     const [showPasswordInput, setShowPasswordInput] = useState(false);
     const [roomPassword, setRoomPassword] = useState('');
-    const [roomType, setRoomType] = useState('public');  
+    const [roomType, setRoomType] = useState<'public' | 'private' | 'protected'>('public');
     const [RoomName, setRoomName] = useState("");
     
-    const handleRoomCreat = async (e) => {
+    const handleRoomCreat = async (e: React.FormEvent) => {
         e.preventDefault();
     
-        const resp = await axios.post(`${import.meta.env.VITE_url_back}/api/room/createroom`, {roomname: RoomName ,type : roomType, password : roomPassword}, {withCredentials:true});
+         await axios.post(`${import.meta.env.VITE_url_back}/api/room/createroom`, {roomname: RoomName ,type : roomType, password : roomPassword}, {withCredentials:true});
         socket.emit('newroom');
         setShowAddRoomForm(false);
         setRoomName("");
@@ -42,10 +49,18 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
         }
     }
 
-    const handleRoomTypeChange = (type : string) => {
+    const handleRoomTypeChange = (type: 'public' | 'private' | 'protected') => {
         setRoomType(type);
         setShowPasswordInput(type === 'protected');
-    }
+      }
+    
+      const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleRoomCreat(e);
+        }
+      };
+      
     return (
 
     <AnimatePresence>
@@ -58,12 +73,14 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
             <motion.div className="modal-content-room"
                 variants={modal}>
                 <input
+                
                     className="room-input"
                     type="text"
                     value={RoomName}
                     onChange={(e) => setRoomName(e.target.value)}
                     placeholder="Enter Room's name"
                     maxLength={10}
+                    onKeyDown={handleKeyDown}
                 />
                 <div className='maxlenght'>
                  {RoomName.length === 10 && (
@@ -73,6 +90,7 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
                 <div className="room-types">
                     <label className="room-type-option">
                         <input
+                        onKeyDown={handleKeyDown}
                         type="radio"
                         name="roomType"
                         value="public"
@@ -85,6 +103,8 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
 
                     <label className="room-type-option">
                         <input
+                        onKeyDown={handleKeyDown}
+
                         type="radio"
                         name="roomType"
                         value="private"
@@ -97,6 +117,8 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
 
                     <label className="room-type-option">
                         <input
+                        onKeyDown={handleKeyDown}
+
                         type="radio"
                         name="roomType"
                         value="protected"
@@ -110,6 +132,8 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
 
                 {showPasswordInput && (
                     <input
+                    onKeyDown={handleKeyDown}
+
                     className="password-input"
                     type="password"
                     value={roomPassword}
@@ -131,7 +155,7 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Check"
+                            className="ai ai-Check"
                         >
                             <path d="M4 12l6 6L20 6" />
                         </svg>
@@ -149,7 +173,7 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="ai ai-Cross"
+                            className="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
                         </svg>
