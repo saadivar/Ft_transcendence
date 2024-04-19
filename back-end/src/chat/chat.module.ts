@@ -15,7 +15,7 @@ import { jwtguard } from 'src/guards/jwtguqrd';
 
 
 @Module({
-  imports:[AuthModule,forwardRef(() => FriendsModule),forwardRef(() => RoomModule),
+  imports:[forwardRef(() =>AuthModule),forwardRef(() => FriendsModule),forwardRef(() => RoomModule),
     TypeOrmModule.forFeature([Chat,Message]),JwtModule.register({secret:"secret",
   signOptions:{expiresIn:'1d'}})
   ],

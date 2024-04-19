@@ -32,7 +32,12 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
   }
   async handleConnection(client: Socket) {
     this.websocketService.addUserToMap(client.data.user.id, client);
-
+    const user = await this.authService.findUser(client.data.user.id);
+    const friends = await this.friendservice.findAllacceotedfriends(user);
+    for(let i = 0; i < friends.length;i++)
+    {
+      this.websocketService.emitToUser(friends[i].id.toString(),"friendRequestReceived");
+    }
     client.join("brodcast");
 
 
@@ -40,6 +45,12 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
   async handleDisconnect(client: Socket) {
     this.websocketService.removeUserFromMap(client.data.user.id);
     await this.authService.changestatus(client.data.user.id, "offline");
+    const user = await this.authService.findUser(client.data.user.id);
+    const friends = await this.friendservice.findAllacceotedfriends(user);
+    for(let i = 0; i < friends.length;i++)
+      {
+        this.websocketService.emitToUser(friends[i].id.toString(),"friendRequestReceived");
+      }
 
     client.leave("brodcast");
 

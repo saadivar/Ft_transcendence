@@ -15,9 +15,10 @@ import { RoomMember } from 'src/typeorm/entities/RoomMember';
 import { Notif } from 'src/typeorm/entities/notif';
 import { TwoFactorAuthenticationService } from './2fa.service';
 import { TwoFactorAuthenticationController } from './2fa.controller';
+import { FriendsModule } from 'src/friends/friends.module';
 
 @Module({
-    imports:[
+    imports:[forwardRef(() => FriendsModule),
         TypeOrmModule.forFeature([User,Notif]),JwtModule.register({secret:"secret",
     signOptions:{expiresIn:'1d'}})
     ],

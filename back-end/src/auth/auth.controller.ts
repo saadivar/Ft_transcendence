@@ -15,6 +15,7 @@ import * as path from  'path'
 
 import { User } from "src/typeorm/entities/User";
 import * as fs from 'fs';
+import { FriendsService } from "src/friends/friends.service";
 
 
 
@@ -24,7 +25,7 @@ export class AuthController
 {
     
     constructor( private readonly authService: AuthService,
-    private jwtService: JwtService,private readonly websocketService: WebsocketService,private readonly twoFactorAuthenticationService: TwoFactorAuthenticationService){
+    private jwtService: JwtService,private readonly websocketService: WebsocketService,private readonly twoFactorAuthenticationService: TwoFactorAuthenticationService,private readonly friendservice: FriendsService){
     }
     @UseGuards(passlogin,IntraAuthGuard)//passlogin
     @Get('42')
@@ -76,7 +77,6 @@ export class AuthController
 
     async updateuser(@Req() req:Request,@Res() res:Response,  @UploadedFile() file: Express.Multer.File,@Body() body: any)
     {
-        console.log("here");
         const user = req.user as User;
         if(user.login != body.name )
         {
@@ -95,7 +95,6 @@ export class AuthController
         }
         await this.authService.saveuser(user);
         this.websocketService.emitToUser(user.id.toString(),"updated");
-        console.log(user);
         res.status(200).send("ok");
         
     }
@@ -169,7 +168,12 @@ export class AuthController
             
             res.clearCookie('jwt');
             user.status = "offline";
-            this.authService.update(user);
+           await  this.authService.update(user);
+            const friends = await this.friendservice.findAllacceotedfriends(user);
+            for(let i = 0; i < friends.length;i++)
+            {
+                this.websocketService.emitToUser(friends[i].id.toString(),"friendRequestReceived");
+            }
             res.send("ok");
         } 
 

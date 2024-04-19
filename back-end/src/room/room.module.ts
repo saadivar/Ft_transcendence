@@ -14,7 +14,7 @@ import { Notif } from 'src/typeorm/entities/notif';
 
 
 @Module({
-  imports: [AuthModule, forwardRef(() => ChatModule),
+  imports: [forwardRef(() => AuthModule), forwardRef(() => ChatModule),
     TypeOrmModule.forFeature([Room, RoomMember,Notif]), JwtModule.register({
       secret: "secret",
       signOptions: { expiresIn: '1d' }

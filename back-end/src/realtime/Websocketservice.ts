@@ -22,7 +22,6 @@ export class WebsocketService {
             const userSocket = WebsocketService.connectedUsers.get(userID);
             if(userSocket)
               {
-                console.log(event ," to ",userID);
                 userSocket.emit(event);
               }
         }
