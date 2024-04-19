@@ -6,7 +6,7 @@ import axios from 'axios';
 const Padding = ({pandding,  userSelect}) => {
 
   userSelect(null);
-  console.log("panding", pandding);
+
   const handleAccept = async (friend) => {
     try {
        
@@ -25,35 +25,36 @@ const handleReject = async (friend) => {
 };
 
 
-
+  console.log(pandding)
   return (
-     <>
-      {
-        // handle size of 
-       pandding ? pandding.map((friend) => (
-        
-        <div className="discussion-pandding">
+<>
+  {
+    pandding.length > 0 ? (
+      pandding.map((friend) => (
+        <div className="discussion-pandding" key={friend.id}>
           <div className="amis-image">
-              <img src={friend.avatar}/>
+            <img src={friend.avatar} alt="Friend Avatar" />
           </div>
 
           <div className="amis-infos">
-              <p className="amis-name"><p>{friend.login}</p></p>
+            <p className="amis-name">{friend.login}</p>
           </div>
 
           <div className="amis-stat"> 
-              <div className="reject" onClick={() => handleReject(friend)} >reject</div>
-              <div className='accept' onClick={() => handleAccept(friend)}>accept</div>
+            <div className="reject" onClick={() => handleReject(friend)}>reject</div>
+            <div className='accept' onClick={() => handleAccept(friend)}>accept</div>
           </div>
-          </div>
-        )) : (
-            <p className='no-pen'> No friend request </p>
-        )
- 
-      }  
-     </>
+        </div>
+      ))
+    ) : (
+      <p className='no-pen'>No friend request</p>
+    )
+  }  
+</>
+
 
   )
 }
+
 
 export default Padding

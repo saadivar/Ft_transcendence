@@ -19,7 +19,7 @@ const Blocked = ({blocked, setboolblock,  userSelect}) => {
   return (
     <>
     {
-      blocked && blocked.map((friend) => (
+      blocked && blocked.lenght > 0 ? blocked.map((friend) => (
 
         <div className="discussion-blocked" key={friend.id}>
                     
@@ -34,7 +34,7 @@ const Blocked = ({blocked, setboolblock,  userSelect}) => {
             <div className="amis-status unblock" onClick={() => handleUnblock(friend.id)}>Unblock</div>
     
         </div>
-      ))
+      )) : (<p className='no-pen'> No Blocked friend </p>)
     }
     </>
   )

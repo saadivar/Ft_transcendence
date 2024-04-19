@@ -49,9 +49,18 @@
         border-radius: 5px;
         padding: 1%
     }
+    .maxlenght{
+        position: absolute;
+        top: 26%;
+        font-size: 1.2vmin;
+        left: 32%;
+        color: red;
+        width: fit-content;
+        height: fit-content;
+      }
     .chooseimg {
         grid-area: 3 / 1 / 4 / 2;
-        margin-left: 29%;
+        margin-left: 30%;
         width: fit-content;
         height: fit-content;
          background:rgba(29, 242, 182, 1);

@@ -37,6 +37,15 @@
         border-radius: 5px;
         padding: 1%
     }
+    .maxlenght{
+        position: absolute;
+        top: 26%;
+        font-size: 1.2vmin;
+        left: 36%;
+        color: red;
+        width: fit-content;
+        height: fit-content;
+      }
     .chooseimg {
         grid-area: 3 / 1 / 4 / 2;
         margin-left: 29%;

@@ -87,7 +87,11 @@ function ChangeProfile({ user })
                 <div className='New-infos'>
                         <p className='choosename'>choose a name</p>
                         <input type="text" placeholder='Enter a name' className='newname' maxLength={8} value={name} onChange={handleNameChange} />
-                
+                        <div className='maxlenght'>
+                        {name.length === 8 && (
+                            <p>Maximum length reached !</p>
+                            )}
+                        </div>
         
                         <p className='chooseimg'>choose an avatar</p>
                         <div className='avatarChose'>

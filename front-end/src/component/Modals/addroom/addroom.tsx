@@ -19,7 +19,7 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
     
     const handleRoomCreat = async (e) => {
         e.preventDefault();
-        //send to backend
+    
         const resp = await axios.post(`${import.meta.env.VITE_url_back}/api/room/createroom`, {roomname: RoomName ,type : roomType, password : roomPassword}, {withCredentials:true});
         socket.emit('newroom');
         setShowAddRoomForm(false);
@@ -46,7 +46,6 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
         setRoomType(type);
         setShowPasswordInput(type === 'protected');
     }
-
     return (
 
     <AnimatePresence>
@@ -64,8 +63,13 @@ const Addroom = ({setShowAddRoomForm,showAddRoomForm}) => {
                     value={RoomName}
                     onChange={(e) => setRoomName(e.target.value)}
                     placeholder="Enter Room's name"
+                    maxLength={10}
                 />
-
+                <div className='maxlenght'>
+                 {RoomName.length === 10 && (
+                     <p>Maximum length reached !</p>
+                    )}
+                </div>
                 <div className="room-types">
                     <label className="room-type-option">
                         <input

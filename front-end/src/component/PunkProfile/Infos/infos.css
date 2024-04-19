@@ -132,20 +132,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+ 
 }
 
 .edit {
     display: flex;
-    color: white;
+    color: #165953;;
     justify-content: center;
 }
 
 .edit  p {
+    cursor: pointer;
     padding: 5px 10px;
     border-radius:  10px;
-    background-color: rgb(73, 6, 68);
+    background-color:#1DF2B6;
     display: block;
     width: fit-content;
     height: fit-content;
     text-align: center;
+    font-size: 1.5vmin;
 }

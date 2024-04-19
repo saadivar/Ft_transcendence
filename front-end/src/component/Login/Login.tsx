@@ -46,7 +46,7 @@ export const Login = ({user}) => {
   return (
     <div className='cont'>
       <div className='container'>
-        <p className='game-title'>Heroes PingPong</p>
+        <p className='game-title'>Play PingPong </p>
         <a  className='login-button' href={`${import.meta.env.VITE_url_back}/api/auth/42`}>
           <p>Login with intra</p>
         </a>
