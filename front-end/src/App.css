@@ -59,6 +59,15 @@
 
 .not-found-title {
   font-size: 48px;
-  margin-top: 38%;
+
 }
 
+.notfound{
+  width: fit-content;
+  height: fit-content;
+  padding: 8vmin;
+  border-radius: 30px;
+  background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+  box-shadow:   5px 5px 10px rgba(13, 21, 38, 1),
+                -5px -5px 10px rgba(22, 89, 83, 1);
+}

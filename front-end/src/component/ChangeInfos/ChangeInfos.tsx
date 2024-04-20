@@ -15,7 +15,7 @@ interface User {
 }
 
 interface ChangeProfileprops {
-    user: User;
+    user: User ;
 }
 
 function ChangeProfile({ user } : ChangeProfileprops)
