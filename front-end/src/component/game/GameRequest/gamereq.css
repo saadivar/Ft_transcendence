@@ -17,6 +17,7 @@
   margin: 2% auto;
   padding: 20px;
   max-width: 598px;
+
   width: 15vw;
   height: 40vh;
   position: relative;
@@ -80,7 +81,7 @@
 .But-modal{
   width: 20%;
   height: 35%;
-  background:rgb(255, 255, 255);
+  background:rgba(29, 242, 182, 1);
   padding: 1vh 1vh 0.5vh 1vh;
   border-radius: 5px;
 

@@ -9,7 +9,7 @@ export class IntraStrategy extends PassportStrategy(Strategy)
     constructor( private readonly authService: AuthService ){
         super({
             clientID:"u-s4t2ud-45f7a4b2d6c78e98eaaa98dbbb2ab728319b88fd53639b970070ddb86860d773",
-            clientSecret:"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",
+            clientSecret:"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",
             callbackURL:`${process.env.url_back}/api/auth/42/redirect`,
             Scope:['profile'],
         });

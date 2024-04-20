@@ -38,25 +38,33 @@ function OnlineMatching({goGame}){
         socket.close();
         setStart(false);
         console.log("END GAME")
-
     });
     socket?.on('start', (roomInfos)=>{
         setInfos(roomInfos);
         setStart(true);
         setWaiting(false);
     });
-
+    const navigate = useNavigate();
+    socket.on('exit', ()=>{
+        console.log("Exit Catched")
+        socket.close();
+        setStart(false);
+        navigate("/Home", { replace: true });
+    })
     if (waiting){
-        socket.emit('CREATEROOM');
+        // useEffect(()=>{
+            socket.emit('CREATEROOM');
+        // },[])
+
         return(<div style={{backgroundImage: `url('https://www.couleurdenuit.com/img/cms/Match-de-ping-pong-23.jpg')`, backgroundSize : 'cover', backgroundPosition: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh'}}>
-    <head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"></link></head>
-        <div style={{marginLeft : '50px', paddingBottom : '100px'}}>
-        <span className="spinner-grow spinner-grow-sm" style={{ marginBottom : '100px' , marginRight : '150px' , fontSize : '250%', color: '#DB8C1B'}}>Waiting...</span>
-        <div className="spinner-border" style={{color : '#DB8C1B', width: '3rem', height: '3rem'}} role="status"></div>
-        <div className="spinner-grow" style={{color : '#DB8C1B' , width: '3rem', height: '3rem'}} role="status"></div>
-        </div>
-        <button id="exit" onClick={()=>{window.location.reload()}}> Exit </button>
-    </div>);
+        <head><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"></link></head>
+            <div style={{marginLeft : '50px', paddingBottom : '100px'}}>
+            <span className="spinner-grow spinner-grow-sm" style={{ marginBottom : '100px' , marginRight : '150px' , fontSize : '250%', color: '#DB8C1B'}}>Waiting...</span>
+            <div className="spinner-border" style={{color : '#DB8C1B', width: '3rem', height: '3rem'}} role="status"></div>
+            <div className="spinner-grow" style={{color : '#DB8C1B' , width: '3rem', height: '3rem'}} role="status"></div>
+            </div>
+            <button id="exit" onClick={()=>{window.location.reload()}}> Exit </button>
+        </div>);
     }
    
         return(

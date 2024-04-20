@@ -37,8 +37,8 @@ function Online({infos , mode, socket} : props) {
 	{
 		let tableWidth : number;
 		let tableHeight: number;
-		let p2Speed =  2;
-		let p1Speed = -2;
+		let p2Speed =  1.8;
+		let p1Speed = -1.8;
 		let initclientX = window.innerWidth / 2;
 		let initClientY = window.innerHeight / 2;
 		let index : number;
@@ -69,8 +69,27 @@ function Online({infos , mode, socket} : props) {
 
 		exit.id = 'exit-button';
 		exit.innerText = "Exit";
+		// const navigate = useNavigate();
+		// navigate("/Home", { replace: true });
 		exit.onclick = () => {
-			window.history.back();
+			root?.removeChild(renderer.domElement);
+			root?.removeChild(container);
+			root?.removeChild(exit);
+			// root?.removeChild(endGame);
+
+			scene.children.forEach(child => {
+				scene.remove(child);
+				console.log("DELETE");
+			});
+			renderer.dispose();
+			stopAnimate = true;
+			renderer.setAnimationLoop(null);
+			renderer.domElement.remove(); 
+			renderer.forceContextLoss();
+			renderer.dispose();
+			controls.dispose();
+			socket.emit('exit');
+			socket.emit('setScore', infos[0]);
 		}
 		container.style.pointerEvents = 'none';
 		if (mode == 'online'){
@@ -109,14 +128,31 @@ function Online({infos , mode, socket} : props) {
 		const back = document.createElement('button');
 		back.innerText = "Go Back";
 		back.onclick = () => {
-			window.history.back();
+			root?.removeChild(renderer.domElement);
+			root?.removeChild(container);
+			root?.removeChild(exit);
+			root?.removeChild(endGame);
+
+			scene.children.forEach(child => {
+				scene.remove(child);
+				console.log("DELETE");
+			});
+			renderer.dispose();
+			stopAnimate = true;
+			renderer.setAnimationLoop(null);
+			renderer.domElement.remove(); 
+			renderer.forceContextLoss();
+			renderer.dispose();
+			controls.dispose();
+			socket.emit('exit');
 		}
 		gameOver.appendChild(result);
 		gameOver.appendChild(back);
 		endGame.appendChild(gameOver);
 		endGame.id = 'end-game';
 		gameOver.id = 'game-over';
-		socket?.on('endGame', (result : string) => {
+		socket?.on('endGame', (res : string) => {
+			result.innerText = res;
 			root?.appendChild(endGame);
 		})
 		socket.on('data', (message : any)=> {
@@ -144,6 +180,9 @@ function Online({infos , mode, socket} : props) {
 			renderer.forceContextLoss();
 			renderer.dispose();
 			controls.dispose();
+			socket.emit('exit');
+			socket.emit('setScore', infos[0]);
+
 		});
 		camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 5000 );
 		camera.position.set(
@@ -240,10 +279,7 @@ function Online({infos , mode, socket} : props) {
 				gltf.scene.rotation.y = Math.PI / 2;
 				gltf.scene.position.x = -1760;
 				gltf.scene.position.z = 2435;
-				// gltf.scene.position.y = -6000;
 				gltf.scene.rotation.y -= Math.PI/2;
-
-				// gltf.scene.scale.set(0.9, 0.9, 0.9);
 				console.log("ADD scene");
 				scene.add(gltf.scene);
 			})
@@ -255,7 +291,7 @@ function Online({infos , mode, socket} : props) {
 			renderer.domElement.addEventListener('mousemove', onMouseMove);
 
 			let stepX = 0;
-			let stepZ = -2;
+			let stepZ = -1.8;
 			function onMouseMove(event : MouseEvent) {
 					if (player1.raquete)// && !controls.enabled)
 					{
@@ -281,29 +317,29 @@ function Online({infos , mode, socket} : props) {
 						}
 						else{
 							if (event.clientY - initClientY < -150){
-								p1Speed =  -3;
+								p1Speed =  -2.8;
 								p1deltaT = 1 / 45;
 								player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.5;
 							}
 							else if (event.clientY - initClientY < -100){
-								p1Speed =  -2.8;
+								p1Speed =  -2.5;
 								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.8;
+								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
 							}
 							else if (event.clientY - initClientY < -25){
 								p1Speed =  -2.5;
 								p1deltaT = 1 / 45;
 								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
 							}
-							else if (event.clientY - initClientY < -3){
-								p1Speed =  -2.2;
+							else if (event.clientY - initClientY < -2){
+								p1Speed =  -2;
 								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 5;
+								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
 							}
 							else {
-								p1Speed =  -1.7;
+								p1Speed =  -1.8;
 								p1deltaT = 1 / 46;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 6;
+								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
 							}
 						}
 						initclientX = event.clientX ;
@@ -343,7 +379,7 @@ function Online({infos , mode, socket} : props) {
 				move = false;
 				if (mode == "practice")
 					player2.raquete.position.z = (boundingBox?.max.z - boundingBox?.min.z) * 0.5;
-				if (player1.goals > 10 || player2.goals > 10){
+				if (player1.goals > 3 || player2.goals > 3){
 					socket.emit('endGame',[player1.goals, player2.goals, infos[0]]);
 				}
 			}
@@ -401,8 +437,6 @@ function Online({infos , mode, socket} : props) {
 					if (floorY != 0 &&  !touchNet && stepZ >= 0 && Math.abs(player2.raquete.position.z - ball.object.position.z) < 12 && touchRaquete(player2.raquete.position.x, player2.raquete.rotation.z))
 					{
 						falligPoint = player2fp;
-						if (mode == "practice")
-							falligPoint = (boundingBox.max.z - boundingBox.min.z) / 3.5;
 						middle = ball.object.position.z - falligPoint;   
 						stepZ = p2Speed;
 						move = true;
@@ -413,11 +447,6 @@ function Online({infos , mode, socket} : props) {
 						moveX = 0;
 						deltaT = p2deltaT;
 						lastFallingZ = 0;
-						if (mode == "practice"){
-							ball.dirX  = 0;
-							player2.raquete.position.z -= (boundingBox.max.z - boundingBox.min.z) * 0.1;
-							stepZ = -2;
-						}
 					}
 					if (floorY != 0 && !touchNet && stepZ <= 0 && Math.abs(player1.raquete.position.z - ball.object.position.z) < 12 && touchRaquete(player1.raquete.position.x, player1.raquete.rotation.z))
 					{
@@ -432,8 +461,6 @@ function Online({infos , mode, socket} : props) {
 						stepX = 0;
 						deltaT = p1deltaT;
 						lastFallingZ = 0;
-						if (mode == "practice")
-							player2.raquete.position.z = (boundingBox.max.z - boundingBox.min.z) * 0.5;
 					}
 					if (ball.object.position.z > tableHeight * 3 || ball.object.position.z < tableHeight * -3){
 						reset();
@@ -482,9 +509,9 @@ function Online({infos , mode, socket} : props) {
 					}
 					else{
 						if (ball.object.position.y < 45)
-							ball.moveY = 0.1;
+							ball.moveY = 0.2;
 						else if (ball.object.position.y > 55) 
-							ball.moveY = -0.1;
+							ball.moveY = -0.2;
 						ball.object.position.y += ball.moveY;
 					}
 					if (mode == "practice" && floorY > 0){

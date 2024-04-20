@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react'
+
 import {motion, AnimatePresence} from 'framer-motion'
 
 import "./gamereq.css"
 import { useNavigate } from 'react-router-dom'
+import { Socket, io } from 'socket.io-client'
+import { useEffect, useState } from 'react'
 
-interface GameRequestProps {
-    SetShow: React.Dispatch<React.SetStateAction<boolean>>;
-    gameRequestSender: {
-      avatar: string;
-      login: string;
-    };
-    onCancel: () => void;
-  }
-  
-function GameRequest({SetShow ,gameRequestSender, onCancel} : GameRequestProps) {
+function GameRequest({SetShow ,gameRequestSender, onCancel, SetgoGame, setIsSender}) {
+
+    const [gameSocket, setGameSocket] = useState(io())
 
     const backdrop = {
         visible : {opacity: 1},
@@ -30,13 +25,40 @@ function GameRequest({SetShow ,gameRequestSender, onCancel} : GameRequestProps) 
             transition : {delay: 0.5}
         }
     }
+    useEffect(()=>{
+        const getSocket = async () =>{
+            try {
+                const newsocket =  io(`${import.meta.env.VITE_url_socket}/game`, {
+                    withCredentials: true,
+                    transports: ['websocket']
+                });
+                setGameSocket(newsocket);
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
+        getSocket();
+    },[])
+
     const navigate = useNavigate(); 
+
     const handleSubmit =()=>{
-        SetShow(false);
-        navigate("/invite", { replace: true });
+        console.log("isInGame");
+        gameSocket?.emit('isInGame', gameRequestSender.login);
     }
 
-    
+    gameSocket.on('NotInGame', ()=>{
+        console.log("NotInGame");
+        SetgoGame(true);
+        SetShow(false);
+        setIsSender(false);
+        navigate("/onlineGame", { replace: true });
+    })
+    gameSocket.on('PlayerInGame', ()=>{ // Player In Game ERROORRRR
+        console.log('PlayerInGame');
+        SetShow(false);
+    })
     return (
         <AnimatePresence>
 
@@ -63,7 +85,7 @@ function GameRequest({SetShow ,gameRequestSender, onCancel} : GameRequestProps) 
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            className="ai ai-Check"
+                            class="ai ai-Check"
                         >
                             <path d="M4 12l6 6L20 6" />
                         </svg>
@@ -80,7 +102,7 @@ function GameRequest({SetShow ,gameRequestSender, onCancel} : GameRequestProps) 
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            className="ai ai-Cross"
+                            class="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
                         </svg>

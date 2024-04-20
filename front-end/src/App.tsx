@@ -8,10 +8,11 @@ import axios from 'axios';
 import { useSocket } from './component/Socket';
 import UserProfile from './component/UserProfile/UserProfile';
 import ChangeProfile from './component/ChangeInfos/ChangeInfos';
-import GameRequest from './component/Modals/GameRequest/gamereq';
 import FirstPage from './component/game/FirstPage';
 import OnlineMatching from './component/game/OnlineMatching';
 import Invite from './component/game/Invite';
+import OnAccept from './component/game/OnAccept';
+import GameRequest from './component/game/GameRequest/gamereq';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -33,7 +34,9 @@ function App() {
   useEffect(()=>{
     socket?.on('invitegame', (user)=> {
       SetSender(user);
-      SetShow(true)});
+      if (window.location.pathname != '/practice' && window.location.pathname != '/online' && window.location.pathname != '/onlineGame')
+        SetShow(true)
+      });
       setTimeout(() => {
         SetShow(false);
       }, 3000);
@@ -73,10 +76,16 @@ function App() {
   }
 
  
-  useEffect(()=>{
-    socket?.on('acceptGame', (recieverName) => {
-      console.log("app acceptGame");
-  
+
+  const [isSender, setIsSender] = useState(false);
+  const [recieverName, setReacieverName] = useState("");
+    useEffect(()=>{
+      socket?.on('acceptGame', (recieverName) => {
+      console.log("acceptGame");
+      setReacieverName(recieverName);
+      setIsSender(true);
+      SetgoGame(true);
+      console.log("isSender : ", isSender);
     })
   } ,[socket])
 
@@ -84,7 +93,14 @@ function App() {
   return (
     <Router>
         {
-          showRequest && gameRequestSender != null &&  <GameRequest SetShow={SetShow} gameRequestSender={gameRequestSender}  onCancel={canceling}/>
+          (showRequest) && gameRequestSender != null &&  <GameRequest SetShow={SetShow} 
+            gameRequestSender={gameRequestSender}  
+            onCancel={canceling}
+            SetgoGame={SetgoGame}
+            setIsSender={setIsSender}/>
+        }
+        {
+          isSender && <OnAccept setIsSender={setIsSender}/>
         }
         {
           errorMessage && (
@@ -116,7 +132,7 @@ function App() {
                 
                 <Route path="/practice" element={<FirstPage infos={[]} mode='practice' goGame={goGame}/>} />
                 <Route path="/online" element={<OnlineMatching goGame={goGame}/>} />
-                <Route path="/invite" element={<Invite baseSocket={socket} inviter={gameRequestSender} />} /> 
+                <Route path="/onlineGame" element={<Invite  inviter={gameRequestSender} isSender={isSender} recieverName={recieverName} goGame={goGame} setIsSender={setIsSender} />} /> 
                 
                 <Route path="/Chat" element={<Chat user={user} setUser={setUser}/>} />
                 {user && <Route path="/Changeinfo" element={<ChangeProfile user={user} />} />}
