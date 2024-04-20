@@ -200,7 +200,7 @@
     grid-row-gap: 0px;
     justify-items: center;
     align-items: center;
-    border-bottom: 1px solid #8BD9D1;
+
 }
 
 
@@ -208,17 +208,18 @@
  .member:hover{
     cursor: pointer;
     width: 100%;
-    background: rgba(139, 217, 209, 0.3);
+    background: rgba(29, 242, 182, 0.5);
     transition: 0.5s ease;
-    border: 1px solid #8BD9D1;
+
 } 
 
 .member-active {
     cursor: pointer;
     width: 100%;
-    background: rgba(139, 217, 209, 0.3);
+    background: rgba(29, 242, 182, 0.5);
+
     transition: 0.5s ease;
-    border: 1px solid #8BD9D1;
+
 }
 
 .amis-role{
@@ -227,7 +228,7 @@
     place-items: center;
     width: fit-content;
     height: fit-content;
-    background: #8BD9D1;
+    background: #b3d6d3;
     padding: 3px 7px 3px 7px;
     margin-right: 40%;
     border-radius: 5px;

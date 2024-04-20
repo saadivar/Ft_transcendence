@@ -31,8 +31,9 @@
     grid-row-gap: 0px;
     border-radius: 5px;
     overflow: hidden;
-    background: rgba(139, 217, 209, 0.3);
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.29);
+    background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+    box-shadow:   -3px -3px 10px rgba(13, 21, 38, 1),
+                  3px 3px 10px rgba(22, 89, 83, 1);
 }

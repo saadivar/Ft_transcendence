@@ -14,7 +14,8 @@
     position: relative;
     justify-items: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.16);
+    background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgb(10, 39, 37));
+
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 

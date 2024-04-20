@@ -1,5 +1,5 @@
 
-.matches-list-container{
+.modes-list-container{
   grid-area: 2 / 1 / 3 / 2;
   display: grid;
   grid-template-columns: 1fr ;
@@ -22,97 +22,32 @@
 }
 
 
-.matches-list {
+.mode-list {
   
   grid-area: 2 / 1 / 3 / 2; 
   position: relative;  
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
+  width: 80%;
   
 }
 
-.card 
+.mode 
 {
     position: relative;
-    height: 27vh;
-    width: 12vw;
+    height: 20vh;
+    width: 10vw;
     background-image: none;
     border-radius: 20px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     margin: 6% 0% 0% 18%;
-    background: rgba(22, 89, 83,0.1);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    border: 1px solid #8BD9D1;
+    border: 0.2px solid #8BD9D1;
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat; 
     object-fit: cover; 
+    background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+    box-shadow:   5px 5px 10px rgba(13, 21, 38, 1),
+                  -5px -5px 10px rgba(22, 89, 83, 1);
 }
 
-  .my-content{
-    grid-area: 1 / 1 / 2 / 2;
-    position: relative;
-  }
-
-  .component-content{
-    grid-area: 1 / 2 / 2 / 3; 
-    position: relative;
-    
-  }  
-
-  .my-card-img{
-    position: absolute;
-    border-radius: 50%;
-    height: 5vmin;
-    width: 5vmin;
-    top: 15%;
-    left: 23%;
-    border: 1px solid white;
-  }
-
-  .com-card-img{
-    position: absolute;
-    border-radius: 50%;
-    height: 5vmin;
-    width: 5vmin;
-    top: 15%;
-    left: 42%;
-    border: 1px solid white;
-  }
-
-  .com-card-res{
-    position: absolute;
-    top: 55%;
-    left: 54%;
-    font-size: 2.5vmin;
-    color: aliceblue;
-    
-  }
-  
-  .my-card-res {
-    position: absolute;
-    top: 55%;
-    left: 32%;
-    font-size: 2.5vmin;
-    color: aliceblue;
-  }
-
-.next {
-    position: absolute;
-    size: 2vmin;
-    color: aliceblue;
-    top: 39.5%;
-}
-
-.prev
-{
-  size: 2vmin;
-  position: absolute;
-  color: aliceblue;
-  top: 39.5%;
-  left: -1%;
-}

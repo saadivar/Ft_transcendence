@@ -10,24 +10,30 @@ const GameModes = ({SetgoGame}) => {
 
 return (
 
-    <div className='matches-list-container'>
+    <div className='modes-list-container'>
         
         <div className='title-history'>
-            <p>List Matches</p>
+            <p>Game Modes</p>
         </div>
 
-        <div className="matches-list">
-        <Link to={{ pathname: "/practice"}}>
-            <div className='match' onClick={SetgoGame(true)}>
-                <div className=" card"></div>
-            </div>
-        </Link>
+        <div className="mode-list">
+
+                <div className='mode' onClick={SetgoGame(true)}>
+                    <Link to={{ pathname: "/practice"}}>
+                        <div className="card-mode"><p>PLAY VS BOOT</p></div>
+                    </Link>
+                </div>
+            
+                <div className='mode' onClick={SetgoGame(true)}>
+                    <Link to="/online">
+                        <div className="card-mode"><p>PLAY VS USER</p></div>
+                    </Link>
+                </div>
         
-        <Link to="/online">
-            <div className='match' onClick={SetgoGame(true)}>
-                <div className=" card"></div>
+            <div className='mode' onClick={SetgoGame(true)}>
+                <div className="card-mode"></div>
             </div>
-        </Link>
+
         </div>
     </div>
   );

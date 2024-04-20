@@ -27,6 +27,7 @@ const Friend = ( { avatar, login , user}:FriendProps ) => {
     <div className='friend' >
     
 
+
       <div className='profileImg'>
         <img src={avatar} alt={login} />
       </div>

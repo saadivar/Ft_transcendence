@@ -16,11 +16,11 @@
     opacity: 0;
     transition: opacity 0.3s ease;
     color: #000000;; 
-    background-color: #86fff5; 
+    background-color:  #ffffff;; 
     padding: 1vmin 1vmin; 
     border-radius: 4px; 
     position: absolute;
-    top: calc(100% + 8px); 
+    top: calc(80% + 2px); 
     left: 50%; 
     transform: translateX(-50%);
     white-space: nowrap; 

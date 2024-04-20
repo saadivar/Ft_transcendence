@@ -10,7 +10,7 @@
 }
 
 .stat-title{
-    margin: -29vmin 0vmin 0vmin 49vmin;
+    margin: -26vmin 0vmin 0vmin 49vmin;
     color: white;
     font-size: 2vmin;
 }
@@ -18,15 +18,19 @@
 .ImgProfile {
     top: 6%;
 }
-
+.player-infos{
+    margin-top: -1vmin;
+}
 .stats-container {
     grid-area: 1 / 1 / 2 / 2;
     position: relative;
     border-radius: 10px;
     margin-top: 7.5vmin;
     height: 84%;
-    background: rgba(22, 89, 83,0.1);
-    border: 1px solid #8BD9D1;
+    background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+    box-shadow:   5px 5px 10px rgba(13, 21, 38, 1),
+                  -5px -5px 10px rgba(22, 89, 83, 1);
+
     margin-left: -2.3vmin;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -44,6 +48,9 @@
 
 .loses{
     grid-area: 1 / 3 / 2 / 4;
+}
+.new-game-container {
+    height: 90%;
 }
 
 .matches-tit{
@@ -78,8 +85,10 @@
     height: 76%;
     width: 80%;
     border-radius: 10px;
-    border: 1px solid #8BD9D1;
-    background: rgba(22, 89, 83, 0.1);
+    background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+    box-shadow:   -5px -5px 10px rgba(13, 21, 38, 1),
+                  5px 5px 10px rgba(22, 89, 83, 1);
+  
     position: absolute;
     margin-top: 10.5vmin;
     margin-left: 4vmin;

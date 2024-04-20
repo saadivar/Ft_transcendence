@@ -91,6 +91,7 @@
     height: 8vmin;
     margin-left: 3vmin;
     border-radius: 50%;
+    cursor: pointer;
     text-align: center;
     border: 2px solid #8BD9D1; 
     object-fit: cover;

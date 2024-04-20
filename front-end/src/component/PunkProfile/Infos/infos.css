@@ -29,8 +29,8 @@
     margin-top: 4%;
     /* border-radius: 30px; */
     background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
-    box-shadow:   5px 5px 10px rgba(13, 21, 38, 1),
-                  -5px -5px 10px rgba(22, 89, 83, 1);
+    box-shadow:   -5px -5px 10px rgba(13, 21, 38, 1),
+                  5px 5px 10px rgba(22, 89, 83, 1);
     margin-left: -1.5%;
     
 }
@@ -109,6 +109,7 @@
     text-align: center;
     border: 2px solid #8BD9D1; 
     object-fit: cover;
+    cursor: pointer;
 }
 
 .name {

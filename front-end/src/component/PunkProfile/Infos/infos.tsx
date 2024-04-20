@@ -5,6 +5,7 @@ import pl from "../../../assets/logo1.svg"
 
 import EditProfile from "../../Modals/editprofile/editprofile";
 import { useNavigate } from "react-router-dom";
+import Popup from "../../Modals/popup/Popup";
 interface User {
   avatar : string
   login : string
@@ -34,9 +35,11 @@ const Infos = ({user} : UserProps) => {
         <div className="player-infos">
           {user ? (
             <>
+                <Popup tooltip="visite profile">
               <div className="ImgProfile">
-                <img src={user.avatar} alt="Profile" onClick={goToprofile} />
+                  <img src={user.avatar} alt="Profile" onClick={goToprofile} />
               </div>
+                </Popup>
               <div className="name">
                 <p>{user.login}</p>
               </div>
