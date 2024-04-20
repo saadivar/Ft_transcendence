@@ -83,20 +83,17 @@
   
   .achiv {
     height: 76%;
-    width: 80%;
+    width: 56%;
     border-radius: 10px;
-    background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
-    box-shadow:   -5px -5px 10px rgba(13, 21, 38, 1),
-                  5px 5px 10px rgba(22, 89, 83, 1);
-  
+    background-image: url('../../assets/fog.png');
     position: absolute;
-    margin-top: 10.5vmin;
-    margin-left: 4vmin;
+    margin-top: 11.5vmin;
+    margin-left: 12vmin;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    overflow-y: auto;
+    /* overflow-y: auto; */
   }
   
 .achievement-item {
@@ -105,7 +102,8 @@
 }
 
 .achievement-item img {
-    width: 19vmin;
+    width: 9vmin;
+
     height: auto;
     border-radius: 5px;
     cursor: pointer;
@@ -113,6 +111,6 @@
 
 .achi-title{
     color: white;
-    margin: 7vmin 0vmin 0vmin 15vmin;
+    margin: 7vmin 0vmin 0vmin 19vmin;
     font-size: 2vmin;
 }

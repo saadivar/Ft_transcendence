@@ -1,4 +1,5 @@
 
+
 .modes-list-container{
   grid-area: 2 / 1 / 3 / 2;
   display: grid;
@@ -7,21 +8,24 @@
   justify-items: center; 
   align-items: center; 
   position: relative;
-  margin-top: -2vmin;
-  margin-left: 6%;
+  margin-top: -7vmin;
+  margin-left: 0%;
 }
 
-.title-history{
+.title-mode{
   grid-area: 1 / 1 / 2 / 2;
   text-align: center;
-  top: 30%;
+  top: 94%;
   position: absolute;
-  font-size: x-large;
+  font-size: 3vmin;
   color: white;
-  right: 1%;
+  right: -6%;
 }
 
-
+.linkstyling{
+  text-decoration: none; 
+  color: inherit; 
+}
 .mode-list {
   
   grid-area: 2 / 1 / 3 / 2; 
@@ -36,10 +40,10 @@
 .mode 
 {
     position: relative;
-    height: 20vh;
+    height: 18vh;
     width: 10vw;
     background-image: none;
-    border-radius: 20px;
+    border-radius: 50px;
     margin: 6% 0% 0% 18%;
     border: 0.2px solid #8BD9D1;
     background-size: cover; 
@@ -49,5 +53,42 @@
     background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
     box-shadow:   5px 5px 10px rgba(13, 21, 38, 1),
                   -5px -5px 10px rgba(22, 89, 83, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
+.card-mode {
+  margin: 0; 
+  text-align: center;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+
+}
+
+.card-mode > p {
+  margin: 0; 
+  text-align: center;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.player{
+  background-image: url('../../../assets/PLAYER.png');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  object-fit: cover; 
+}
+.bot{
+  background-image: url('../../../assets/VSBOT.png');
+  background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat; 
+    object-fit: cover; 
+}

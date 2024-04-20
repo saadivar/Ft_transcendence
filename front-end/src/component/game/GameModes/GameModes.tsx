@@ -12,21 +12,21 @@ return (
 
     <div className='modes-list-container'>
         
-        <div className='title-history'>
+        <div className='title-mode'>
             <p>Game Modes</p>
         </div>
 
         <div className="mode-list">
 
-                <div className='mode' onClick={SetgoGame(true)}>
-                    <Link to={{ pathname: "/practice"}}>
-                        <div className="card-mode"><p>PLAY VS BOOT</p></div>
+                <div className='mode player' onClick={SetgoGame(true)}>
+                    <Link  className='linkstyling' to={{ pathname: "/practice"}}>
+                        <div className="card-mode"></div>
                     </Link>
                 </div>
             
-                <div className='mode' onClick={SetgoGame(true)}>
-                    <Link to="/online">
-                        <div className="card-mode"><p>PLAY VS USER</p></div>
+                <div className='mode bot' onClick={SetgoGame(true)}>
+                    <Link to="/online" className='linkstyling'>
+                        <div className="card-mode"></div>
                     </Link>
                 </div>
         

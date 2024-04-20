@@ -20,6 +20,8 @@ interface PunkProps {
 }
 const Punk = ({ SetgoGame , user, setUser} : PunkProps) => {
   
+
+
   if(user == null){
 
     useEffect(() => {
@@ -34,7 +36,6 @@ const Punk = ({ SetgoGame , user, setUser} : PunkProps) => {
       fetchData();
     }, []);
   }
-
 
   return (
     <div>

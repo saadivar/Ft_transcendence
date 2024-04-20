@@ -17,7 +17,7 @@ interface FriendInfoProps {
   user: User | null;
   profile: any;
   UserSelceted: (
-     user : User | null
+     user : any
   ) => void;
 }
 

@@ -154,13 +154,25 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
 
 
   }
-  @SubscribeMessage('autocomplete')
+
+@SubscribeMessage('autocomplete')
   async handleautocomplete(client: Socket, str: string) {
+    const user = await this.authService.findUser(client.data.user.id);
    let userProfiles
     if(str !== ''){
 
       const users = await this.authService.findAllUserswith(str);
-      userProfiles = users.map(user => ({
+      const us = await this.friendservice.findallblocked(user);
+      const blockingme = await this.friendservice.findallthatblockedme(user);
+      const filteredUsers = users.filter(user => {
+        return !us.some(blockedUser => blockedUser.id === user.id);
+      });
+      
+      const filteredUsers1 = filteredUsers.filter(user => {
+        return !blockingme.some(blockedUser => blockedUser.id === user.id);
+      });
+      userProfiles = filteredUsers1.map(user => (
+        {
         login: user.login,     
         avatar: user.avatar   
     }));

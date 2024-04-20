@@ -127,7 +127,11 @@ const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , 
             {
               RoomNotifs && (RoomNotifs.find(notification => notification.roomname === room.name)?.count ?? 0) > 0 &&
               <div className="room-notifications">
-                {RoomNotifs.find(notification => notification.roomname === room.name)?.count}
+                {
+                   RoomNotifs && RoomNotifs.find(notification => notification.roomname === room.name)?.count > 9
+                    ? "+9"
+                    : RoomNotifs.find(notification => notification.roomname === room.name)?.count
+                }
               </div>
             }
           </div>

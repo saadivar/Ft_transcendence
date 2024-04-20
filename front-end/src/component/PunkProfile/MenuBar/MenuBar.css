@@ -5,6 +5,20 @@
 
 }
 
+.allnotif{
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  background: rgb(172, 6, 6);
+  padding: 0.4vmin 0.6vmin;
+  border-radius: 5px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.2vmin;
+  margin-left: 37%;
+  margin-top: -30%;
+}
+
 .Menu-container {
   height: 83%;
   width: 33%;
@@ -23,7 +37,7 @@
 
 
 
-.icon {
+.icon  {
   height: 3%;
   width: 51%;
   padding: 0.6vmin;

@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import MenuBar from '../PunkProfile/MenuBar/MenuBar';
 import Infos from '../PunkProfile/Infos/infos';
-import ListMatch from '../PunkProfile/MatchHistory/Match';
+import ListMatch from './MatchHistory/Match';
 
 import "./UserProfile.css";
 import win1 from '../../assets/1win.png'

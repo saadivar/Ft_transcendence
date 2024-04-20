@@ -1,9 +1,11 @@
 import React, { useEffect, useState, ChangeEvent, KeyboardEvent  } from "react";
 import "./MenuBar.css";
 import logo from "../../../assets/logoPIngpong.svg";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import { useSocket } from "../../Socket";
+import { Prev } from "react-bootstrap/esm/PageItem";
 interface ModalProps {
   onClose: () => void;
   isTwoFactorEnabled: boolean;
@@ -195,7 +197,7 @@ function Modal({ onClose, isTwoFactorEnabled } : ModalProps) {
 
 const MenuBar = ({ user, setUser } : MenuBarProps) => {
   const [Settings, SetSettings] = useState(false);
-
+  const location = useLocation()
 
   const navigate = useNavigate()
   const handleModal = () => {
@@ -208,6 +210,32 @@ const MenuBar = ({ user, setUser } : MenuBarProps) => {
     navigate("/", { replace: true });
 
   }
+const socket = useSocket()
+  const [allnotifs, setallnotifs] = useState('');
+  const [up, setUp] = useState(0)
+
+  useEffect(()=>{
+    socket?.on('notif',()=> {setUp((prevIsbool)=>prevIsbool + 1)})
+  })
+  if (location.pathname !== "/chat"){
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+            const resp = await axios.get(`${import.meta.env.VITE_url_back}/api/auth/numofnotif`, { withCredentials: true });
+            const num = resp.data
+            if(num > 9)
+              setallnotifs('+9');
+            else
+              setallnotifs(num.toString());
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+          }
+        };
+        fetchData();
+      }, [location.pathname, up]);
+  }
+
 
   return (
     <>
@@ -239,6 +267,7 @@ const MenuBar = ({ user, setUser } : MenuBarProps) => {
               </div>
 
               <div className="icon ">
+                {allnotifs.length > 0 && allnotifs != '0' && <div className="allnotif">{allnotifs}</div>}
                 <Link to="/chat">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

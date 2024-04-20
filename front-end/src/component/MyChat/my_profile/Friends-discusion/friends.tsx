@@ -74,7 +74,11 @@ const Friends_discusion = ({
 
             <p className="last-message">{friend.lastmessagecontent}</p>
           </div>
-          {friend.id !== selectedFriendId && MesagesById[friend.id] > 0 && <div className="amis-notifications">{MesagesById[friend.id]}</div>}
+          { 
+            friend.id !== selectedFriendId && 
+            MesagesById[friend.id] > 0 && 
+            <div className="amis-notifications"> {MesagesById[friend.id] > 9 ? "+9" : MesagesById[friend.id]}</div>
+          }
         </div>
       ))}
     </div>
