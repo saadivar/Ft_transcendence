@@ -45,3 +45,20 @@
     align-items: center;
     z-index: 100;
   }
+
+  .not-found-container {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+    text-align: center; 
+    color: #ffffff; 
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+.not-found-title {
+  font-size: 48px;
+  margin-top: 38%;
+}
+

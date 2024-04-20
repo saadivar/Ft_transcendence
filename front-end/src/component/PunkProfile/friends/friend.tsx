@@ -58,10 +58,7 @@ const Friends = () => {
     <div className='friends-container'>
       {myFriends ? (
         <>
-          <div className='search-friend'>
-            <input className="searchInput" type='text' placeholder='Search for a friend...' />
-            <span className="material-symbols-outlined"><div className='iconSearch'>search</div></span>
-          </div>
+          <div className='friend-title'>Friends</div>
 
           <div className='friends-list'>
             {myFriends ? (

@@ -49,7 +49,13 @@ export class GameGateway implements OnGatewayInit {
       // console.log(client.data.user.login," already in game");
     }
   }
-
+  @SubscribeMessage('starting')
+  starting(client : Socket, roomName : string){
+    this.rooms.get(roomName).starting++;
+    console.log("staring : ", this.rooms.get(roomName).starting);
+    if (this.rooms.get(roomName).starting > 1)
+      this.server.to(roomName)?.emit('starting');
+  }
   @SubscribeMessage('InviterJoining')
   inviterJoining(client : Socket, roomName : any){
     roomName = roomName.userlog;

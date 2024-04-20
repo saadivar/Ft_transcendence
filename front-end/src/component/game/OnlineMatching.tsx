@@ -4,8 +4,11 @@ import Online from "./Online";
 import './style/StartGame.css'
 import { Navigate, useNavigate } from "react-router-dom";
 
+interface props{
+    goGame : Boolean;
+}
 
-function OnlineMatching({goGame}){
+function OnlineMatching({goGame} : props){
 
 
     if(!goGame){
@@ -35,9 +38,7 @@ function OnlineMatching({goGame}){
         getSocket();
     },[])
     window.addEventListener('popstate', function(event) {
-        socket.close();
-        setStart(false);
-        console.log("END GAME")
+        socket.emit('exit');
     });
     socket?.on('start', (roomInfos)=>{
         setInfos(roomInfos);
@@ -63,7 +64,7 @@ function OnlineMatching({goGame}){
             <div className="spinner-border" style={{color : '#DB8C1B', width: '3rem', height: '3rem'}} role="status"></div>
             <div className="spinner-grow" style={{color : '#DB8C1B' , width: '3rem', height: '3rem'}} role="status"></div>
             </div>
-            <button id="exit" onClick={()=>{window.location.reload()}}> Exit </button>
+            <button id="exit" onClick={()=>{socket.emit('exit')}}> Exit </button>
         </div>);
     }
    

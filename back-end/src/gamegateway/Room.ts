@@ -8,9 +8,9 @@ export class Room{
     client2Name : string;
     client1Avatar : string;
     client2Avatar : string;
-
-
+    starting : number;
     constructor(name : string){
         this.name = name;
+        this.starting = 0;
     }
 }

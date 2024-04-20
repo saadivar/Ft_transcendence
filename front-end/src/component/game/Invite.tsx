@@ -67,9 +67,7 @@ export default function Invite({inviter, isSender, recieverName, goGame, setIsSe
         });
     // },[])
     window.addEventListener('popstate', function(event) {
-        gameSocket.close();
-        setStart(false);
-        console.log("END GAME")
+        gameSocket.emit('exit');
     });
     gameSocket.on('exit', ()=>{
         console.log("Exit Catched")

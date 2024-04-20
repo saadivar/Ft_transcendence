@@ -36,7 +36,7 @@ const Punk = ({ SetgoGame , user, setUser} : PunkProps) => {
       fetchData();
     }, []);
   }
-
+  
   return (
     <div>
       {user && (

@@ -65,17 +65,37 @@ function Online({infos , mode, socket} : props) {
 		const player2Score = document.createElement('span');
 		const scoreInfo = document.createElement('div');
 		exit = document.createElement('button');
-		const starting = document.createElement('div');
-
+		const stopControl = document.createElement('button');
+		const fixCamera = document.createElement('button');
+		const starting = document.createElement('img');
+		starting.src =  "src/component/game/assets/starting1.gif";
+		starting.id = 'starting';
+		fixCamera.id = 'fix-camera';
+		fixCamera.innerText = "Fix Camera";
+		stopControl.id = 'stop-control';
+		stopControl.innerText = "disable Control";
+		stopControl.onclick = () => {
+			stopControl.innerText = (stopControl.innerText == "disable Control" ? "enable Control" : "disable Control");
+			controls.enablePan = !controls.enablePan;
+			controls.enableZoom = !controls.enableZoom;
+			controls.enableRotate = !controls.enableRotate;
+		}
 		exit.id = 'exit-button';
 		exit.innerText = "Exit";
-		// const navigate = useNavigate();
-		// navigate("/Home", { replace: true });
+		fixCamera.onclick = () => {
+			camera.position.set(
+				0,
+				70,
+				-150 );
+			camera.lookAt(0, 70, -100);
+		}
 		exit.onclick = () => {
 			root?.removeChild(renderer.domElement);
 			root?.removeChild(container);
 			root?.removeChild(exit);
-			// root?.removeChild(endGame);
+			root?.removeChild(stopControl);
+			root?.removeChild(fixCamera);
+			// root?.removeChild(starting);
 
 			scene.children.forEach(child => {
 				scene.remove(child);
@@ -132,6 +152,10 @@ function Online({infos , mode, socket} : props) {
 			root?.removeChild(container);
 			root?.removeChild(exit);
 			root?.removeChild(endGame);
+			root?.removeChild(stopControl);
+			root?.removeChild(fixCamera);
+			// root?.removeChild(starting);
+
 
 			scene.children.forEach(child => {
 				scene.remove(child);
@@ -168,6 +192,9 @@ function Online({infos , mode, socket} : props) {
 			root?.removeChild(container);
 			root?.removeChild(exit);
 			root?.removeChild(endGame);
+			root?.removeChild(stopControl);
+			root?.removeChild(fixCamera);
+			// root?.removeChild(starting);
 
 			scene.children.forEach(child => {
 				scene.remove(child);
@@ -204,6 +231,7 @@ function Online({infos , mode, socket} : props) {
 		const	glbloader = new GLTFLoader();
 		let		boundingBox : any;
 		let		table : any;
+		let		stadium : any;
 
 		let ball = {
 			dirX : 0,
@@ -220,6 +248,10 @@ function Online({infos , mode, socket} : props) {
 			root.appendChild(renderer.domElement);
 			root.appendChild(container);
 			root.appendChild(exit);
+			root.appendChild(stopControl);
+			root.appendChild(fixCamera);
+			// root.appendChild(starting);
+
 
 		} else {
 			console.log("Element with ID 'root' not found.");
@@ -241,55 +273,38 @@ function Online({infos , mode, socket} : props) {
 			})
 			setTimeout(() =>{
 				glbloader.load( 'src/component/game/assets/tennis_ball_blue.glb', function ( gltf : any ) {
-				
 					ball.object = gltf.scene;
 					ball.object.position.y = 50;
 					ball.object.position.z =  -(boundingBox?.max.z - boundingBox?.min.z) * 0.4;
 					ball.object.position.x = 30;
 					ball.object.scale.set(2, 2, 2);
-					scene.add( ball.object );
-						
+					scene.add( ball.object );		
 				});
-				// ball.object.position.y = 50;
-				// ball.object.position.z =  -(boundingBox?.max.z - boundingBox?.min.z) * 0.4;
-				// ball.object.position.x = 30;
-				// ball.object.scale.set(20, 20, 20);
-				// scene.add( ball.object );
 				glbloader.load( 'src/component/game/assets/raquete.glb', function ( gltf : any ) {
-				
 					player1.raquete = gltf.scene;
 					player1.raquete.scale.set(6, 6, 6);
 					player1.raquete.position.set(0, 40, (boundingBox?.max.z - boundingBox?.min.z) * -0.5);
-					scene.add( player1.raquete );
-						
+					scene.add( player1.raquete );	
 				});
 				glbloader.load( 'src/component/game/assets/raquete.glb', function ( gltf : any ) {
-				
 					player2.raquete = gltf.scene;
 					player2.raquete.scale.set(6, 6, 6);
-					// boundingBox = new THREE.Box3().setFromObject(table);
-			
 					player2.raquete.position.set(0, 40, (boundingBox?.max.z - boundingBox?.min.z) * 0.5);
 					scene.add( player2.raquete );
 				});
 			}, 1000)
 
 			glbloader.load('src/component/game/assets/basketball_-_aizismus.glb', (gltf) => {
-
-				gltf.scene.rotation.y = Math.PI / 2;
-				gltf.scene.position.x = -1760;
-				gltf.scene.position.z = 2435;
-				gltf.scene.rotation.y -= Math.PI/2;
-				console.log("ADD scene");
-				scene.add(gltf.scene);
+				stadium = gltf.scene;
+				stadium.rotation.y = Math.PI / 2;
+				stadium.position.x = -1760;
+				stadium.position.z = 2435;
+				stadium.rotation.y -= Math.PI/2;
+				console.log("EMITTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+				socket.emit('starting', infos[0]);
+				scene.add(stadium);
 			})
-			setTimeout(() => {
-				starting.innerHTML = "";
-			}, 4000);
-			
-
 			renderer.domElement.addEventListener('mousemove', onMouseMove);
-
 			let stepX = 0;
 			let stepZ = -1.8;
 			function onMouseMove(event : MouseEvent) {
@@ -345,7 +360,6 @@ function Online({infos , mode, socket} : props) {
 						initclientX = event.clientX ;
 						initClientY = event.clientY;
 					}
-
 			}
 			function	reset(){
 				ball.object.position.y = 50;
@@ -406,14 +420,13 @@ function Online({infos , mode, socket} : props) {
 			}
 
 			function touchRaquete(raqueteX : number, raqueteRotZ : number){
-				if (ball.object.position.x <= 0 && raqueteX <= 0 && raqueteRotZ == 0)
-					return((Math.abs(ball.object.position.x - raqueteX)) < 14 ? true : false);
+				if (raqueteRotZ == 0){
+					return((Math.abs(ball.object.position.x - raqueteX)) < 6 ? true : false);
+				}
 				else if (ball.object.position.x <= 0 && raqueteX <= 0 && raqueteRotZ != 0)
-					return((Math.abs(ball.object.position.x - (raqueteX - 7)) < 10) ? true : false);
-				else if (ball.object.position.x >= 0 && raqueteX >= 0 && raqueteRotZ == 0)
-					return((Math.abs(ball.object.position.x - raqueteX)) < 14 ? true : false);
+					return((Math.abs(ball.object.position.x - (raqueteX - 7)) < 12) ? true : false);
 				else if (ball.object.position.x >= 0 && raqueteX >= 0 && raqueteRotZ != 0)
-					return((Math.abs(ball.object.position.x - (raqueteX + 7)) < 10) ? true : false);
+					return((Math.abs(ball.object.position.x - (raqueteX + 7)) < 12) ? true : false);
 				return(false);
 			}
 
@@ -432,7 +445,7 @@ function Online({infos , mode, socket} : props) {
 				maxX = tableWidth / 2.5;
 				minX = tableWidth / -2.5;
 			}
-			if (ball.object && table && player1.raquete && player2.raquete && (index == 0 || mode == "practice"))
+			if (start && ball.object && table && player1.raquete && player2.raquete && (index == 0 || mode == "practice"))
 			{
 					if (floorY != 0 &&  !touchNet && stepZ >= 0 && Math.abs(player2.raquete.position.z - ball.object.position.z) < 12 && touchRaquete(player2.raquete.position.x, player2.raquete.rotation.z))
 					{
@@ -500,9 +513,9 @@ function Online({infos , mode, socket} : props) {
 								lastFallingZ = ball.object.position.z;
 							up = true;
 							if (stepZ > 0)
-								middle = ball.object.position.z + falligPoint / 1.2;
+								middle = ball.object.position.z + falligPoint // *1.2;
 							else
-								middle = ball.object.position.z - falligPoint / 1.2;
+								middle = ball.object.position.z - falligPoint // *1.2;
 							deltaT = 1/50; 
 						}
 						
@@ -577,7 +590,11 @@ function Online({infos , mode, socket} : props) {
 				player2.raquete.position.z = -pos.z;
 				player2.raquete.rotation.copy(rot);
 			})
-
+			let start = false;
+			socket.on('starting', ()=>{
+				start = true;
+				scene.fog = null;
+			})
 
 			socket.on('index', (i) =>{
 				console.log("index : ", i);
@@ -596,12 +613,12 @@ function Online({infos , mode, socket} : props) {
 		}
 		function base() {
 			scene.background = new THREE.Color( 0x000000 );
+			scene.fog = new THREE.Fog( 0x000000, 50, 500 );
 
-			const hemiLight = new THREE.HemisphereLight( 0x999999, 0x999999, 5 );
+			const hemiLight = new THREE.HemisphereLight( 0x777777, 0x777777, 5 );
 			hemiLight.position.set( 0, 500, 0 );
 			scene.add( hemiLight );
-
-			const dirLight = new THREE.DirectionalLight( 0x999999, 5 );
+			const dirLight = new THREE.DirectionalLight( 0x777777, 5 );
 			dirLight.position.set( 0, 500, 100 );
 			dirLight.castShadow = true;
 			dirLight.shadow.camera.top = 180;
