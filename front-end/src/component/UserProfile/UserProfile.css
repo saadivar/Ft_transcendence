@@ -63,6 +63,7 @@
     color: white;
     font-size: 3vmin;
 }
+
 .achievements-container {
     grid-area: 1 / 2 / 3 / 3;
     display: grid;

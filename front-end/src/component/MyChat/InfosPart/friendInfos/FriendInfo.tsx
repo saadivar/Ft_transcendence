@@ -10,13 +10,14 @@ interface User {
   isTwoFactorAuthenticationEnabled : boolean
   avatar: string;
   login: string;
+  status: string;
 }
 
 interface FriendInfoProps {
   user: User | null;
   profile: any;
   UserSelceted: (
-     user : User 
+     user : User | null
   ) => void;
 }
 

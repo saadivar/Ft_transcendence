@@ -1,59 +1,49 @@
 
 .menuB {
     grid-area: 1 / 1 / 2 / 2;
-    font-family: "Inter", sans-serif;
-    line-height: 3.5;
-    min-height: 100vh;
     position: relative;
 
 }
 
 .Menu-container {
-    position: absolute;
-    text-align: center;
-	  background-color:rgba(22, 89, 83, 0.3);;
-    display: flex;
-    flex-direction: column;
-	  box-shadow: 0 10px 50px 0 rgba(5, 4, 62, 0.25);
-    height: 82%;
-    width: 30%;
-    left: 10%;
-    top: 7%;
-    padding-bottom: 5px;
-    border-radius: 5px;
-    justify-content: center;
-     align-items: center;
-}
-
-.logo > img {
-    position: relative;
-    bottom: 30%;
+  height: 83%;
+  width: 33%;
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+  box-shadow: 5px 5px 10px rgba(13, 21, 38, 1), -5px -5px 10px rgba(22, 89, 83, 1);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  margin-top: 8vmin;
+  margin-left: 5vmin;
 }
 
 
-
-.icons-cont {
-    display: flex;
-    flex-direction: column;
-    gap: 1vmin;
-    
-}
 
 .icon {
-   
-    color: #FFF;
-	  font-size: medium;
-    width: 2vmin;
-    height: auto;
-    padding: 1vmin 2vmin 1vmin 2vmin;
-    border-radius: 5px;
+  height: 3%;
+  width: 51%;
+  padding: 0.6vmin;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.icon:hover{
+  background-color: #1DF2B6;
+  transition: ease 1s;
+}
+.icon-logo{
+  height: 8%;
+  width: 100%;
+
 }
 
-.icon:hover {
-    background: rgba(29, 242, 182, 0.5);
-    transition: 1s ease;
-    cursor: pointer;
+.icon .elem {
+  color: rgb(148, 148, 148);
 }
+
 
 
 
@@ -167,4 +157,11 @@
   background: rgb(36, 185, 185);
   cursor: pointer;
   transition: 1s ease;
+}
+@media screen and (max-width: 768px) {
+  .menuB {
+    height: 95%;
+    margin-top: 15%;
+  }
+
 }

@@ -19,6 +19,7 @@
     grid-template-rows: 1fr 0.5fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+    height: 84%;
 }
 
 .new-game {
@@ -26,9 +27,10 @@
     position: relative;
     border-radius: 10px;
     margin-top: 4%;
-    height: 84%;
-    background: rgba(22, 89, 83,0.1);
-    border: 1px solid #8BD9D1;
+    /* border-radius: 30px; */
+    background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+    box-shadow:   5px 5px 10px rgba(13, 21, 38, 1),
+                  -5px -5px 10px rgba(22, 89, 83, 1);
     margin-left: -1.5%;
     
 }
@@ -70,7 +72,7 @@
     height: fit-content;
     border-radius: 10px;
     font-size: 2vmin;
-    padding: 5px 10px 5px 10px;
+    padding: 0.5vmin 1vmin;
     cursor: pointer;
     background: #1DF2B6;
 }
@@ -87,7 +89,7 @@
     grid-template-rows: 1fr 0.5fr 0.5fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    margin: -3% 0% 0% -14%;
+    margin-top: -4vmin;
 }
 
 .ImgProfile {
@@ -143,7 +145,7 @@
 
 .edit  p {
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 0.5vmin 1vmin;
     border-radius:  10px;
     background-color:#1DF2B6;
     display: block;
@@ -151,4 +153,18 @@
     height: fit-content;
     text-align: center;
     font-size: 1.5vmin;
+}
+
+@media screen and (max-width: 768px) {
+    .new-game-container{
+        display: none;
+    }
+    .profile-container {
+        grid-template-columns: 1fr;
+        margin-top: 37%;
+        height: 65%;
+    }
+    .player-infos{
+        margin-top : -15vmin;
+    }
 }

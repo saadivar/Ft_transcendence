@@ -21,3 +21,12 @@
     grid-column-gap: 5px; 
     grid-row-gap: 5px;
 }
+
+@media screen and (max-width: 768px) {
+    .page{
+        grid-template-columns: 1fr 0.8fr;
+    }
+    .profile{
+        grid-template-columns: 0.2fr 1fr;
+    }
+}

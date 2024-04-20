@@ -30,12 +30,13 @@
     }
     .choosename {
         grid-area: 1 / 1 / 2 / 2;
-        margin-left: 31%;
+        margin-left: 33%;
         width: fit-content;
         height: fit-content;
         background:rgba(29, 242, 182, 1);
         border-radius: 5px;
-        padding: 1%
+        padding: 1%;
+        font-size: 1.5vmin;
     }
     .maxlenght{
         position: absolute;
@@ -48,12 +49,14 @@
       }
     .chooseimg {
         grid-area: 3 / 1 / 4 / 2;
-        margin-left: 29%;
+        margin-left: 31%;
         width: fit-content;
         height: fit-content;
          background:rgba(29, 242, 182, 1);
         border-radius: 5px;
-        padding: 1%
+        padding: 1%;
+        font-size: 1.5vmin;
+
     }
     .newname {
         grid-area: 2 / 1 / 3 / 2;

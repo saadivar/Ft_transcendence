@@ -47,13 +47,7 @@ interface DefaultProps {
 
 interface RoomInfoProps {
   profile: any;
-  room: Room;
-  RoomSelceted: any;
-}
-
-interface RoomInfoProps {
-  profile: any;
-  room: Room;
+  room: Room | null;
   RoomSelceted: any;
 }
 

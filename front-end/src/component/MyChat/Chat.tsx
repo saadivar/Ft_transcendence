@@ -18,9 +18,23 @@ interface User {
   status: string;
 }
 
+interface Member {
+  id: string;
+  role: string;
+  status: string;
+  login: string;
+  avatar: string;
+}
+
 interface Room {
+  id: string;
+  type: 'public' | 'private' | 'protected';
+  password: string;
+  roomname: string;
+  lastmessagecontent: string;
   name: string;
   mestatus: string;
+  members:Member[]
 }
 
 interface Profile {
