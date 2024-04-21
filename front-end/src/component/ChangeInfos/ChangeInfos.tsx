@@ -114,6 +114,7 @@ function ChangeProfile({ user } : ChangeProfileprops)
                         <p className='chooseimg'>choose an avatar</p>
                         <div className='avatarChose'>
                             <input className='avatimg' onKeyDown={handleKeyDown} type="file" onChange={handleImageChange} /> 
+                      
                             <img className='preview'  src={imagePreviewUrl} />
                         </div>
                    

@@ -113,6 +113,8 @@ function EditProfile({ user, ShowEdit, Setedit, onCancel }: EditProfileProps) {
                         <div className='avatarChose'>
                            
                             <input className='avatimg' type="file" onChange={handleImageChange}  onKeyDown={handleKeyDown} /> 
+        
+
                             <img className='preview'  src={imagePreviewUrl} />
                         </div>
                    
