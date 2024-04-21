@@ -32,7 +32,7 @@ const Input = ({User, Profile, Room} : InputProps) => {
         if (message.trim() !== '' ) {
             
             Profile && User && socket.emit('message', {from: Profile.login , fromid: Profile.id, to: User.id, content: message });
-            // fromid:string; roomname: string; content: string 
+            // fromid:string; roomname: string; content: string
             Profile && Room && socket.emit('roommessage', { fromid: Profile.id, roomname: Room.name , content: message });
             setMessage('');
         }
