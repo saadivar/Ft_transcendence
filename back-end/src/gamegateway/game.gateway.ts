@@ -7,6 +7,9 @@ import { AuthService } from 'src/auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { Game } from 'src/typeorm/entities/game';
 import { GameService } from 'src/game/game.service';
+import { copyFileSync } from 'node:fs';
+import { WebsocketService } from 'src/realtime/Websocketservice';
+import { FriendsService } from 'src/friends/friends.service';
 
 
 let clients = [];
@@ -14,7 +17,7 @@ const inGame = [];
 
 @WebSocketGateway({ cors: true  , namespace: 'game' })
 export class GameGateway implements OnGatewayInit {
-  constructor(private readonly authService: AuthService,private readonly jwtService: JwtService,private readonly gameservice: GameService){}
+  constructor(private readonly authService: AuthService,private readonly jwtService: JwtService,private readonly gameservice: GameService,private readonly websocketService: WebsocketService, private readonly friendservice: FriendsService){}
   @WebSocketServer() server: Server;
   rooms = new Map();
   gamesList = new Map<string, string>();
@@ -30,7 +33,7 @@ export class GameGateway implements OnGatewayInit {
     }
 
   @SubscribeMessage('InviteMatching')
-  inviteMatching(client : Socket, inveterName : string){
+  async inviteMatching(client : Socket, inveterName : string){
     if (!inGame.includes(client.data.user.login)){
       const newRoom = new Room(client.data.user.login);
       newRoom.client1 = client;
@@ -39,6 +42,8 @@ export class GameGateway implements OnGatewayInit {
       this.rooms.set(client.data.user.login, newRoom);
       client.join(client.data.user.login);
       inGame.push(client.data.user.login);
+      await this.authService.changestatus(client.data.user.id,"ingame");
+  
       // console.log("client 1 create : ", client.data.user.login);
       // console.log("In game will  : ", inGame);
 
@@ -57,7 +62,7 @@ export class GameGateway implements OnGatewayInit {
       this.server.to(roomName)?.emit('starting');
   }
   @SubscribeMessage('InviterJoining')
-  inviterJoining(client : Socket, roomName : any){
+  async inviterJoining(client : Socket, roomName : any){
     roomName = roomName.userlog;
     // console.log("inGame : ", inGame);
     // console.log("client : ", client.data.user.login);
@@ -71,6 +76,8 @@ export class GameGateway implements OnGatewayInit {
       this.rooms.get(roomName).client2Avatar = client.data.user.avatar;
       client.join(roomName);
       inGame.push(client.data.user.login);
+      await this.authService.changestatus(client.data.user.id,"ingame");
+      
       this.rooms.get(roomName).client1?.emit('start', [roomName, client.data.user.login, this.rooms.get(roomName).client1Avatar, this.rooms.get(roomName).client2Avatar]);
       this.rooms.get(roomName).client2?.emit('start', [roomName, client.data.user.login, this.rooms.get(roomName).client1Avatar, this.rooms.get(roomName).client2Avatar]);
     }
@@ -81,10 +88,10 @@ export class GameGateway implements OnGatewayInit {
 
 
   @SubscribeMessage('CREATEROOM')
-  createRoom(client: Socket) {
-      console.log("client : ", client.data.user.login, " Want to Play ", "with client ==> ", clients);
+  async createRoom(client: Socket) {
+      // console.log("client : ", client.data.user.login, " Want to Play ", "with client ==> ", clients);
       if (clients?.length != 0 && clients[0] != client.data.user.login && !inGame.includes(client.data.user.login)){
-        console.log("client : ", client.data.user.login, " join ", clients);
+        // console.log("client : ", client.data.user.login, " join ", clients);
 
         this.rooms.get(clients[0]).client2 = client;
         this.rooms.get(clients[0]).client2Name = client.data.user.login;
@@ -94,6 +101,7 @@ export class GameGateway implements OnGatewayInit {
         this.rooms.get(clients[0]).client2?.emit('start', [clients[0], client.data.user.login, this.rooms.get(clients[0]).client1Avatar, this.rooms.get(clients[0]).client2Avatar]);
         clients.splice(0, 1);
         inGame.push(client.data.user.login);
+        await this.authService.changestatus(client.data.user.id,"ingame");
       }
       else if (clients.length == 0 && !inGame.includes(client.data.user.login)){
         const newRoom = new Room(client.data.user.login);
@@ -104,11 +112,13 @@ export class GameGateway implements OnGatewayInit {
         client.join(client.data.user.login);
         clients.push(client.data.user.login);
         inGame.push(client.data.user.login);
-        console.log("client : ", client.data.user.login, "  create ", clients);
+        await this.authService.changestatus(client.data.user.id,"ingame");
+      
+        // console.log("client : ", client.data.user.login, "  create ", clients);
       }
       else{
 
-        console.log(client.data.user.login , " Can't Play !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        // console.log(client.data.user.login , " Can't Play !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       }
     }
 
@@ -157,35 +167,34 @@ export class GameGateway implements OnGatewayInit {
   @SubscribeMessage('speed')
   ballSpeed(@MessageBody() data : [string, number]){
       
-    if (data[1] < -150){
-      this.rooms.get(data[0])?.client1?.emit('speed', 2.8);
-      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
-      this.rooms.get(data[0])?.client1?.emit('falligPoint', 3.5);
+    // if (data[1] < -150){
+    //   this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
+    //   this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
+    //   this.rooms.get(data[0])?.client1?.emit('falligPoint',3);
 
-    }
-    else if (data[1] < -100){
+    // }
+    // else if (data[1] < -100){
+    //   this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
+    //   this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
+    //   this.rooms.get(data[0])?.client1?.emit('falligPoint', 3);
+
+
+    // }
+    // else if (data[1] < -25){
+    //   this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
+    //   this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
+    //   this.rooms.get(data[0])?.client1?.emit('falligPoint', 3);
+    // }
+    // else if (data[1] < -2){
+    //   this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
+    //   this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
+    //   this.rooms.get(data[0])?.client1?.emit('falligPoint', 3);
+    // }
+    // else{
       this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
-      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
-      this.rooms.get(data[0])?.client1?.emit('falligPoint', 4);
-
-
-    }
-    else if (data[1] < -25){
-      this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
-      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
-      this.rooms.get(data[0])?.client1?.emit('falligPoint', 4);
-    }
-    else if (data[1] < -2){
-      this.rooms.get(data[0])?.client1?.emit('speed', 2);
-      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
-      this.rooms.get(data[0])?.client1?.emit('falligPoint', 4);
-    }
-    else{
-      this.rooms.get(data[0])?.client1?.emit('speed', 1.8);
-      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/46);
-      this.rooms.get(data[0])?.client1?.emit('falligPoint', 4);
-    }
-
+      this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/40);
+      this.rooms.get(data[0])?.client1?.emit('falligPoint', 5);
+    // }
   }
   @SubscribeMessage('score')
   scoreEvent(@MessageBody() score : any[]){
@@ -221,9 +230,9 @@ export class GameGateway implements OnGatewayInit {
         game.winner = p2;
         game.loser = p1;
       }
+      // console.log("game = ",game);
       await this.gameservice.savegamedata(game);
     this.rooms.delete(roomName);
-
   }
 
   @SubscribeMessage('endGame')
@@ -256,9 +265,9 @@ export class GameGateway implements OnGatewayInit {
 
   @SubscribeMessage('isInGame')
   isInGame(client : Socket, playerName){
-    console.log("inGame : ", inGame);
+    // console.log("inGame : ", inGame);
     if (!inGame.includes(playerName)){
-      console.log("NotInGame");
+      // console.log("NotInGame");
       client.emit('NotInGame');
     }
     else
@@ -271,12 +280,14 @@ export class GameGateway implements OnGatewayInit {
     client.emit('GamesList', valuesArray);
   }
 
-  handleDisconnect(client : Socket){
+  async handleDisconnect(client : Socket){
     const clientRoom = this.getClientRoomName(client.id);
-    // this.rooms.delete(clientRoom);
     if (clients[0] == client.data.user.login)
       clients.splice(0, 1);
     inGame.splice(inGame.indexOf(client.data.user.login), 1);
     this.server.to(clientRoom)?.emit('endGame', "You Win");
+    
+    await this.authService.changestatus(client.data.user.id,"online");
+    
   }
 }

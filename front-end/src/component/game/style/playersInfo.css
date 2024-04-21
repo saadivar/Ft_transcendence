@@ -4,31 +4,26 @@
     position: absolute;
     bottom: 2vh;
     right : 2vw;
-    width: 10vw;
-    height: 10vh;
-    font-size: 300%;
+    width: 8vw;
+    height: 8vh;
+    font-size: 1.5vw;
     background-color: transparent;
-    border: solid 5px rgb(112, 70, 16);
+    border: solid 5px rgb(23, 8, 105);
     border-radius: 10px;
-    box-shadow: 5px 5px 50px rgb(114, 122, 3);
     backdrop-filter: blur(3px);
-    color: rgb(185, 201, 17);
+    color: rgb(201, 127, 17);
 }
 
 #stop-control{
+    font-size: 1vw;
     left: 5%;
-    height: 10vh;
-    width: 10vw;
     top: 20%;
-    font-size: 150%;
 }
 
 #fix-camera{
+    font-size: 1.2vw;
     right: 5%;
-    height: 10vh;
-    width: 10vw;
     top: 20%;
-    font-size: 150%;
 }
 
 

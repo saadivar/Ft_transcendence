@@ -99,7 +99,6 @@ function Online({infos , mode, socket} : props) {
 
 			scene.children.forEach(child => {
 				scene.remove(child);
-				console.log("DELETE");
 			});
 			renderer.dispose();
 			stopAnimate = true;
@@ -108,8 +107,8 @@ function Online({infos , mode, socket} : props) {
 			renderer.forceContextLoss();
 			renderer.dispose();
 			controls.dispose();
-			socket.emit('exit');
 			socket.emit('setScore', infos[0]);
+			socket.emit('exit');
 		}
 		container.style.pointerEvents = 'none';
 		if (mode == 'online'){
@@ -142,6 +141,7 @@ function Online({infos , mode, socket} : props) {
 			container.appendChild(player2Info);
 
 		}
+		let remove = false;
 		const endGame = document.createElement('div');
 		const gameOver = document.createElement('div');
 		const result = document.createElement('h3');
@@ -159,7 +159,6 @@ function Online({infos , mode, socket} : props) {
 
 			scene.children.forEach(child => {
 				scene.remove(child);
-				console.log("DELETE");
 			});
 			renderer.dispose();
 			stopAnimate = true;
@@ -177,6 +176,7 @@ function Online({infos , mode, socket} : props) {
 		gameOver.id = 'game-over';
 		socket?.on('endGame', (res : string) => {
 			result.innerText = res;
+			remove = true;
 			root?.appendChild(endGame);
 		})
 		socket.on('data', (message : any)=> {
@@ -191,14 +191,16 @@ function Online({infos , mode, socket} : props) {
 			root?.removeChild(renderer.domElement);
 			root?.removeChild(container);
 			root?.removeChild(exit);
-			root?.removeChild(endGame);
+			if (remove){
+				root?.removeChild(endGame);
+			}
+
 			root?.removeChild(stopControl);
 			root?.removeChild(fixCamera);
 			// root?.removeChild(starting);
 
 			scene.children.forEach(child => {
 				scene.remove(child);
-				console.log("DELETE");
 			});
 			renderer.dispose();
 			stopAnimate = true;
@@ -207,8 +209,8 @@ function Online({infos , mode, socket} : props) {
 			renderer.forceContextLoss();
 			renderer.dispose();
 			controls.dispose();
-			socket.emit('exit');
 			socket.emit('setScore', infos[0]);
+			socket.emit('exit');
 
 		});
 		camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 5000 );
@@ -250,11 +252,6 @@ function Online({infos , mode, socket} : props) {
 			root.appendChild(exit);
 			root.appendChild(stopControl);
 			root.appendChild(fixCamera);
-			// root.appendChild(starting);
-
-
-		} else {
-			console.log("Element with ID 'root' not found.");
 		}
 		base();
 		logic();
@@ -262,7 +259,6 @@ function Online({infos , mode, socket} : props) {
 		function logic(){
 
 			glbloader.load('src/component/game/assets/table.glb', (gltf)=>{
-				console.log("TAble : !!");
 				table = gltf.scene;
 				table.castShadow = true;
 				table.scale.set(30, 30, 30);
@@ -300,7 +296,6 @@ function Online({infos , mode, socket} : props) {
 				stadium.position.x = -1760;
 				stadium.position.z = 2435;
 				stadium.rotation.y -= Math.PI/2;
-				console.log("EMITTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 				socket.emit('starting', infos[0]);
 				scene.add(stadium);
 			})
@@ -331,36 +326,37 @@ function Online({infos , mode, socket} : props) {
 							socket.emit('speed', [infos[0], event.clientY - initClientY]);
 						}
 						else{
-							if (event.clientY - initClientY < -150){
-								p1Speed =  -2.8;
-								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.5;
-							}
-							else if (event.clientY - initClientY < -100){
+							// if (event.clientY - initClientY < -150){
+							// 	p1Speed =  -2.5;
+							// 	p1deltaT = 1 / 45;
+							// 	player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
+							// }
+							// else if (event.clientY - initClientY < -100){
+							// 	p1Speed =  -2.5;
+							// 	p1deltaT = 1 / 45;
+							// 	player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
+							// }
+							// else if (event.clientY - initClientY < -25){
+							// 	p1Speed =  -2.5;
+							// 	p1deltaT = 1 / 45;
+							// 	player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
+							// }
+							// else if (event.clientY - initClientY < -2){
+							// 	p1Speed =  -2.5;
+							// 	p1deltaT = 1 / 45;
+							// 	player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
+							// }
+							// else {
 								p1Speed =  -2.5;
-								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
-							}
-							else if (event.clientY - initClientY < -25){
-								p1Speed =  -2.5;
-								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
-							}
-							else if (event.clientY - initClientY < -2){
-								p1Speed =  -2;
-								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
-							}
-							else {
-								p1Speed =  -1.8;
-								p1deltaT = 1 / 46;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
-							}
+								p1deltaT = 1 / 40;
+								player1fp = (boundingBox.max.z - boundingBox.min.z) / 5;
+							// }
 						}
 						initclientX = event.clientX ;
 						initClientY = event.clientY;
 					}
 			}
+
 			function	reset(){
 				ball.object.position.y = 50;
 				if (ball.object.position.x > maxX)
@@ -393,7 +389,7 @@ function Online({infos , mode, socket} : props) {
 				move = false;
 				if (mode == "practice")
 					player2.raquete.position.z = (boundingBox?.max.z - boundingBox?.min.z) * 0.5;
-				if (player1.goals > 3 || player2.goals > 3){
+				if (player1.goals > 10 || player2.goals > 10){
 					socket.emit('endGame',[player1.goals, player2.goals, infos[0]]);
 				}
 			}
@@ -513,17 +509,17 @@ function Online({infos , mode, socket} : props) {
 								lastFallingZ = ball.object.position.z;
 							up = true;
 							if (stepZ > 0)
-								middle = ball.object.position.z + falligPoint // *1.2;
+								middle = ball.object.position.z + falligPoint *1.5;
 							else
-								middle = ball.object.position.z - falligPoint // *1.2;
-							deltaT = 1/50; 
+								middle = ball.object.position.z - falligPoint *1.5;
+							// deltaT = 1/50; 
 						}
 						
 					}
 					else{
 						if (ball.object.position.y < 45)
 							ball.moveY = 0.2;
-						else if (ball.object.position.y > 55) 
+						else if (ball.object.position.y > 57) 
 							ball.moveY = -0.2;
 						ball.object.position.y += ball.moveY;
 					}
@@ -597,7 +593,6 @@ function Online({infos , mode, socket} : props) {
 			})
 
 			socket.on('index', (i) =>{
-				console.log("index : ", i);
 				index = i;
 			})
 			socket.on('speed', (spd) => {
@@ -608,7 +603,6 @@ function Online({infos , mode, socket} : props) {
 			socket.on('falligPoint', (fp) =>{
 				player2fp = (boundingBox.max.z - boundingBox.min.z) / fp;
 			});
-			console.log("HERE");
 			animate();
 		}
 		function base() {

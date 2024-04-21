@@ -102,7 +102,7 @@ function EditProfile({ user, ShowEdit, Setedit, onCancel }: EditProfileProps) {
                             value={name} 
                             onChange={handleNameChange} 
                             onKeyDown={handleKeyDown}
-                            />
+                          />
                         <div className='maxlenght'>
                         {name.length === 8 && (
                             <p>Maximum length reached !</p>
