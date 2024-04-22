@@ -62,34 +62,39 @@
   top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-  width: 35vw;
+  width: 27vw;
   height: 35vh;
   border-radius: 5px;
-  border: 2px solid #8BD9D1;
+  border: 1px solid #8BD9D1;
+  background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+  box-shadow:   -3px -3px 10px rgba(13, 21, 38, 1),
+                3px 3px 10px rgba(22, 89, 83, 1);
 }
 
 .wfa .h11 {
   position: absolute;
-  font-size: x-large;
-  color: #8BD9D1;
-  left: 23%;
+  font-size: 3.5vmin;
+  color: #FFF;
+  left: 13%;
   top: 10%;
+  width: fit-content;
+  height: fit-content;
 }
 
 .wfa .input {
   position: absolute;
   border-radius: 5px;
-  border: 2px solid #8BD9D1;
+  border: 1px solid #8BD9D1;
   height: 2vh;
   width: 12vw;
   top: 41%;
-  left: 34%;
+  left: 27%;
 }
 .wfa > Button{
   width: fit-content;
   height: fit-content;
   top: 67%;
-  left: 49%;
+  left: 43%;
   position: absolute;
   padding: 1vh;
 }

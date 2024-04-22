@@ -14,8 +14,9 @@ interface User {
 interface UserProps {
   user : User
   SetgoGame:any
+  setErrorMessage:any;
 }
-const Infos = ({user, SetgoGame} : UserProps) => {
+const Infos = ({user, SetgoGame, setErrorMessage} : UserProps) => {
 
 
   
@@ -70,7 +71,7 @@ const Infos = ({user, SetgoGame} : UserProps) => {
 
           </div>
         </div>
-        <EditProfile user={user} ShowEdit={ShowEdit} Setedit={Setedit} onCancel={handleCancel}/>
+        <EditProfile user={user} ShowEdit={ShowEdit} Setedit={Setedit} onCancel={handleCancel} setErrorMessage={setErrorMessage}/>
     </div>
   );
 

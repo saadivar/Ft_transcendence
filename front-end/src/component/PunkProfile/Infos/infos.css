@@ -156,16 +156,3 @@
     font-size: 1.5vmin;
 }
 
-@media screen and (max-width: 768px) {
-    .new-game-container{
-        display: none;
-    }
-    .profile-container {
-        grid-template-columns: 1fr;
-        margin-top: 37%;
-        height: 65%;
-    }
-    .player-infos{
-        margin-top : -15vmin;
-    }
-}

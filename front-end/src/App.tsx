@@ -27,7 +27,7 @@ const NotFound = () => {
 };
 
 
-
+ 
 function App() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
@@ -36,9 +36,6 @@ function App() {
   const[fetchuser,setfetchuser] = useState(0);
   const [showRequest, SetShow] = useState(false);
   const [gameRequestSender, SetSender] = useState(null);
-
-
-  
   
   useEffect(()=>{
     socket?.on('updated', ()=> {
@@ -150,7 +147,7 @@ function App() {
               <>
                 <Route path="/2fa" element={<TwoFa user={user} setError={setError}/>} />
                 <Route path="/" element={<Login user={user} />} />
-                <Route path="/Home" element={<Punk SetgoGame={SetgoGame} user={user} setUser={setUser}/>} />
+                <Route path="/Home" element={<Punk SetgoGame={SetgoGame} user={user} setUser={setUser} setErrorMessage={setErrorMessage}/>} />
 
                 <Route path="/practice" element={<Practice infos={[]} mode='practice' goGame={goGame}/>} />
                 <Route path="/online" element={<OnlineMatching goGame={goGame}/>} />

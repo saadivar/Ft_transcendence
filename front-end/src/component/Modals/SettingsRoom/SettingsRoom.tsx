@@ -18,14 +18,11 @@ interface Room {
   
 interface ASettingsRoomProps {
     setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
-    show: boolean;
     room :Room
 }
-const SettingsRoom = ({show, setShowSettings, room} : ASettingsRoomProps) => {
+const SettingsRoom = ({setShowSettings, room} : ASettingsRoomProps) => {
    
-    if (!show) {
-        return null;
-    }
+
   
     const socket = useSocket();
     const [showPasswordInput, setShowPasswordInput] = useState(false);

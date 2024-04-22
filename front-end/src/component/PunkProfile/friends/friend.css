@@ -125,28 +125,15 @@
     display: flex;
     align-items: center;
     color: #ffffff;
-    font-size: 1.2vmin;
+    font-size: 1vmin;
     color: black;
     width: fit-content;
     height: fit-content;
     background-color: #8BD9D1;
-    margin-top: 10%;
-    padding: 1vmin;
+    margin-top: 15%;
+    padding: 0.8vmin;
     border-radius: 12px;
     cursor: pointer;
+    margin-left: 18%;
   
-}
-@media screen and (max-width: 768px) {
-        .search-friend .searchInput {
-        height: 100%;
-    
-      }
-      
-      .search-friend .material-symbols-outlined 
-      {
-          height: 100%;
-      }
-      .friends-container{
-        grid-template-rows: 0.1fr 0.1fr 1fr;
-      }
 }

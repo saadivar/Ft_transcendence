@@ -8,6 +8,7 @@ import { useSocket } from '../../../../Socket'
 import LogsModal from '../../../../Modals/LogsModal/LogsModal'
 import SettingsRoom from '../../../../Modals/SettingsRoom/SettingsRoom'
 
+import grpImg from '../../../../../assets/groupImg.png'
 
 
 
@@ -27,6 +28,7 @@ interface Room {
   lastmessagecontent: string;
   name: string;
   members:Member[]
+  me: string
 }
 
 interface OwnerProps {
@@ -123,6 +125,9 @@ function OwnerOption (roleSelected : any, SetRole: any, room: Room, memberSelect
 
 }
 
+
+
+
 function adminOption (roleSelected : any,SetRole: any, room: Room, memberSelectedid :any, RoomSelceted:any)
 {
 
@@ -180,22 +185,6 @@ function memberOption ()
   )
 }
 
-function renderOptions(roleSelected : any, SetRole: any, room: Room, memberSelectedid: any, RoomSelceted:any) {
-  if (!roleSelected) {
-    return (
-      <div className="friend-options">
-        <div className='no-opt'><p>No options</p></div>
-      </div>
-    )
-  }
-
-  if (room.me === 'admin') 
-    return (adminOption(roleSelected, SetRole,room, memberSelectedid, RoomSelceted));
-  else if (room.me === 'owner') 
-      return (OwnerOption(roleSelected, SetRole,room, memberSelectedid, RoomSelceted)) 
-  else if (room.me === 'default') 
-      return (memberOption())
-}
 
 
 const Owner = ({room, RoomSelceted} : OwnerProps) => {
@@ -205,7 +194,6 @@ const Owner = ({room, RoomSelceted} : OwnerProps) => {
   const [showSetOwner, setShowSetOwner] = useState(false);
   const [ShowSettings, setShowSettings] = useState(false)
   const  socket = useSocket();
-
   const [showLogs, setShowLogs] = useState(false);
 
   const handleAddClick = () => {
@@ -272,29 +260,32 @@ const Owner = ({room, RoomSelceted} : OwnerProps) => {
           </svg>
        
       </div>
-        <AddFriendModal
-          show={showAdd}
+        {showAdd && <AddFriendModal
+       
           friendName={friendName}
           setFriendName={setFriendName}
           onSubmit={handleFormSubmit}
           onCancel={handleCancel}
-        />
+        />}
 
-      <SetOwnerModal
+      {showSetOwner && <SetOwnerModal
           room={room}
-          show={showSetOwner}
+         
           NewOwner={NewOwner}
           setNewOwner={setNewOwner}
           onSubmit={handleLeaveSubmit}
           onCancel={handleCancel}
-      />
+      />}
 
-      <LogsModal
-          show={showLogs}
+        { showLogs && <LogsModal
+          
           room={room}
           onCancel={handleCancel}
-      />
-      <SettingsRoom show={ShowSettings} setShowSettings={setShowSettings} room={room}/>
+          />
+        }
+        {
+         ShowSettings && <SettingsRoom  setShowSettings={setShowSettings} room={room}/>
+        }
     </>
   );
 };
@@ -326,30 +317,6 @@ const Default = ({room, RoomSelceted} : DefaultProps) => {
   );
 };
 
-function MyOptions(room: Room , roomRole : string, RoomSelceted :any) {
-  
-  if (roomRole === 'owner') 
-  {
-    return(
-      <Owner room={room} RoomSelceted={RoomSelceted}/>
-    )
-  }
-
-  else if (roomRole === 'admin') 
-  {
-    return(
-      <Admin room={room} RoomSelceted={RoomSelceted}/>
-    )
-  }
-  
-  else if (roomRole === 'default') 
-  {
-    return(
-      <Default room={room} RoomSelceted={RoomSelceted}/>
-    )
-  }
-
-}
 
 
 const RoomInfo = ({profile, room, RoomSelceted} : RoomInfoProps) => {
@@ -363,8 +330,51 @@ const RoomInfo = ({profile, room, RoomSelceted} : RoomInfoProps) => {
     SetMember(member.id);
     SetRole(member.role);
   }
+
+  const MyOptions = (room: Room , roomRole : string, RoomSelceted :any) => {
+  
+    if (roomRole === 'owner') 
+    {
+      return(
+        <Owner room={room} RoomSelceted={RoomSelceted}/>
+      )
+    }
+  
+    else if (roomRole === 'admin') 
+    {
+      return(
+        <Admin room={room} RoomSelceted={RoomSelceted}/>
+      )
+    }
+    
+    else if (roomRole === 'default') 
+    {
+      return(
+        <Default room={room} RoomSelceted={RoomSelceted}/>
+      )
+    }
+  
+  }
+  
+  const renderOptions = (roleSelected : any, SetRole: any, room: Room, memberSelectedid: any, RoomSelceted:any) => {
+   
+    if (!roleSelected) {
+      return (
+        <div className="friend-options">
+          <div className='no-opt'><p>No options</p></div>
+        </div>
+      )
+    }
   
 
+    if (room.me === 'admin') 
+      return (adminOption(roleSelected, SetRole,room, memberSelectedid, RoomSelceted));
+    else if (room.me === 'owner') 
+        return (OwnerOption(roleSelected, SetRole,room, memberSelectedid, RoomSelceted)) 
+    else if (room.me === 'default') 
+        return (memberOption())
+  }
+  
 
   return (
     <>
@@ -377,7 +387,7 @@ const RoomInfo = ({profile, room, RoomSelceted} : RoomInfoProps) => {
               </div>
 
               <div className="Otherimg">
-                <img />
+                <img src={grpImg} />
               </div>
 
               <div className="Othername">
@@ -395,7 +405,7 @@ const RoomInfo = ({profile, room, RoomSelceted} : RoomInfoProps) => {
                     {room.members && room.members.map( (member : any) => (
                       member.status != 'banned' && (
                         
-                        <div className={`member ${member.id === memberSelectedid ? 'member-active' : ''}`}
+                        <div key={member.id} className={`member ${member.id === memberSelectedid ? 'member-active' : ''}`}
                         onClick={()  => handleSelectMember(member) }
                         >
                           <div className="amis-image">

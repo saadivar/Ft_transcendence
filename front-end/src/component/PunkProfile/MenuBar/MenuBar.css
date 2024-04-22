@@ -84,8 +84,7 @@
 
 .modal-content-twfa .close{
   position: absolute;
-  left: 47%;
-
+  left: 48%;
 }
 
 .modal-content-twfa > h1{
@@ -166,16 +165,11 @@
   font-size: 2vmin;
 
  }
+
+
  .saveBut:hover {
 
   background: rgb(36, 185, 185);
   cursor: pointer;
   transition: 1s ease;
-}
-@media screen and (max-width: 768px) {
-  .menuB {
-    height: 95%;
-    margin-top: 15%;
-  }
-
 }

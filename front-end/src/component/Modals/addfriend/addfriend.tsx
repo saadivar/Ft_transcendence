@@ -29,17 +29,15 @@ const FriendHelper = ( { image, name ,  onFriendClick} : FriendHelperProps ) => 
 }
 
 interface AddFriendModalProps {
-    show: boolean;
+  
     friendName: string;
     setFriendName: React.Dispatch<React.SetStateAction<string>>;
     onSubmit: (e: React.FormEvent) => Promise<void>;
     onCancel: () => void;
 }
 
-function AddFriendModal({ show, friendName, setFriendName, onSubmit, onCancel }:AddFriendModalProps) {
-    if (!show) {
-      return null;
-    }
+function AddFriendModal({  friendName, setFriendName, onSubmit, onCancel }:AddFriendModalProps) {
+
 
     const backdrop = {
         visible : {opacity: 1},

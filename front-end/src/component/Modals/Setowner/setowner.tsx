@@ -30,17 +30,15 @@ const FriendHelper = ( { image, name , onFriendClick}:FriendHelperProps ) => {
   
   interface SetOwnerModalProps {
     room: any; 
-    show: boolean;
+   
     NewOwner: string;
     setNewOwner: React.Dispatch<React.SetStateAction<string>>;
     onSubmit: (e: React.FormEvent) => void;
     onCancel: () => void;
   }
   
-function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }: SetOwnerModalProps) {
-    if (!show) {
-        return null;
-      }
+function SetOwnerModal({ room,  NewOwner, setNewOwner, onSubmit, onCancel }: SetOwnerModalProps) {
+ 
   
       const backdrop = {
           visible : {opacity: 1},

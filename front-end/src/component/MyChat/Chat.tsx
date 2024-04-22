@@ -35,6 +35,7 @@ interface Room {
   name: string;
   mestatus: string;
   members:Member[]
+  me:string
 }
 
 interface Profile {

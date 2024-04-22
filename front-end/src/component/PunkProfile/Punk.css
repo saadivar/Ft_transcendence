@@ -22,7 +22,7 @@
     grid-row-gap: 5px;
 }
 
-@media screen and (max-width: 768px) {
+ screen and (max-width: 768px) {
     .page{
         grid-template-columns: 1fr 0.8fr;
     }

@@ -9,7 +9,7 @@ import { useSocket } from '../../Socket';
 
 
 interface Message {
-    senderId: string;
+    senderId: number;
     content: string;
     senderavatar: string;
   }
@@ -81,10 +81,10 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
                 <div className= 'midlePart' key={user.id} > 
                     
                     <div className="new-chat"  >
-                        { MessagesData && MessagesData.map((message) => (
+                        { MessagesData && MessagesData.map((message , index) => (
                             
                                 <div
-                                    key={message.senderId}
+                                    key={index}
                                     className={`usermessage ${message.senderId === user.id ? 'stark' : 'parker'}`}>
                                     {message.content}
                                 </div>
@@ -125,12 +125,12 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
                     <div className="new-chat">
                     
                         {
-                            MessagesRoom && MessagesRoom.map((message) => (
-                            <div key={message.senderId} className={`message-row ${message.senderId !== profile.id ? 'other' : 'mine'}`}>
+                            MessagesRoom && MessagesRoom.map((message, index) => (
+                            <div key={index} className={`message-row ${message.senderId !== profile.id ? 'other' : 'mine'}`}>
                                 {
                                     (message.senderId !== profile.id ? <img src={message.senderavatar} alt="sender" className="sender-img" /> : null)
                                 }
-                                <div className={`message ${message.senderId === profile.id ? 'othermsg' : 'mymsg'}`}>
+                                <div key={index} className={`message ${message.senderId === profile.id ? 'othermsg' : 'mymsg'}`}>
                                     {message.content}
                                 </div>
                                 

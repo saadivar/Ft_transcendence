@@ -8,8 +8,8 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.enableCors({ origin: `${process.env.url_front}`, credentials: true, preflightContinue: true, });
   app.use(cookieParser());
-  app.use(bodyParser.json({ limit: '10mb' }));
-  app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+  app.use(bodyParser.json({ limit: '2mb' }));
+  app.use(bodyParser.urlencoded({ limit: '2mb' }));
   await app.listen(3000);
   
 }

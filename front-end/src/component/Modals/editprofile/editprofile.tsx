@@ -16,9 +16,10 @@ interface EditProfileProps {
   ShowEdit: boolean;
   Setedit: React.Dispatch<React.SetStateAction<boolean>>;
   onCancel: () => void;
+  setErrorMessage:any;
 }
 
-function EditProfile({ user, ShowEdit, Setedit, onCancel }: EditProfileProps) {
+function EditProfile({ user, ShowEdit, Setedit, onCancel ,setErrorMessage}: EditProfileProps) {
   if (!ShowEdit) {
     return null;
   }
@@ -68,13 +69,21 @@ function EditProfile({ user, ShowEdit, Setedit, onCancel }: EditProfileProps) {
         const formData = new FormData();
         formData.append('name', name);
         formData.append('avatar', image); 
-        
-        await axios.post(`${import.meta.env.VITE_url_back}/api/auth/update_user`, formData, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+        try {
+          await axios.post(`${import.meta.env.VITE_url_back}/api/auth/update_user`, formData, {
+              withCredentials: true,
+              headers: {
+                  'Content-Type': 'multipart/form-data',
+              },
+          });
+        }
+        catch(error: any)
+        {
+          setErrorMessage('An error occurred: avatar to large');
+          setTimeout(() => {
+            setErrorMessage(''); 
+          }, 1000);
+        }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

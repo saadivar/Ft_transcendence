@@ -3,8 +3,10 @@ import "./Input.css"
 
 import { useSocket }  from "../../../Socket"
 interface User {
-    id: string;
+    id: number;
+    avatar: string;
     login: string;
+    status: string;
   }
   
   interface Profile {
@@ -54,6 +56,7 @@ const Input = ({User, Profile, Room} : InputProps) => {
                 value={message}
                 onChange={(e) =>setMessage(e.target.value)}
                 onKeyDown={handleKeyDown}
+                maxLength={100}
             />
             <button className="send-message-button" onClick={sendMessage}>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" data-reactid="1036">

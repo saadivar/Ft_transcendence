@@ -17,8 +17,9 @@ interface PunkProps {
   SetgoGame: React.Dispatch<React.SetStateAction<boolean>>;
   setUser: React.Dispatch<React.SetStateAction<null>>;
   user: User | null;
+  setErrorMessage: any;
 }
-const Punk = ({ SetgoGame , user, setUser} : PunkProps) => {
+const Punk = ({ SetgoGame , user, setUser, setErrorMessage} : PunkProps) => {
   
 
 
@@ -42,7 +43,7 @@ const Punk = ({ SetgoGame , user, setUser} : PunkProps) => {
       {user && (
         <div className='profile'>
           <div className='page'>
-            <Infos user={user} SetgoGame={SetgoGame}/>
+            <Infos user={user} SetgoGame={SetgoGame} setErrorMessage={setErrorMessage}/>
             <Friends />
             <GameModes SetgoGame={SetgoGame} />
           </div>

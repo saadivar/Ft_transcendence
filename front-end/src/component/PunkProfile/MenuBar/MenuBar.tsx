@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { useSocket } from "../../Socket";
 import { Prev } from "react-bootstrap/esm/PageItem";
+import Popup from "../../Modals/popup/Popup";
 interface ModalProps {
   onClose: () => void;
   isTwoFactorEnabled: boolean;
@@ -15,6 +16,9 @@ interface ModalProps {
 interface User {
   isTwoFactorAuthenticationEnabled: boolean;
   id : number
+  avatar : string
+  login : string
+
 }
 interface MenuBarProps {
   user: User | null;
@@ -248,11 +252,14 @@ const socket = useSocket()
     { user && 
       <div className="menuB">
         <div className="Menu-container">
+
             <div className="icon-logo">
+        
                 <Link to="/Home">
                   <img src={logo} className="elem"/>
                 </Link>
             </div>
+         
       
               <div className="icon" onClick={goToprofile}>
             

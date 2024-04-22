@@ -39,7 +39,7 @@ export const TwoFa = ({user ,setError} : Props) =>
       saveData();
     }
   };
-  
+
   return (
     <div className='wfa-container'>
       <div className='wfa'>

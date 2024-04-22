@@ -1,0 +1,73 @@
+version: '3.1'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    env_file:
+      - .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - ft_trance
+  back:
+    image: node:lts-alpine
+    container_name: backend
+    working_dir: /app
+    command: sh -c "npm install
+                    && npm run start:dev"
+                    # && npm run migration:generate -- db/migrations/newmigrations 
+                    # && npm run migration:run"
+    env_file:
+      - .env
+    volumes:
+      - back-end:/app
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - ft_trance
+    depends_on:
+      - postgres
+      
+  front:
+    image: node:lts-alpine
+    container_name: frontend
+    working_dir: /app
+    command: sh -c "npm install 
+                    && npm run dev"
+    env_file:
+      - .env
+    volumes:
+      - front-end:/app
+    ports:
+      - "5173:5173"
+    restart: unless-stopped
+    networks:
+      - ft_trance
+    depends_on:
+      - back   
+networks:
+  ft_trance:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$PWD/postgres_db'
+  back-end:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$PWD/back-end'
+  front-end:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '$PWD/front-end'

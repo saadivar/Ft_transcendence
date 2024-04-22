@@ -34,6 +34,7 @@ export class ChatService {
       async createmessage(details:MessageDtails)  {
         if(!details.chat)
           return "blocked";
+        
         const message = await this.messagerepository.create(details);
         message.sender = details.sendr;
         return this.messagerepository.save(message);

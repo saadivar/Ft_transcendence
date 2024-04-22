@@ -10,6 +10,8 @@ import { Friends } from "src/typeorm/entities/friends";
 import { Message } from "src/typeorm/entities/message";
 import { Notif } from "src/typeorm/entities/notif";
 import { Room } from "src/typeorm/entities/rooms";
+import * as path from  'path'
+
 import { BlockedDtails, ChatDtails, FriendsDtails, MessageDtails, NotifDtails, RoomDtails, RoomMemberDtails, UserDetails } from "src/types/types";
 import { ILike, Like, Not, Repository} from "typeorm";
 
@@ -170,18 +172,4 @@ export class AuthService{
         }})
         return users;
       }
-    
-  
-  
-  
- 
-
-
-
-  
-  
-  
-  
-  
-  
 }

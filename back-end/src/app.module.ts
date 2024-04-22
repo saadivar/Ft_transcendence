@@ -38,7 +38,7 @@ import { Acheivment } from './typeorm/entities/acheivment';
     entities: [User,Friends,Chat,Message,Blocked,Room,RoomMember,Notif,Game,Acheivment],
     synchronize: true,
   }),JwtModule.register({secret:"secret",
-  signOptions:{expiresIn:'1d'}})
+  signOptions:{expiresIn:'2h'}})
   ,
   PassportModule.register({session: true}),
   UsersModule,FriendsModule, ChatModule, RoomModule,ConfigModule.forRoot({
@@ -49,3 +49,20 @@ import { Acheivment } from './typeorm/entities/acheivment';
   providers: [AppService, RealtimeGateway,WebsocketService,GameGateway],
 }) 
 export class AppModule {} 
+
+
+
+
+// @Module({
+//   imports: [AuthModule,TypeOrmModule.forRoot(dataSourceOptions),JwtModule.register({secret:"secret",
+//   signOptions:{expiresIn:'1d'}})
+//   ,
+//   PassportModule.register({session: true}),
+//   UsersModule,FriendsModule, ChatModule, RoomModule,ConfigModule.forRoot({
+//     envFilePath: '.env',isGlobal: true,
+//   }), GameModule,
+//   ],
+//   controllers: [AppController],
+//   providers: [AppService, RealtimeGateway,WebsocketService,GameGateway],
+// }) 
+// export class AppModule {} 

@@ -62,23 +62,36 @@ export class AuthController
             res.redirect(`${process.env.url_front}/Home`);
         }
         
-    } 
+    }
+    private isImageFile(filename: string): boolean {
+        const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+        const ext = path.extname(filename).toLowerCase();
+        return allowedExtensions.includes(ext);
+      }
     @Post('update_user')
     @UseGuards(jwtguard)
     @UseInterceptors(FileInterceptor('avatar', {
         storage: diskStorage({
-          destination: './avatars', // Adjust the path as necessary
+          destination: './avatars',
           filename: (req, file, callback) => {
+           
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
             const filename = `${uniqueSuffix}${path.extname(file.originalname)}`;
             callback(null, filename);
           },
         }),
+        limits: {
+            fileSize: 5 * 1024 * 1024,
+          },
       }))
 
     async updateuser(@Req() req:Request,@Res() res:Response,  @UploadedFile() file: Express.Multer.File,@Body() body: any)
     {
         const user = req.user as User;
+        if (file && !this.isImageFile(file.originalname)) {
+            this.websocketService.emiterrorToUser(user.id.toString(),"error occured");
+            return res.status(400).send('Only image files are allowed');
+          }
         if(user.login != body.name )
         {
             if (body.name == "") { this.websocketService.emiterrorToUser(user.id.toString(),`empty name`)
@@ -107,7 +120,7 @@ export class AuthController
     @Get("avatars/:filename")
     @UseGuards(jwtguard)
     viewFiles(@Param("filename") filename: string, @Res() res) {
-        const file = path.join(__dirname, '../../', 'avatars', filename)
+        const file = path.join(__dirname, '../../../', 'avatars', filename)
         if (!fs.existsSync(file)) {
             throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
         }
