@@ -41,6 +41,8 @@
   border-bottom: solid;
   margin-top: -8%;
   font-size: 1.8vmin;
+  color: white;
+
 }
 .INV-IMG{
   grid-area: 2 / 1 / 3 / 2; 
@@ -58,6 +60,7 @@
   place-items: center;
   display: grid;
   font-size: 1.8vmin;
+  color: white;
 
 }
 .INV-text{
@@ -67,6 +70,7 @@
   position: absolute;
   bottom: 42%;
   font-size: 2vmin;
+  color: white;
 }
 .butt-add-modal{
   grid-area: 5 / 1 / 6 / 2; 

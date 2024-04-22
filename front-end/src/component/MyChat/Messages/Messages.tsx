@@ -6,34 +6,35 @@ import Profile from '../../Profile/Profile';
 import { Socket } from 'socket.io-client';
 import { useSocket } from '../../Socket';
 
+import grpImg from '../../../assets/groupImg.png'
 
 
 interface Message {
     senderId: number;
     content: string;
     senderavatar: string;
-  }
-  
-  interface User {
-    id: number;
-    avatar: string;
-    login: string;
-    status: string;
-  }
-  
-  interface Room {
-    name: string;
-    mestatus: string;
-  }
-  
-  interface MessagesProps {
-    optionSelected: any;
-    room: Room | null;
-    user: User | null;
-    profile: any;
-    MessagesData: Message[] | null;
-    MessagesRoom: Message[] | null;
-  }
+}
+
+interface User {
+id: number;
+avatar: string;
+login: string;
+status: any;
+}
+
+interface Room {
+name: string;
+mestatus: string;
+}
+
+interface MessagesProps {
+optionSelected: any;
+room: Room | null;
+user: User | null;
+profile: any;
+MessagesData: Message[] | null;
+MessagesRoom: Message[] | null;
+}
 
 
 const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRoom} : MessagesProps) => {
@@ -55,6 +56,7 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
     useEffect(()=>{
         socket?.on('muted', setstat)
     }, [socket])
+
   return (
 
     <div className='messages-container'> 
@@ -108,7 +110,7 @@ const Messages = ({optionSelected ,room, user, profile, MessagesData, MessagesRo
                         room && 
                         <>
                             <div className="img-cont">
-                                <img  />
+                                <img src={grpImg} />
                             </div >
 
                             <div className="text">

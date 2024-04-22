@@ -1,11 +1,9 @@
 import * as THREE from 'three';
 import { FBXLoader, GLTFLoader, OrbitControls } from 'three/examples/jsm/Addons.js';
 import './style/playersInfo.css'
-import { Socket, io } from 'socket.io-client';
-import { useLocation , Navigate, useNavigate} from 'react-router-dom';
+import {  Navigate} from 'react-router-dom';
 
 interface props{
-	infos : string[];
     mode : string;
 	goGame : boolean;
 };
@@ -25,7 +23,7 @@ export class Player
 
 
 
-function Practice({infos , mode, goGame} : props){
+function Practice({mode, goGame} : props){
 	if(!goGame){
 		return <Navigate to="/Home" replace />;
 	}
@@ -76,7 +74,7 @@ function Practice({infos , mode, goGame} : props){
 				root?.removeChild(stopControl);
 				root?.removeChild(fixCamera);
 
-				scene.children.forEach(child => {
+				scene.children.forEach((child : any)  => {
 					scene.remove(child);
 				});
 				renderer.dispose();
@@ -95,7 +93,7 @@ function Practice({infos , mode, goGame} : props){
 				root?.removeChild(stopControl);
 				root?.removeChild(fixCamera);
 
-				scene.children.forEach(child => {
+				scene.children.forEach((child : any) => {
 					scene.remove(child);
 				});
 				renderer.dispose();

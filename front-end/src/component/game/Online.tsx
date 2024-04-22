@@ -1,9 +1,7 @@
 import * as THREE from 'three';
 import { FBXLoader, GLTFLoader, OrbitControls } from 'three/examples/jsm/Addons.js';
 import './style/playersInfo.css'
-import { Socket, io } from 'socket.io-client';
-import { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Socket } from 'socket.io-client';
 import './style/StartGame.css'
 
 interface props{
@@ -97,7 +95,7 @@ function Online({infos , mode, socket} : props) {
 			root?.removeChild(fixCamera);
 			// root?.removeChild(starting);
 
-			scene.children.forEach(child => {
+			scene.children.forEach((child : any) => {
 				scene.remove(child);
 			});
 			renderer.dispose();
@@ -157,7 +155,7 @@ function Online({infos , mode, socket} : props) {
 			// root?.removeChild(starting);
 
 
-			scene.children.forEach(child => {
+			scene.children.forEach((child : any) => {
 				scene.remove(child);
 			});
 			renderer.dispose();
@@ -199,7 +197,7 @@ function Online({infos , mode, socket} : props) {
 			root?.removeChild(fixCamera);
 			// root?.removeChild(starting);
 
-			scene.children.forEach(child => {
+			scene.children.forEach((child : any) => {
 				scene.remove(child);
 			});
 			renderer.dispose();
@@ -233,7 +231,6 @@ function Online({infos , mode, socket} : props) {
 		const	glbloader = new GLTFLoader();
 		let		boundingBox : any;
 		let		table : any;
-		let		stadium : any;
 
 		let ball = {
 			dirX : 0,
@@ -290,14 +287,6 @@ function Online({infos , mode, socket} : props) {
 				});
 			}, 1000)
 
-			glbloader.load('src/component/game/assets/basketball_-_aizismus.glb', (gltf) => {
-				stadium = gltf.scene;
-				stadium.rotation.y = Math.PI / 2;
-				stadium.position.x = -1760;
-				stadium.position.z = 2435;
-				stadium.rotation.y -= Math.PI/2;
-				scene.add(stadium);
-			})
 			renderer.domElement.addEventListener('mousemove', onMouseMove);
 			let stepX = 0;
 			let stepZ = -1.8;

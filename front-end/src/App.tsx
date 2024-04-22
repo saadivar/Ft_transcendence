@@ -119,7 +119,7 @@ function App() {
             setIsSender={setIsSender}/>
         }
         {
-          isSender && <OnAccept setIsSender={setIsSender}/>
+          isSender && <OnAccept />
         }
         {
           errorMessage && (
@@ -149,7 +149,7 @@ function App() {
                 <Route path="/" element={<Login user={user} />} />
                 <Route path="/Home" element={<Punk SetgoGame={SetgoGame} user={user} setUser={setUser} setErrorMessage={setErrorMessage}/>} />
 
-                <Route path="/practice" element={<Practice infos={[]} mode='practice' goGame={goGame}/>} />
+                <Route path="/practice" element={<Practice mode='practice' goGame={goGame}/>} />
                 <Route path="/online" element={<OnlineMatching goGame={goGame}/>} />
                 <Route path="/onlineGame" element={<Invite  inviter={gameRequestSender} isSender={isSender} recieverName={recieverName} goGame={goGame} setIsSender={setIsSender} />} /> 
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-export default function OnAccept({setIsSender}){
+export default function OnAccept(){
     const navigate = useNavigate();
     useEffect(()=>{
         navigate("/onlineGame", { replace: true });

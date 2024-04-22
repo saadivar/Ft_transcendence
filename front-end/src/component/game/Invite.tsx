@@ -40,26 +40,19 @@ export default function Invite({inviter, isSender, recieverName, goGame, setIsSe
         getSocket();
     },[])
     if (isSender){
-        // setIsSender(false);
         gameSocket?.emit('InviterJoining', recieverName);
     }
-    // useEffect(()=>{
-        gameSocket?.on('success', () => {
-            baseSocket.emit('acceptGame', inviter?.id);
-        });
-    // },[])
+    gameSocket?.on('success', () => {
+        baseSocket.emit('acceptGame', inviter?.id);
+    });
 
-    // useEffect(()=>{
-        if (!isSender){
-            gameSocket?.emit('InviteMatching', inviter?.login);
-        }
-    // },[])
-    // useEffect(()=>{
-        gameSocket?.on('start', (roomInfos)=>{
-            setInfos(roomInfos);
-            setStart(true);
-        });
-    // },[])
+    if (!isSender){
+        gameSocket?.emit('InviteMatching', inviter?.login);
+    }
+    gameSocket?.on('start', (roomInfos)=>{
+        setInfos(roomInfos);
+        setStart(true);
+    });
     window.addEventListener('popstate', function(event) {
         gameSocket.emit('exit');
     });

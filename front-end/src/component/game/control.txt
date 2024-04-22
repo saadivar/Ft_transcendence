@@ -1,8 +1,0 @@
-Rotation : Click and drag with the left mouse button to rotate the camera around the scene.
-This allows players to view the game from different angles.
-
-Zoom : Use the scroll wheel to zoom in and out. This helps players adjust the camera's distance from the ping pong table,
-allowing for a better view of the game.
-
-Pan : Hold down the RIGHT mouse button and drag to pan the camera horizontally and vertically, 
-This allows players to shift the camera's focus without changing its distance or angle

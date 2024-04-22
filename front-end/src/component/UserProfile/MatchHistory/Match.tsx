@@ -10,8 +10,11 @@ import image2 from '../../../assets/theFlash.jpg';
 
 // Import necessary Swiper modules
 import { Navigation, Pagination, Scrollbar,Autoplay } from 'swiper/modules';
-
-const Match = ({ match }) => {
+import { AnyPixelFormat } from 'three';
+interface PropsMatch{
+    match : any;
+}
+const Match = ({ match } : PropsMatch) => {
     return (
         <div className="match">
             <div className="card">
@@ -27,8 +30,10 @@ const Match = ({ match }) => {
         </div>
     );
 };
-
-const ListMatch = ({profile}) => {
+interface Props{
+    profile : any;
+}
+const ListMatch = ({profile} : Props) => {
 
     return (
         <div className="matches-list-container">
@@ -39,12 +44,13 @@ const ListMatch = ({profile}) => {
                 modules={[Navigation, Pagination, Scrollbar, Autoplay]}
                 spaceBetween={15}
                 slidesPerView={3}
+                slidesPerGroup={1}
                 navigation
                 autoplay={{ delay: 1500, disableOnInteraction: false }}
                 loop={true}
                 className="swiper-container"
             >
-                {profile.games.map((match, index) => (
+                {profile.games.map((match: any, index : any) => (
                     <SwiperSlide key={index}>
                         <Match match={match} />
                     </SwiperSlide>

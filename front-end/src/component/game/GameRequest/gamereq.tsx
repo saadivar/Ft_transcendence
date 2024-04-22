@@ -81,7 +81,7 @@ function GameRequest({SetShow ,gameRequestSender, onCancel, SetgoGame, setIsSend
                             strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            class="ai ai-Check"
+                            className="ai ai-Check"
                         >
                             <path d="M4 12l6 6L20 6" />
                         </svg>
@@ -98,7 +98,7 @@ function GameRequest({SetShow ,gameRequestSender, onCancel, SetgoGame, setIsSend
                             strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            class="ai ai-Cross"
+                            className="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
                         </svg>

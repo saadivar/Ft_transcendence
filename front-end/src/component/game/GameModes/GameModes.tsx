@@ -1,10 +1,9 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import  "./GameModes.css";
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 
-const GameModes = ({SetgoGame}) => {
+const GameModes = ({SetgoGame} : any) => {
 
 
 
