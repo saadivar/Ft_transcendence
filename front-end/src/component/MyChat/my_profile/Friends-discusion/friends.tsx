@@ -40,8 +40,6 @@ const Friends_discusion = ({
   setSelectedFriendId
 } : FriendsDiscussionProps) => {
 
-
-  
   const handleFriendClick = (friend: Friend, friendId: number) => {
     if (selectedUser && selectedUser.id != friend.id)
       SetMessages(null);
@@ -67,11 +65,10 @@ const Friends_discusion = ({
         >
           <div className="amis-image">
             <img  src={friend.avatar}></img>
-            {friend.status === 'online' ? <span className="on"></span> : <span className="off"></span>}
+            {friend.status === 'online' ? <span className="on"></span> : friend.status === 'ingame' ? <span className="ingame"></span> : <span className="off"></span>}
           </div>
           <div className="amis-infos">
-            <p className="amis-name"> <p>{friend.login}</p></p>
-
+            <div className="amis-name"> <p>{friend.login}</p></div>
             <p className="last-message">{friend.lastmessagecontent}</p>
           </div>
           { 

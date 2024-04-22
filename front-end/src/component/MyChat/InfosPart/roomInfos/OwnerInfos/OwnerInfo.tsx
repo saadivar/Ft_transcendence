@@ -402,9 +402,9 @@ const RoomInfo = ({profile, room, RoomSelceted} : RoomInfoProps) => {
                             <img  src={member.avatar}/>
                           </div>
                           <div className="amis-infos">
-                            <p className="amis-name"> <p>{member.login}</p> </p>
+                            <div className="amis-name"> <p>{member.login}</p> </div>
                           </div> 
-                          <p className="amis-role"> <p>{member.role}</p> </p>
+                          <div className="amis-role"> <p>{member.role}</p> </div>
                         </div> 
                         )
                     ))}

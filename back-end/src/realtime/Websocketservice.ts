@@ -11,6 +11,18 @@ export class WebsocketService {
     WebsocketService.connectedUsers.set(userId, socket);
 
   }
+  ifalreadyexist(userid:string,client :Socket)
+  {
+    for (const userID of WebsocketService.connectedUsers.keys()) {
+      if(userid == userID)
+        {
+          client.emit("secondwindow");
+          return true;
+        }
+
+      }
+      return false;
+  }
   removeUserFromMap(userId: string): void {
     WebsocketService.connectedUsers.delete(userId);
   }

@@ -4,7 +4,7 @@ import "./infos.css";
 import pl from "../../../assets/logo1.svg"
 
 import EditProfile from "../../Modals/editprofile/editprofile";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Popup from "../../Modals/popup/Popup";
 interface User {
   avatar : string
@@ -13,8 +13,9 @@ interface User {
 }
 interface UserProps {
   user : User
+  SetgoGame:any
 }
-const Infos = ({user} : UserProps) => {
+const Infos = ({user, SetgoGame} : UserProps) => {
 
 
   
@@ -57,12 +58,16 @@ const Infos = ({user} : UserProps) => {
         <div className="new-game-container">
           <div className="new-game">
             <img className="myPl" src={pl}  />
-            {/* <img className="myPl1" src={pl1}  /> */}
+      
             <div>
               <p className="wlcom"> Welcome ! </p>
               <p className="ready">Are you ready for a new game ?</p>
-              <div className="start-button">New game</div>
+              <Link to="/online">
+                <div className="start-button" onClick={()=>SetgoGame(true)}>New game</div>
+              </Link>
+            
             </div>
+
           </div>
         </div>
         <EditProfile user={user} ShowEdit={ShowEdit} Setedit={Setedit} onCancel={handleCancel}/>

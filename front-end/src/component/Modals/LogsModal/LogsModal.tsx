@@ -80,7 +80,7 @@ function LogsModal({show, room, onCancel} : LogsModalProps) {
                             </div>
                     
                             <div className="amis-infos">
-                                <p className="amis-name"><p>{friend.login}</p></p>
+                                <div className="amis-name"><p>{friend.login}</p></div>
                             </div>
                     
                             <div className="amis-status unblock" onClick={() => handleUnban(friend.id)}>Unban</div>

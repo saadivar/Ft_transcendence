@@ -80,7 +80,7 @@ const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , 
 
       const updatedRoom = Roomsdata.find(room => room.id === selectedroom.id);
       if (updatedRoom) {
-        RoomSelect(updatedRoom); 
+          RoomSelect(updatedRoom); 
       }
     }
    
@@ -109,15 +109,16 @@ const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , 
         {Roomsdata && Roomsdata.map((room) => (
           <div 
             className={`discussion ${selectedroom != null && room.id === selectedroom.id ? 'message-active' : ''}`}
-            onClick={() => handleroomClick(room)} 
+            onClick={() => handleroomClick(room)}
+            key={room.id}
           >
             <div className="amis-image">
               <img />
             </div>
 
             <div className="amis-infos">
-              <p className="amis-name"><p>{room.name}</p></p>
-              <p className="last-message">{room.lastmessagecontent}</p>
+              <div className="amis-name"><p>{room.name}</p></div>
+              <div className="last-message">{room.lastmessagecontent}</div>
             </div>
 
             <div className='room-type'>
@@ -141,14 +142,14 @@ const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , 
       {
         NotRoomsdata && NotRoomsdata.map((room) => 
         (
-          <div className="discussion message-active">
+          <div className="discussion" key={room.id}>
               <div className="amis-image">
                   <img />
               </div>
     
 
               <div className="amis-infos">
-                  <p className="amis-name"><p>{room.roomname}</p></p>
+                  <div className="amis-name"><p>{room.roomname}</p></div>
               </div>
               <div className="join-room" onClick={() => Joinroom(room)}> join </div>
               </div>

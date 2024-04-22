@@ -42,7 +42,7 @@ const Punk = ({ SetgoGame , user, setUser} : PunkProps) => {
       {user && (
         <div className='profile'>
           <div className='page'>
-            <Infos user={user} />
+            <Infos user={user} SetgoGame={SetgoGame}/>
             <Friends />
             <GameModes SetgoGame={SetgoGame} />
           </div>

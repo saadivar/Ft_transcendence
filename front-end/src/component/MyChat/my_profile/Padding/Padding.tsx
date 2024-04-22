@@ -14,7 +14,10 @@ interface PaddingProps {
 
 const Padding = ({pandding,  userSelect} :PaddingProps) => {
 
-  userSelect(null);
+  useEffect(()=>{
+
+    userSelect(null);
+  },[])
 
   const handleAccept = async (friend: Friend) => {
     try {

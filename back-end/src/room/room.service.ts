@@ -85,21 +85,25 @@ export class RoomService {
     const roomsjoinedwithroles = await Promise.all(roomsNotBanned.map(async (room) => {
       const memberStatus = await this.getstatusofthemember(room, user);
       const chatid = await this.chatservice.findChatByroomid({friends:null,rooms:room});
-      const lastmessage = await this.chatservice.findMessagesByChatId(chatid.id);
+      if(chatid)
+      {
+        const lastmessage = await this.chatservice.findMessagesByChatId(chatid.id);
       
-      const lastm =lastmessage[lastmessage.length - 1] ? lastmessage[lastmessage.length - 1].content : null;
-      const role = memberStatus ? memberStatus.role : null;
-      const status = memberStatus ? memberStatus.status : null;
-     
-      return {
-          id: room.id,
-          name: room.roomname,
-          type: room.type,
-          members: await this.getstatusofallthemember(room, user.id),
-          me: role,
-          mestatus :status,
-          lastmessagecontent:lastm,
-      };
+        const lastm =lastmessage[lastmessage.length - 1] ? lastmessage[lastmessage.length - 1].content : null;
+        const role = memberStatus ? memberStatus.role : null;
+        const status = memberStatus ? memberStatus.status : null;
+      
+        return {
+            id: room.id,
+            name: room.roomname,
+            type: room.type,
+            members: await this.getstatusofallthemember(room, user.id),
+            me: role,
+            mestatus :status,
+            lastmessagecontent:lastm,
+        };
+      }
+      
   }));
     
     return roomsjoinedwithroles;

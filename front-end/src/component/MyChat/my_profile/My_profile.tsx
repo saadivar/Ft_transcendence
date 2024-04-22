@@ -16,7 +16,7 @@ interface Props {
   UserSelceted: any;
   Profile: any;
   optionSelected: string;
-  SetOption: (option: string) => void;
+  SetOption: any;
   SetMessages: any;
   SetMessagesRoom: any;
 }

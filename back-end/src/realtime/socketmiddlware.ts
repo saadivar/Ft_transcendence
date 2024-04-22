@@ -26,7 +26,7 @@ export const socketmidd = (jwtservice:JwtService,authservice:AuthService):Socket
             if(!data)
                 throw new UnauthorizedException();
             client.data.user = await authservice.findUser(data['id']);
-            await authservice.changestatus(client.data.user.id,"online");
+            
             
             next();
         }

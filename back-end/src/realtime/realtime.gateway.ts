@@ -31,16 +31,20 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     client.use(socketmidd(this.jwtService, this.authService) as any)
   }
   async handleConnection(client: Socket) {
-    this.websocketService.addUserToMap(client.data.user.id, client);
+    if(this.websocketService.ifalreadyexist(client.data.user.id,client))
+    {
+      client.disconnect();
+      return;
+    }
+    await this.authService.changestatus(client.data.user.id,"online");
     const user = await this.authService.findUser(client.data.user.id);
+    this.websocketService.addUserToMap(client.data.user.id, client);
     const friends = await this.friendservice.findAllacceotedfriends(user);
     for(let i = 0; i < friends.length;i++)
     {
       this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
     }
     client.join("brodcast");
-
-
   }
   async handleDisconnect(client: Socket) {
     this.websocketService.removeUserFromMap(client.data.user.id);

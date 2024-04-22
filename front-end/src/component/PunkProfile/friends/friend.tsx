@@ -43,7 +43,8 @@ const Friends = () => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const resp = await axios.get('http://localhost:3000/api/friends/isaccepted', { withCredentials: true });
+        
+        const resp = await axios.get(`${import.meta.env.VITE_url_back}/api/friends/isaccepted`, { withCredentials: true });
         setMyFriends(resp.data);
       } catch (error) {
         console.error(error);

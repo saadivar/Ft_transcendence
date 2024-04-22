@@ -48,6 +48,13 @@ export class GameGateway implements OnGatewayInit {
       client.join(client.data.user.login);
       inGame.push(client.data.user.login);
       await this.authService.changestatus(client.data.user.id,"ingame");
+      /////
+      const user = await this.authService.findUser(client.data.user.id);
+      const friends = await this.friendservice.findAllacceotedfriends(user);
+      for(let i = 0; i < friends.length;i++)
+      {
+        this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
+      }
 
       client.emit('success');
     }
@@ -69,7 +76,12 @@ export class GameGateway implements OnGatewayInit {
         client.join(roomName);
         inGame.push(client.data.user.login);
         await this.authService.changestatus(client.data.user.id,"ingame");
-        
+        const user = await this.authService.findUser(client.data.user.id);
+        const friends = await this.friendservice.findAllacceotedfriends(user);
+        for(let i = 0; i < friends.length;i++)
+        {
+          this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
+        }
         room.client1?.emit('start', [roomName, client.data.user.login, room.client1Avatar, room.client2Avatar]);
         room.client2?.emit('start', [roomName, client.data.user.login, room.client1Avatar, room.client2Avatar]);
       }
@@ -91,6 +103,12 @@ export class GameGateway implements OnGatewayInit {
           clients.splice(0, 1);
           inGame.push(client.data.user.login);
           await this.authService.changestatus(client.data.user.id,"ingame");
+          const user = await this.authService.findUser(client.data.user.id);
+          const friends = await this.friendservice.findAllacceotedfriends(user);
+          for(let i = 0; i < friends.length;i++)
+          {
+            this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
+          }
         }
       }
       else if (clients.length == 0 && !inGame.includes(client.data.user.login)){
@@ -103,7 +121,12 @@ export class GameGateway implements OnGatewayInit {
         clients.push(client.data.user.login);
         inGame.push(client.data.user.login);
         await this.authService.changestatus(client.data.user.id,"ingame");
-      
+        const user = await this.authService.findUser(client.data.user.id);
+        const friends = await this.friendservice.findAllacceotedfriends(user);
+        for(let i = 0; i < friends.length;i++)
+        {
+          this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
+        }
       }
     
     }
@@ -133,17 +156,17 @@ export class GameGateway implements OnGatewayInit {
   }
   @SubscribeMessage('moveX')
   handlePlayer2Moves(@MessageBody() data : [string, number]){
-    this.rooms.get(data[0]).client1?.emit('moveX', data[1]);
+    this.rooms.get(data[0])?.client1?.emit('moveX', data[1]);
   }
   @SubscribeMessage('moveZ')
   handlePlayerMoveZ(@MessageBody() data : [string, number]){
-    this.rooms.get(data[0]).client1?.emit('moveZ', data[1]);
+    this.rooms.get(data[0])?.client1?.emit('moveZ', data[1]);
   }
 
   @SubscribeMessage('setstart') 
   handleStart(client : Socket, roomName : string){
-    this.rooms.get(roomName).client1?.emit('start', roomName);
-    this.rooms.get(roomName).client2?.emit('start', roomName);
+    this.rooms.get(roomName)?.client1?.emit('start', roomName);
+    this.rooms.get(roomName)?.client2?.emit('start', roomName);
   }
 
   @SubscribeMessage('speed')
@@ -267,6 +290,12 @@ export class GameGateway implements OnGatewayInit {
     this.server.to(clientRoom)?.emit('endGame', "You Win");
     
     await this.authService.changestatus(client.data.user.id,"online");
+    const user = await this.authService.findUser(client.data.user.id);
+    const friends = await this.friendservice.findAllacceotedfriends(user);
+    for(let i = 0; i < friends.length;i++)
+    {
+      this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
+    }
     
   }
 }

@@ -27,7 +27,15 @@
     bottom: 2.3vmin;
     right: 2vmin;
 }
-
+.ingame{
+    position: absolute;
+    width: 1.3vmin;
+    height: 1.3vmin;
+    border-radius: 50%;
+    background-color: rgb(16, 99, 207);
+    bottom: 2.3vmin;
+    right: 2vmin;
+}
 .off {
     position: absolute;
     width: 1.3vmin;

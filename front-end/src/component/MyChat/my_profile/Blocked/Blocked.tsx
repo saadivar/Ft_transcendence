@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Blocked.css"
 import axios from 'axios'
 interface Friend {
@@ -14,8 +14,10 @@ interface BlockedProps {
 }
 const Blocked = ({blocked, setboolblock,  userSelect} : BlockedProps) => {
 
- 
-  userSelect(null);
+ useEffect(()=>{
+
+   userSelect(null);
+ },[])
  const handleUnblock = async (friendId : number) => {
   try {
        await axios.post(`${import.meta.env.VITE_url_back}/api/friends/unblock`, {id: friendId}, { withCredentials: true })
@@ -37,7 +39,7 @@ const Blocked = ({blocked, setboolblock,  userSelect} : BlockedProps) => {
             </div>
     
             <div className="amis-infos">
-                <p className="amis-name"><p>{friend.login}</p></p>
+                <div className="amis-name"><p>{friend.login}</p></div>
             </div>
     
             <div className="amis-status unblock" onClick={() => handleUnblock(friend.id)}>Unblock</div>
