@@ -6,8 +6,8 @@ import { User } from "./User";
 export class Acheivment {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ type: 'enum', enum: [ '1win', '5wins',"10wins","20wins","50wins"]})
-  name:  '1win' | '5wins'|'10wins'|'20wins'|'50wins';
+  @Column({ type: 'enum', enum: [ '1win', '2wins',"3wins","4wins","5wins"]})
+  name:  '1win' | '2wins'|'3wins'|'4wins'|'5wins';
   @ManyToOne(() => User, (user) => user.acheivment, { onDelete: 'CASCADE' })
   belongs: User;
  

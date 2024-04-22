@@ -35,20 +35,16 @@ export default function Invite({inviter, isSender, recieverName, goGame, setIsSe
                 setGameSocket(newsocket);
             }
             catch(e){
-                console.log(e);
             }
         }
         getSocket();
-        console.log("isSender : ", isSender);
     },[])
     if (isSender){
-        console.log("IS SENDEER : ", recieverName)
         // setIsSender(false);
         gameSocket?.emit('InviterJoining', recieverName);
     }
     // useEffect(()=>{
         gameSocket?.on('success', () => {
-            console.log("success");
             baseSocket.emit('acceptGame', inviter?.id);
         });
     // },[])
@@ -56,12 +52,10 @@ export default function Invite({inviter, isSender, recieverName, goGame, setIsSe
     // useEffect(()=>{
         if (!isSender){
             gameSocket?.emit('InviteMatching', inviter?.login);
-            console.log("InviteMatching")
         }
     // },[])
     // useEffect(()=>{
         gameSocket?.on('start', (roomInfos)=>{
-            console.log("start");
             setInfos(roomInfos);
             setStart(true);
         });
@@ -70,7 +64,6 @@ export default function Invite({inviter, isSender, recieverName, goGame, setIsSe
         gameSocket.emit('exit');
     });
     gameSocket.on('exit', ()=>{
-        console.log("Exit Catched")
         gameSocket.close();
         setStart(false);
         setIsSender(false);

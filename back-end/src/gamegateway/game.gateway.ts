@@ -104,12 +104,8 @@ export class GameGateway implements OnGatewayInit {
         inGame.push(client.data.user.login);
         await this.authService.changestatus(client.data.user.id,"ingame");
       
-        // console.log("client : ", client.data.user.login, "  create ", clients);
       }
-      else{
-
-        // console.log(client.data.user.login , " Can't Play !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      }
+    
     }
 
     @SubscribeMessage('index')

@@ -80,29 +80,32 @@ export class FriendsService {
       });
       const users = await Promise.all(friendships.map(async (friendship) => {
         const chatid = await this.chatservice.findChatByFriendshipId({friends:friendship,rooms:null});
+          if(chatid)
+          {
+            const lastmessage = await this.chatservice.findMessagesByChatId(chatid.id);
+          const lastm =lastmessage[lastmessage.length - 1] ? lastmessage[lastmessage.length - 1].content : null;
+          if(friendship.user1.id == user.id)
+          {
+            return{
+              id:friendship.user2.id,
+              login:friendship.user2.login,
+              avatar:friendship.user2.avatar,
+              status:friendship.user2.status,
+              lastmessagecontent:lastm,
+            }
+          }
+          else
+          {
+            return{
+              id:friendship.user1.id,
+              login:friendship.user1.login,
+              avatar:friendship.user1.avatar,
+              status:friendship.user1.status,
+              lastmessagecontent:lastm,
+            }
+          }
+        }
         
-        const lastmessage = await this.chatservice.findMessagesByChatId(chatid.id);
-        const lastm =lastmessage[lastmessage.length - 1] ? lastmessage[lastmessage.length - 1].content : null;
-        if(friendship.user1.id == user.id)
-        {
-          return{
-            id:friendship.user2.id,
-            login:friendship.user2.login,
-            avatar:friendship.user2.avatar,
-            status:friendship.user2.status,
-            lastmessagecontent:lastm,
-          }
-        }
-        else
-        {
-          return{
-            id:friendship.user1.id,
-            login:friendship.user1.login,
-            avatar:friendship.user1.avatar,
-            status:friendship.user1.status,
-            lastmessagecontent:lastm,
-          }
-        }
       }));
       return users;
     }

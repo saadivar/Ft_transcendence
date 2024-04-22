@@ -38,7 +38,6 @@ export class RoomController {
     }
     @Post("createroom")
     async firstrom(@Req() req, @Res() res, @Body(ValidationPipe) createroomdto: CreateRoomDto) {
-        console.log("here");
         const user = req.user as User;
         if (createroomdto.type === "protected") {
             if (createroomdto.password !== "")
@@ -88,7 +87,6 @@ export class RoomController {
         
         await this.roomservice.ubdateroom(room,{roomname:body.roomname,type:body.type,password:body.password});
          room = await this.roomservice.findroomid(body.id);
-        console.log(room);
         const members = await this.roomservice.findroommembers(room.roomname);
 
         res.send("ok");
@@ -129,7 +127,6 @@ export class RoomController {
         const user11 = req.user as User;
         const usermuted = await this.authService.findUser(body.id);
         const roomname = body.name;
-        console.log(body.id ,body.name);
         const room = await this.roomservice.findroom(roomname);
         const user = await this.roomservice.unbanuser(room, usermuted, user11);
         await this.roomservice.leaveroom(roomname, usermuted);

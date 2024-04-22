@@ -93,7 +93,6 @@ const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , 
             SetPass("");
           }
         } catch (error) {
-          console.log("error = ", error);
         }
       };
     

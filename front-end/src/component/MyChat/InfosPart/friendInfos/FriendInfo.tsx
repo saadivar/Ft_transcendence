@@ -32,7 +32,6 @@ const FriendInfo = ({ user, profile, UserSelceted }: FriendInfoProps) => {
       );
       UserSelceted(null);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -49,7 +48,6 @@ const FriendInfo = ({ user, profile, UserSelceted }: FriendInfoProps) => {
       );
       UserSelceted(null);
     } catch (error) {
-      console.log(error);
     }
   };
 

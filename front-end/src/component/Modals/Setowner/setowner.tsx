@@ -62,7 +62,6 @@ function SetOwnerModal({ room, show, NewOwner, setNewOwner, onSubmit, onCancel }
   
       useEffect(() => {
           socket?.on("autocompleteroom", (payload) => {
-            console.log("users",payload);
               Sethelp(payload.users);
               
           });

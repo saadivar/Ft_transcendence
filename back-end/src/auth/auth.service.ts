@@ -69,7 +69,7 @@ export class AuthService{
           user.status = "offline";
         return await this.userRepository.save(user);
       }
-    async findnumberofnotif(userid:number) : Promise<number>{
+    async findnumberofnotif(userid:number) : Promise<number>{ 
 
       const numb = await this.userRepository.findOne({relations:["notif"],where:{
         id:userid

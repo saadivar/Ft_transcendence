@@ -9,7 +9,6 @@ export class WebsocketService {
 
   addUserToMap(userId: string, socket: Socket): void {
     WebsocketService.connectedUsers.set(userId, socket);
-    // console.log(WebsocketService.connectedUsers.size);
 
   }
   removeUserFromMap(userId: string): void {
@@ -71,7 +70,6 @@ export class WebsocketService {
     for (const userID of WebsocketService.connectedUsers.keys()) {
       if(userId == userID)
       {
-            console.log("herre");
             const userSocket = WebsocketService.connectedUsers.get(userID);
             if(userSocket)
                 userSocket.emit("error",{type:type});

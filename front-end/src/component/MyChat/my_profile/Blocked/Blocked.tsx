@@ -22,7 +22,6 @@ const Blocked = ({blocked, setboolblock,  userSelect} : BlockedProps) => {
       setboolblock((prevIsBool) => prevIsBool + 1);
   }  
   catch (error) {
-      console.log(error);
   }
  }
 

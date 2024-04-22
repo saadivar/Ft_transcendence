@@ -191,7 +191,6 @@ allmembers.forEach((mem) => {
 
   }
   async joinusertoroom(room: Room, user: User) {
-    console.log(room);
     if (room.type == "private") {
     
 
@@ -262,15 +261,19 @@ allmembers.forEach((mem) => {
         room: myroom, user: willingtomute,
       }
     })
-    if (muter.role == "admin" || muter.role == "owner") {
+    if (muter?.role == "admin" || muter?.role == "owner") {
       const specificuser = await this.roommmemberrepository.findOne({
         where: {
           room: myroom, user: muteduser,
         }
       })
-      if (specificuser.role != "owner" || muter.role == "owner")
-        specificuser.status = null;
-      this.roommmemberrepository.save(specificuser)
+      if(specificuser)
+      {
+        if (specificuser?.role != "owner" || muter?.role == "owner")
+          specificuser.status = null;
+        this.roommmemberrepository.save(specificuser)
+      }
+      
     }
 
     return;
@@ -281,7 +284,7 @@ allmembers.forEach((mem) => {
         room: myroom, user: willingtokick,
       }
     })
-    if (kicker.role == "admin" || kicker.role == "owner") {
+    if (kicker?.role == "admin" || kicker?.role == "owner") {
       const specificuser = await this.roommmemberrepository.findOne({
         where: {
           room: myroom, user: kickeduser,
@@ -289,7 +292,7 @@ allmembers.forEach((mem) => {
       })
       if (specificuser && specificuser.role != "owner")
       {
-      if (specificuser &&( kicker.role == "owner" ||(kicker.role == "admin" && specificuser.role != "admin")))
+      if (specificuser &&( kicker?.role == "owner" ||(kicker?.role == "admin" && specificuser?.role != "admin")))
         await this.leaveroom(myroom.roomname, kickeduser);
       }
     }

@@ -36,7 +36,7 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     const friends = await this.friendservice.findAllacceotedfriends(user);
     for(let i = 0; i < friends.length;i++)
     {
-      this.websocketService.emitToUser(friends[i].id.toString(),"friendRequestReceived");
+      this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
     }
     client.join("brodcast");
 
@@ -49,7 +49,7 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     const friends = await this.friendservice.findAllacceotedfriends(user);
     for(let i = 0; i < friends.length;i++)
       {
-        this.websocketService.emitToUser(friends[i].id.toString(),"friendRequestReceived");
+        this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
       }
 
     client.leave("brodcast");
@@ -130,7 +130,6 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
   async acceptGame(client: Socket,id:string)
   {
     this.websocketService.emitgameacccepttouser(id,client.data.user.login);
-    console.log("gateway acceptGame");
   }
 
   @SubscribeMessage('chatroomselected')
@@ -229,7 +228,6 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     }
     const bool: Boolean = this.websocketService.checking(payload.id.toString(), payload.name);
     if (bool == true) {
-      console.log(usermuted.login)
       this.websocketService.emitToUser(payload.id.toString(), "ileaved");
       this.websocketService.emitToUser(payload.id.toString(), "newmember");
     }
@@ -289,7 +287,6 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
       this.websocketService.emitToUser(String(members.members[i].id), "newmember");
       if(members.members[i].id == payload.id )
       {
-        console.log(usertoban.login)
         this.websocketService.emitToUser(payload.id.toString(), "ileaved");
 
       }

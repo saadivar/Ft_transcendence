@@ -118,8 +118,11 @@ export class AuthController
     async numofnotif(@Req() req:Request,@Res() res:Response)
     {
         const user = req.user as User;
-        const n = await this.authService.findnumberofnotif(user.id);
-        res.send(JSON.stringify(n));
+        if(user)
+        {
+            const n = await this.authService.findnumberofnotif(user.id);
+            res.send(JSON.stringify(n));
+        }
     }
     @Get('user')
     async getUser(@Req() req:Request,@Res() res:Response) {
@@ -155,11 +158,13 @@ export class AuthController
     @Get('user/:id')
     @UseGuards(jwtguard)
     async getUserbyid(@Req() req:Request,@Res() res:Response,@Param('id',ParseIntPipe) id: number) {
-        const user = req.user as User;
-        
+        try{
+            const user = req.user as User;
         const user1 = await this.authService.findUser(id);
         if(!user1)
+        {
             throw new NotFoundException();
+        }
         else
         {
             const games = await this.gameservice.findgames(user1);
@@ -169,16 +174,27 @@ export class AuthController
                 
                 if(games[i].winner.id== user1.id)
                     totalwin++;
-            }
+            } 
+            const acheivment = await this.gameservice.acheivment(user1);
             const userwitgames = {
-                id:user.id,
-                avatar: user.avatar,
+                id:user1.id,
+                avatar: user1.avatar,
+                login:user1.login,
                 games:games,
                 totalplayed:games.length,
                 wins: totalwin ,
                 loses:games.length - totalwin,
+                acheivment:acheivment,
+
             }
             res.send(userwitgames)
+        }
+        }
+        catch
+        {
+        
+            throw new NotFoundException();
+
         }
         
        
@@ -198,7 +214,7 @@ export class AuthController
             const friends = await this.friendservice.findAllacceotedfriends(user);
             for(let i = 0; i < friends.length;i++)
             {
-                this.websocketService.emitToUser(friends[i].id.toString(),"friendRequestReceived");
+                this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
             }
             res.send("ok");
         } 

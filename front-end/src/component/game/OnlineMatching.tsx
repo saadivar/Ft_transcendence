@@ -32,7 +32,6 @@ function OnlineMatching({goGame} : props){
                 setSocket(newsocket);
             }
             catch(e){
-                console.log(e);
             }
         }
         getSocket();
@@ -47,7 +46,6 @@ function OnlineMatching({goGame} : props){
     });
     const navigate = useNavigate();
     socket.on('exit', ()=>{
-        console.log("Exit Catched")
         socket.close();
         setStart(false);
         navigate("/Home", { replace: true });

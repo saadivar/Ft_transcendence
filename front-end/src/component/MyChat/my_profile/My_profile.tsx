@@ -137,7 +137,6 @@ const My_profile: React.FC<Props> = ({
         });
         SetFriendsData(resp.data);
       } catch (error) {
-        console.log(error);
       }
     };
     getFriendsData();
@@ -175,7 +174,6 @@ const My_profile: React.FC<Props> = ({
         });
         SetRoomData(resp.data);
       } catch (error) {
-        console.log(error);
       }
     };
     getRoomData();
@@ -191,7 +189,6 @@ const My_profile: React.FC<Props> = ({
         });
         SetNotRoomsdata(resp.data);
       } catch (error) {
-        console.log(error);
       }
     };
     getRoomData();
@@ -209,7 +206,6 @@ const My_profile: React.FC<Props> = ({
         });
         SetBlockedData(resp.data);
       } catch (error) {
-        console.log(error);
       }
     };
     getBlokcedData();
@@ -233,7 +229,6 @@ const My_profile: React.FC<Props> = ({
             setProfileData(dat);
           })
           .catch((err) => {
-            console.log(err.response);
           });
       } catch (error) {
         console.error("Error fetching player data:", error);
@@ -256,7 +251,6 @@ const My_profile: React.FC<Props> = ({
         });
         SetPanding(resp.data);
       } catch (error) {
-        console.log(error);
       }
     };
     getData();

@@ -82,9 +82,7 @@ function AddFriendModal({ show, friendName, setFriendName, onSubmit, onCancel }:
 
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        console.log('Key pressed:', e.key);
         if (e.key === 'Enter') {
-            console.log('Enter key pressed');
             e.preventDefault(); 
             onSubmit(e);
         }

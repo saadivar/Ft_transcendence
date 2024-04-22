@@ -41,7 +41,6 @@ function App() {
 
   useEffect(()=>{
     socket?.on('updated', ()=> {
-      console.log('nice herre')
       setfetchuser((prevIsBool) => prevIsBool + 1)});
   }, [socket])
 
@@ -98,11 +97,9 @@ function App() {
   const [recieverName, setReacieverName] = useState("");
     useEffect(()=>{
       socket?.on('acceptGame', (recieverName) => {
-      console.log("acceptGame");
       setReacieverName(recieverName);
       setIsSender(true);
       SetgoGame(true);
-      console.log("isSender : ", isSender);
     })
   } ,[socket])
 

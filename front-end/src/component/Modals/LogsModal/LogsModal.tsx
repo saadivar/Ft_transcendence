@@ -54,7 +54,6 @@ function LogsModal({show, room, onCancel} : LogsModalProps) {
     }
 
     const handleUnban = (friendId: string) => {
-        console.log("clicked = ",friendId)
         axios.post(`${import.meta.env.VITE_url_back}/api/room/unbanuser`,{id: friendId, name: room.name}, {withCredentials:true});
     
     }

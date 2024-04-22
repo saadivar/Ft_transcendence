@@ -35,7 +35,6 @@ function GameRequest({SetShow ,gameRequestSender, onCancel, SetgoGame, setIsSend
                 setGameSocket(newsocket);
             }
             catch(e){
-                console.log(e);
             }
         }
         getSocket();
@@ -44,19 +43,16 @@ function GameRequest({SetShow ,gameRequestSender, onCancel, SetgoGame, setIsSend
     const navigate = useNavigate(); 
 
     const handleSubmit =()=>{
-        console.log("isInGame");
         gameSocket?.emit('isInGame', gameRequestSender.login);
     }
 
     gameSocket.on('NotInGame', ()=>{
-        console.log("NotInGame");
         SetgoGame(true);
         SetShow(false);
         setIsSender(false);
         navigate("/onlineGame", { replace: true });
     })
     gameSocket.on('PlayerInGame', ()=>{ // Player In Game ERROORRRR
-        console.log('PlayerInGame');
         SetShow(false);
     })
     return (

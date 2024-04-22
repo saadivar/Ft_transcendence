@@ -27,8 +27,7 @@ export class FriendsController {
           this.websocketService.emiterrorToUser(users.id.toString(),`${body["login"]} not found`);
           return ;
         }
-      //   const friends = await this.friendsservice.findfriendship({user1:user,user2:users});
-      // console.log(friends);
+      
         const response = await this.friendsservice.confirmfriendship({user1:user,user2:users})
         if(response == "")
         {

@@ -44,7 +44,6 @@ export class ChatController {
                 };
                 simplifiedMessages.push(simplifiedMessage);
             }
-            // console.log("user",simplifiedMessages);
 
             res.send(simplifiedMessages);
             

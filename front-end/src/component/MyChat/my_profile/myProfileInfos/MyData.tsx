@@ -33,7 +33,6 @@ const MyData = ({profileData} : any) => {
 
         }
         catch(error){
-            console.log("error = ",error)
         }
         
     };
