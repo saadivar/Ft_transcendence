@@ -78,7 +78,6 @@ function Practice({infos , mode, goGame} : props){
 
 				scene.children.forEach(child => {
 					scene.remove(child);
-					console.log("DELETE");
 				});
 				renderer.dispose();
 				stopAnimate = true;
@@ -98,7 +97,6 @@ function Practice({infos , mode, goGame} : props){
 
 				scene.children.forEach(child => {
 					scene.remove(child);
-					console.log("DELETE");
 				});
 				renderer.dispose();
 				stopAnimate = true;
@@ -146,8 +144,6 @@ function Practice({infos , mode, goGame} : props){
 				root.appendChild(stopControl);
 				root.appendChild(fixCamera);
 				
-			} else {
-				console.log("Element with ID 'root' not found.");
 			}
 			base();
 			logic();
@@ -155,7 +151,6 @@ function Practice({infos , mode, goGame} : props){
 			function logic(){
 
 				glbloader.load('src/component/game/assets/table.glb', (gltf)=>{
-					console.log("TAble : !!");
 					table = gltf.scene;
 					table.castShadow = true;
 					table.scale.set(30, 30, 30);
@@ -413,9 +408,9 @@ function Practice({infos , mode, goGame} : props){
 						requestAnimationFrame( animate );
 						renderer.render( scene, camera );
 
-						// const delta = clock.getDelta();
+						const delta = clock.getDelta();
 
-						// if ( mixer ) mixer.update( delta );
+						if ( mixer ) mixer.update( delta );
 
 
 				}
@@ -474,24 +469,24 @@ function Practice({infos , mode, goGame} : props){
 				grid.material.transparent = true;
 				scene.add( grid );
 
-				// const fbxloader = new FBXLoader();
-				// fbxloader.load( 'src/component/game/assets/people_freePack_webGl_ani.fbx', function ( object  : any) {
+				const fbxloader = new FBXLoader();
+				fbxloader.load( 'src/component/game/assets/people_freePack_webGl_ani.fbx', function ( object  : any) {
           
-				// mixer = new THREE.AnimationMixer( object );
+				mixer = new THREE.AnimationMixer( object );
 		
-				// const action = mixer.clipAction( object.animations[ 0 ] );
-				// action.play();
-				// object.traverse( function ( child : any ) {
-				// if ( child.isMesh ) {
-				// 	child.castShadow = true;
-				// 	child.receiveShadow = true;
-				// }} );
-				// object.position.z = 100;
-				// object.position.x = 400 * (index == 0 ? -1 : 1);
-				// object.scale.set(0.5, 0.5, 0.5);
-				// object.rotation.y = Math.PI / 2 * (index == 0 ? 1 : -1);
-				// // scene.add( object );
-				// });
+				const action = mixer.clipAction( object.animations[ 0 ] );
+				action.play();
+				object.traverse( function ( child : any ) {
+				if ( child.isMesh ) {
+					child.castShadow = true;
+					child.receiveShadow = true;
+				}} );
+				object.position.z = 100;
+				object.position.x = 400 * (index == 0 ? -1 : 1);
+				object.scale.set(0.5, 0.5, 0.5);
+				object.rotation.y = Math.PI / 2 * (index == 0 ? 1 : -1);
+				scene.add( object );
+				});
 			}
 			window.addEventListener( 'resize', onWindowResize );
 			function onWindowResize() {

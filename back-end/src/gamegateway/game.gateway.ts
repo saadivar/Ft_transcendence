@@ -1,7 +1,6 @@
 import { SubscribeMessage, WebSocketGateway, MessageBody,WebSocketServer ,OnGatewayInit} from '@nestjs/websockets';
 import { Server , Socket} from 'socket.io';
 import { Room } from './Room';
-import { Ball } from './ball';
 import { socketmidd } from 'src/realtime/socketmiddlware';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
@@ -11,6 +10,12 @@ import { copyFileSync } from 'node:fs';
 import { WebsocketService } from 'src/realtime/Websocketservice';
 import { FriendsService } from 'src/friends/friends.service';
 
+
+interface Ball {
+  x : number;
+  y : number;
+  z : number;
+}
 
 let clients = [];
 const inGame = [];
@@ -43,65 +48,50 @@ export class GameGateway implements OnGatewayInit {
       client.join(client.data.user.login);
       inGame.push(client.data.user.login);
       await this.authService.changestatus(client.data.user.id,"ingame");
-  
-      // console.log("client 1 create : ", client.data.user.login);
-      // console.log("In game will  : ", inGame);
 
       client.emit('success');
     }
     else{
       client.emit('error');
-      // console.log(client.data.user.login," already in game");
     }
   }
-  @SubscribeMessage('starting')
-  starting(client : Socket, roomName : string){
-    this.rooms.get(roomName).starting++;
-    console.log("staring : ", this.rooms.get(roomName).starting);
-    if (this.rooms.get(roomName).starting > 1)
-      this.server.to(roomName)?.emit('starting');
-  }
+
   @SubscribeMessage('InviterJoining')
   async inviterJoining(client : Socket, roomName : any){
     roomName = roomName.userlog;
-    // console.log("inGame : ", inGame);
-    // console.log("client : ", client.data.user.login);
-    // console.log("reciever : ", roomName);
-
 
     if (!inGame.includes(client.data.user.login)){
-      // console.log("InviterJoining")
-      this.rooms.get(roomName).client2 = client;
-      this.rooms.get(roomName).client2Name = client.data.user.login;
-      this.rooms.get(roomName).client2Avatar = client.data.user.avatar;
-      client.join(roomName);
-      inGame.push(client.data.user.login);
-      await this.authService.changestatus(client.data.user.id,"ingame");
-      
-      this.rooms.get(roomName).client1?.emit('start', [roomName, client.data.user.login, this.rooms.get(roomName).client1Avatar, this.rooms.get(roomName).client2Avatar]);
-      this.rooms.get(roomName).client2?.emit('start', [roomName, client.data.user.login, this.rooms.get(roomName).client1Avatar, this.rooms.get(roomName).client2Avatar]);
-    }
-    else{
-      // console.log(client.data.user.login, " In game ERRRRRRRRROR ")
+      const room = this.rooms.get(roomName);
+      if (room){
+        room.client2 = client;
+        room.client2Name = client.data.user.login;
+        room.client2Avatar = client.data.user.avatar;
+        client.join(roomName);
+        inGame.push(client.data.user.login);
+        await this.authService.changestatus(client.data.user.id,"ingame");
+        
+        room.client1?.emit('start', [roomName, client.data.user.login, room.client1Avatar, room.client2Avatar]);
+        room.client2?.emit('start', [roomName, client.data.user.login, room.client1Avatar, room.client2Avatar]);
+      }
     }
   }
 
 
   @SubscribeMessage('CREATEROOM')
   async createRoom(client: Socket) {
-      // console.log("client : ", client.data.user.login, " Want to Play ", "with client ==> ", clients);
       if (clients?.length != 0 && clients[0] != client.data.user.login && !inGame.includes(client.data.user.login)){
-        // console.log("client : ", client.data.user.login, " join ", clients);
-
-        this.rooms.get(clients[0]).client2 = client;
-        this.rooms.get(clients[0]).client2Name = client.data.user.login;
-        this.rooms.get(clients[0]).client2Avatar = client.data.user.avatar; 
-        client.join(clients[0]);
-        this.rooms.get(clients[0]).client1?.emit('start', [clients[0], client.data.user.login, this.rooms.get(clients[0]).client1Avatar, this.rooms.get(clients[0]).client2Avatar]);
-        this.rooms.get(clients[0]).client2?.emit('start', [clients[0], client.data.user.login, this.rooms.get(clients[0]).client1Avatar, this.rooms.get(clients[0]).client2Avatar]);
-        clients.splice(0, 1);
-        inGame.push(client.data.user.login);
-        await this.authService.changestatus(client.data.user.id,"ingame");
+        const room = this.rooms.get(clients[0]);
+        if (room){
+          room.client2 = client;
+          room.client2Name = client.data.user.login;
+          room.client2Avatar = client.data.user.avatar; 
+          client.join(clients[0]);
+          room.client1?.emit('start', [clients[0], client.data.user.login, room.client1Avatar, room.client2Avatar]);
+          room.client2?.emit('start', [clients[0], client.data.user.login, room.client1Avatar, room.client2Avatar]);
+          clients.splice(0, 1);
+          inGame.push(client.data.user.login);
+          await this.authService.changestatus(client.data.user.id,"ingame");
+        }
       }
       else if (clients.length == 0 && !inGame.includes(client.data.user.login)){
         const newRoom = new Room(client.data.user.login);
@@ -128,10 +118,6 @@ export class GameGateway implements OnGatewayInit {
           client.emit('index', 0);
         else if (this.rooms.get(roomName)?.client2?.id == client.id)
           client.emit('index', 1);
-        else{
-          
-
-        }
       }
   @SubscribeMessage('data')
   handleData(@MessageBody() data : [Ball, string]) {
@@ -230,7 +216,6 @@ export class GameGateway implements OnGatewayInit {
         game.winner = p2;
         game.loser = p1;
       }
-      // console.log("game = ",game);
       await this.gameservice.savegamedata(game);
     this.rooms.delete(roomName);
   }
@@ -265,9 +250,7 @@ export class GameGateway implements OnGatewayInit {
 
   @SubscribeMessage('isInGame')
   isInGame(client : Socket, playerName){
-    // console.log("inGame : ", inGame);
     if (!inGame.includes(playerName)){
-      // console.log("NotInGame");
       client.emit('NotInGame');
     }
     else

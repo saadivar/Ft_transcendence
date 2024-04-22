@@ -296,7 +296,6 @@ function Online({infos , mode, socket} : props) {
 				stadium.position.x = -1760;
 				stadium.position.z = 2435;
 				stadium.rotation.y -= Math.PI/2;
-				socket.emit('starting', infos[0]);
 				scene.add(stadium);
 			})
 			renderer.domElement.addEventListener('mousemove', onMouseMove);
@@ -441,7 +440,7 @@ function Online({infos , mode, socket} : props) {
 				maxX = tableWidth / 2.5;
 				minX = tableWidth / -2.5;
 			}
-			if (start && ball.object && table && player1.raquete && player2.raquete && (index == 0 || mode == "practice"))
+			if (ball.object && table && player1.raquete && player2.raquete && (index == 0 || mode == "practice"))
 			{
 					if (floorY != 0 &&  !touchNet && stepZ >= 0 && Math.abs(player2.raquete.position.z - ball.object.position.z) < 12 && touchRaquete(player2.raquete.position.x, player2.raquete.rotation.z))
 					{
@@ -586,12 +585,6 @@ function Online({infos , mode, socket} : props) {
 				player2.raquete.position.z = -pos.z;
 				player2.raquete.rotation.copy(rot);
 			})
-			let start = false;
-			socket.on('starting', ()=>{
-				start = true;
-				scene.fog = null;
-			})
-
 			socket.on('index', (i) =>{
 				index = i;
 			})
@@ -607,9 +600,9 @@ function Online({infos , mode, socket} : props) {
 		}
 		function base() {
 			scene.background = new THREE.Color( 0x000000 );
-			scene.fog = new THREE.Fog( 0x000000, 50, 500 );
+			scene.fog = new THREE.Fog( 0x000000, 50, 700 );
 
-			const hemiLight = new THREE.HemisphereLight( 0x777777, 0x777777, 5 );
+			const hemiLight = new THREE.HemisphereLight( 0x777777, 0xffffff, 5 );
 			hemiLight.position.set( 0, 500, 0 );
 			scene.add( hemiLight );
 			const dirLight = new THREE.DirectionalLight( 0x777777, 5 );

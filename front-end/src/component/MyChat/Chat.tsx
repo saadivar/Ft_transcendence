@@ -66,6 +66,7 @@ const Chat = ({user, setUser} :ChatProps) => {
   const handleProfile = (profile: Profile) => {
     SetProfile(profile);
   }
+  
   const [optionSelected, SetOption] = useState("friends");
   const [MessagesData, SetMessages] = useState(null);
   const [FetchMessages, SetFetch] = useState(0);

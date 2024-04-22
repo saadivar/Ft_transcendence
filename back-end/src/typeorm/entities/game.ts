@@ -22,10 +22,10 @@ export class Game {
     score1:number;
     @Column()
     score2:number;
-    @OneToOne(() => User, (user) => user.winner, { onDelete: 'CASCADE'})
+    @ManyToOne(() => User, (user) => user.winner, { onDelete: 'CASCADE'})
     @JoinColumn()
     winner : User;
-    @OneToOne(() => User, (user) => user.loser, { onDelete: 'CASCADE'})
+    @ManyToOne(() => User, (user) => user.loser, { onDelete: 'CASCADE'})
     @JoinColumn()
     loser : User;
 }

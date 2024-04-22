@@ -69,9 +69,9 @@ const MyData = ({profileData} : any) => {
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
                                     className="ai ai-PersonAdd"
                                 >
                                     <circle cx="12" cy="7" r="5" />
@@ -91,9 +91,9 @@ const MyData = ({profileData} : any) => {
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                         className="ai ai-ChatAdd"
                                     >
                                         <path d="M12 8v3m0 0v3m0-3h3m-3 0H9" />

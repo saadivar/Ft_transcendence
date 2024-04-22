@@ -16,42 +16,19 @@ const Match = ({ match }) => {
         <div className="match">
             <div className="card">
                 <div className="my-content">
-                    <img className="my-card-img" src={match.player1.image} alt={match.player1.name} />
-                    <p className="my-card-res">{match.player1.result}</p>
+                    <img className="my-card-img" src={match.player1.avatar} alt={match.player1.login} />
+                    <p className="my-card-res">{match.score1}</p>
                 </div>
                 <div className="component-content">
-                    <img className="com-card-img" src={match.player2.image} alt={match.player2.name} />
-                    <p className="com-card-res">{match.player2.result}</p>
+                    <img className="com-card-img" src={match.player2.avatar} alt={match.player2.login} />
+                    <p className="com-card-res">{match.score2}</p>
                 </div>
             </div>
         </div>
     );
 };
 
-const ListMatch = () => {
-    const matches = [
-        {
-            player1: { name: 'Player 1', image: image2, result: '0' },
-            player2: { name: 'Player 2', image: image2, result: '10' },
-            result: '1'
-        },
-        {
-            player1: { name: 'Player 1', image: image2, result: '1' },
-            player2: { name: 'Player 2', image: image2, result: '22' },
-            result: '1'
-        },
-        {
-            player1: { name: 'Player 1', image: image2, result: '5' },
-            player2: { name: 'Player 2', image: image2, result: '8' },
-            result: '1'
-        },
-        {
-            player1: { name: 'Player 1', image: image2, result: '6' },
-            player2: { name: 'Player 2', image: image2, result: '17' },
-            result: '1'
-        },
-        // Add more matches as needed
-    ];
+const ListMatch = ({profile}) => {
 
     return (
         <div className="matches-list-container">
@@ -67,7 +44,7 @@ const ListMatch = () => {
                 loop={true}
                 className="swiper-container"
             >
-                {matches.map((match, index) => (
+                {profile.games.map((match, index) => (
                     <SwiperSlide key={index}>
                         <Match match={match} />
                     </SwiperSlide>

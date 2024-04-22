@@ -120,40 +120,52 @@ li img{
 
 #game-over{
   position: absolute;
-  top: 10vw;
-  left: 25vw;
-  margin: 0;
-  padding: 0;
-  width: 50vw;
-  height: 70vh;
-  color: wheat;
-  font-size: 50%;
-  border-radius: 30px;
-  background-color: rgb(14, 19, 43);
+  grid-area: 1 / 3 / 2 / 4;
+  display: grid;
+  width: 25vw;
+  height: 54vh;
+  top: 25%;
+  left: 38%;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.1fr 0.2fr 0.1fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  border-radius: 5px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(13, 21, 38, 1),rgba(22, 89, 83, 1));
+  box-shadow: 3px 3px 10px rgba(13, 21, 38, 1), -3px -3px 10px rgba(22, 89, 83, 1);
+  border: 1px solid #17BFA0;
 }
 
 #game-over button{
-  color: blueviolet;
-  width: 40%;
-  height: 20vh;
+  color: rgb(255, 255, 255);
+  width: fit-content;
+  height: fit-content;
   position: absolute;
-  left: 28%;
+  left: 32%;
   top: 50%;
-  background-color: #051b4d;
-  border: 2px solid rebeccapurple;
-  font-size: 5vw;
-  text-shadow: 0 0 10px #0df3f3;
+  background-color: #0c5849;
+  border: 0.5px solid rgb(255, 254, 254);
+  font-size: 5vmin;
+  text-shadow: 0 0 1px #fff;
   border-radius: 20px;
+  padding: 2vmin;
+}
+
+#game-over button:hover{
+  cursor: pointer;
+  background-color: #2fdab7;
 }
 
 #game-over h3{
   position: absolute;
   height: 10vh;
-  width: 50%;
-  left: 30%;
+  width: 100%;
+  left: 27%;
   top: 10%;
-  font-size: 5vw;
-  color: rgb(15, 106, 148);
+  font-size: 7vmin;
+  color: rgb(255, 255, 255);
 }
 
 

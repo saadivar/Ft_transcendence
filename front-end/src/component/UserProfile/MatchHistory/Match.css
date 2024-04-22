@@ -78,6 +78,7 @@
     top: 15%;
     left: 23%;
     border: 1px solid white;
+    object-fit: cover;
   }
 
   .com-card-img{
@@ -88,6 +89,8 @@
     top: 15%;
     left: 42%;
     border: 1px solid white;
+    object-fit: cover;
+    
   }
 
   .com-card-res{

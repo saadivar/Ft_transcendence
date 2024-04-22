@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { GameController } from './game.controller';
 import { GameService } from './game.service';
 import { Game } from 'src/typeorm/entities/game';
@@ -8,7 +8,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { Acheivment } from 'src/typeorm/entities/acheivment';
 @Module({
-  imports:[AuthModule,TypeOrmModule.forFeature([Game,Acheivment]),JwtModule.register({
+  imports:[forwardRef(() =>AuthModule),TypeOrmModule.forFeature([Game,Acheivment]),JwtModule.register({
     secret: "secret",
     signOptions: { expiresIn: '1d' }
   })],

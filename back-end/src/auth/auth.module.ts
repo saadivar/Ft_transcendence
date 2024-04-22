@@ -16,9 +16,10 @@ import { Notif } from 'src/typeorm/entities/notif';
 import { TwoFactorAuthenticationService } from './2fa.service';
 import { TwoFactorAuthenticationController } from './2fa.controller';
 import { FriendsModule } from 'src/friends/friends.module';
+import { GameModule } from 'src/game/game.module';
 
 @Module({
-    imports:[forwardRef(() => FriendsModule),
+    imports:[forwardRef(() => FriendsModule),forwardRef(() =>GameModule),
         TypeOrmModule.forFeature([User,Notif]),JwtModule.register({secret:"secret",
     signOptions:{expiresIn:'1d'}})
     ],

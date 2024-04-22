@@ -17,6 +17,7 @@
 
 .ImgProfile {
     top: 6%;
+    object-fit: cover;
 }
 .player-infos{
     margin-top: -1vmin;
@@ -103,7 +104,6 @@
 
 .achievement-item img {
     width: 9vmin;
-
     height: auto;
     border-radius: 5px;
     cursor: pointer;
@@ -113,4 +113,28 @@
     color: white;
     margin: 7vmin 0vmin 0vmin 19vmin;
     font-size: 2vmin;
+}
+.ttmatches{
+    width: fit-content;
+  height: fit-content;
+  margin-top: -18vmin;
+  margin-left: 17vmin;
+  font-size: 5vmin;
+  color: white;
+}
+.ttwins{
+    width: fit-content;
+    height: fit-content;
+    margin-top: -18vmin;
+    margin-left: 15vmin;
+    font-size: 5vmin;
+    color: white;
+}
+.ttloses{
+    width: fit-content;
+    height: fit-content;
+    margin-top: -18vmin;
+    margin-left: 15vmin;
+    font-size: 5vmin;
+    color: white;
 }

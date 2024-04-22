@@ -27,7 +27,7 @@ export class GameService {
               { player2: user },
              
             ],
-            relations: ['player1', 'player2'],
+            relations: ['player1', 'player2','winner','loser'],
           });
         return games;
     }

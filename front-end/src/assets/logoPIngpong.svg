@@ -16,7 +16,7 @@
 		.s2 { fill: #ffffff } 
 		.s3 { fill: url(#g2) } 
 		.s4 { fill: #c9ccd3 } 
-		.s5 { fill: none;stroke: #e7ebf4;stroke-linecap: round;stroke-miterlimit:10;stroke-width: 14 } 
+		.s5 { fill: none;stroke: #e7ebf4;strokeLinecap: round;stroke-miterlimit:10;strokeWidth: 14 } 
 	</style>
 	<g id="BACKGROUND">
 	</g>

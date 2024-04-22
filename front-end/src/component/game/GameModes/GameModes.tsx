@@ -18,13 +18,13 @@ const GameModes = ({SetgoGame}) => {
     
             <div className="mode-list">
     
-                    <div className='mode bot' onClick={SetgoGame(true)}>
+                    <div className='mode bot' onClick={() => {SetgoGame(true)}}>
                         <Link  className='linkstyling' to={{ pathname: "/practice"}}>
                             <div className="card-mode"></div>
                         </Link>
                     </div>
                 
-                    <div className='mode player' onClick={SetgoGame(true)}>
+                    <div className='mode player' onClick={() => {SetgoGame(true)}}>
                         <Link to="/online" className='linkstyling'>
                             <div className="card-mode"></div>
                         </Link>

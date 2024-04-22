@@ -242,7 +242,10 @@ const My_profile: React.FC<Props> = ({
     getData();
   }, []);
 
-  (profileData && Profile(profileData)); //fill user data
+  useEffect(()=> {
+    (profileData && Profile(profileData)); //fill user data
+  },[profileData])
+  
   const [pandding, SetPanding] = useState<any>(null);
 
   useEffect(() => {
@@ -316,9 +319,9 @@ const My_profile: React.FC<Props> = ({
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="ai ai-PeopleMultiple"
             >
               <circle cx="7" cy="6" r="3" />
@@ -343,9 +346,9 @@ const My_profile: React.FC<Props> = ({
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="ai ai-PeopleGroup"
             >
               <path d="M16.719 19.752l-.64-5.124A3 3 0 0 0 13.101 12h-2.204a3 3 0 0 0-2.976 2.628l-.641 5.124A2 2 0 0 0 9.266 22h5.468a2 2 0 0 0 1.985-2.248z" />
@@ -373,9 +376,9 @@ const My_profile: React.FC<Props> = ({
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="ai ai-PersonCross"
             >
               <circle cx="12" cy="7" r="5" />
@@ -399,9 +402,9 @@ const My_profile: React.FC<Props> = ({
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="ai ai-Clock"
             >
               <circle cx="12" cy="12" r="10" />

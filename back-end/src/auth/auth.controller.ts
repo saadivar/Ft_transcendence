@@ -16,6 +16,7 @@ import * as path from  'path'
 import { User } from "src/typeorm/entities/User";
 import * as fs from 'fs';
 import { FriendsService } from "src/friends/friends.service";
+import { GameService } from "src/game/game.service";
 
 
 
@@ -25,7 +26,7 @@ export class AuthController
 {
     
     constructor( private readonly authService: AuthService,
-    private jwtService: JwtService,private readonly websocketService: WebsocketService,private readonly twoFactorAuthenticationService: TwoFactorAuthenticationService,private readonly friendservice: FriendsService){
+    private jwtService: JwtService,private readonly websocketService: WebsocketService,private readonly twoFactorAuthenticationService: TwoFactorAuthenticationService,private readonly friendservice: FriendsService,private readonly gameservice: GameService){
     }
     @UseGuards(passlogin,IntraAuthGuard)//passlogin
     @Get('42')
@@ -152,21 +153,34 @@ export class AuthController
             
     }
     @Get('user/:id')
+    @UseGuards(jwtguard)
     async getUserbyid(@Req() req:Request,@Res() res:Response,@Param('id',ParseIntPipe) id: number) {
+        const user = req.user as User;
         
-        const cookie = req.cookies['jwt'];
-        if(!cookie)
-            throw new UnauthorizedException();
-        const data = await this.jwtService.verifyAsync(cookie);
-        if(!data)
-        { 
-            throw new UnauthorizedException();
-        }
-        const user = await this.authService.findUser(id);
-        if(!user)
+        const user1 = await this.authService.findUser(id);
+        if(!user1)
             throw new NotFoundException();
         else
-            res.send(user)
+        {
+            const games = await this.gameservice.findgames(user1);
+            let totalwin :number = 0;
+         for(let i = 0;i < games.length ; i++)
+            {
+                
+                if(games[i].winner.id== user1.id)
+                    totalwin++;
+            }
+            const userwitgames = {
+                id:user.id,
+                avatar: user.avatar,
+                games:games,
+                totalplayed:games.length,
+                wins: totalwin ,
+                loses:games.length - totalwin,
+            }
+            res.send(userwitgames)
+        }
+        
        
             
     }

@@ -152,9 +152,9 @@ const Addroom = ({setShowAddRoomForm, showAddRoomForm} : AddroomProps) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="ai ai-Check"
                         >
                             <path d="M4 12l6 6L20 6" />
@@ -170,9 +170,9 @@ const Addroom = ({setShowAddRoomForm, showAddRoomForm} : AddroomProps) => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="ai ai-Cross"
                         >
                             <path d="M20 20L4 4m16 0L4 20" />
