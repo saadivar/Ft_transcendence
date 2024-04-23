@@ -3,7 +3,7 @@ import "./Rooms.css"
 import { useSocket } from '../../../Socket';
 import axios from "axios";
 import CodeModal from '../../../Modals/RoomCode/RoomCode';
-import grpImg from '../../../../assets/groupImg.png'
+import romImg from '../../../../assets/groupImg.png'
 interface Room {
   id: string;
   type: string;
@@ -75,7 +75,7 @@ const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , 
         };
 
     }, [socket]);
-    useEffect(() => {
+
     if (selectedroom && Roomsdata) {
 
       const updatedRoom = Roomsdata.find(room => room.id === selectedroom.id);
@@ -83,7 +83,6 @@ const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , 
           RoomSelect(updatedRoom); 
       }
     }
-  }, [socket]);
    
     const handleFormSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
@@ -114,7 +113,7 @@ const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , 
             key={room.id}
           >
             <div className="amis-image">
-              <img src={grpImg} />
+              <img src={romImg} />
             </div>
 
             <div className="amis-infos">
@@ -145,7 +144,7 @@ const Rooms = ({Roomsdata, selectedroom, RoomSelect, NotRoomsdata, RoomNotifs , 
         (
           <div className="discussion" key={room.id}>
               <div className="amis-image">
-                  <img  src={grpImg}/>
+                  <img src={romImg}/>
               </div>
     
 

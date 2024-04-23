@@ -28,14 +28,14 @@ export class AuthController
     constructor( private readonly authService: AuthService,
     private jwtService: JwtService,private readonly websocketService: WebsocketService,private readonly twoFactorAuthenticationService: TwoFactorAuthenticationService,private readonly friendservice: FriendsService,private readonly gameservice: GameService){
     }
-    @UseGuards(passlogin,IntraAuthGuard)//passlogin
+    @UseGuards(passlogin,IntraAuthGuard)
     @Get('42')
     @SetMetadata('isPublic', true)
     handlelogin(@Req() req,@Res() res){
        
      }
  
-    @UseGuards(passlogin,IntraAuthGuard)//passlogin
+    @UseGuards(passlogin,IntraAuthGuard)
     @Get('42/redirect')
     @SetMetadata('isPublic', true)
     async handleredirect(@Req() req,@Res({passthrough: true}) res: Response){
@@ -120,7 +120,7 @@ export class AuthController
     @Get("avatars/:filename")
     @UseGuards(jwtguard)
     viewFiles(@Param("filename") filename: string, @Res() res) {
-        const file = path.join(__dirname, '../../../', 'avatars', filename)
+        const file = path.join(__dirname, '../../', 'avatars', filename)
         if (!fs.existsSync(file)) {
             throw new HttpException('File Not Found', HttpStatus.NOT_FOUND);
         }
@@ -141,22 +141,26 @@ export class AuthController
     async getUser(@Req() req:Request,@Res() res:Response) {
         try{
             const cookie = req.cookies['jwt']; 
-            if(!cookie)
-            {
-                throw new UnauthorizedException();
-            }
-            const data = await this.jwtService.verifyAsync(cookie);
-            if(!data)
-            {
-                throw new UnauthorizedException();
-            }
-            const user = await this.authService.findUser(data['id']);
-
-            if(user.HasAccess == false)
-            {
-                throw new UnauthorizedException("2FA");
-            }
             
+            if(!cookie)
+                {
+                    throw new UnauthorizedException();
+                }
+                const data = await this.jwtService.verifyAsync(cookie);
+
+                if(!data)
+                {
+                    throw new UnauthorizedException();
+                }
+                const user = await this.authService.findUser(data['id']);
+                   
+                
+            if(user.HasAccess == false)
+                {
+                    throw new UnauthorizedException("2FA");
+                }
+                
+               
             res.send(user)
         } 
         catch(e)
@@ -205,9 +209,7 @@ export class AuthController
         }
         catch
         {
-        
             throw new NotFoundException();
-
         }
         
        
@@ -224,11 +226,13 @@ export class AuthController
             res.clearCookie('jwt');
             user.status = "offline";
            await  this.authService.update(user);
+           
             const friends = await this.friendservice.findAllacceotedfriends(user);
             for(let i = 0; i < friends.length;i++)
             {
                 this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
             }
+            this.websocketService.deletefrommap(user.id.toString());
             res.send("ok");
         } 
 

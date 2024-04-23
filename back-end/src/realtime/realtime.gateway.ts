@@ -33,6 +33,7 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
   async handleConnection(client: Socket) {
     if(client.data.user && this.websocketService.ifalreadyexist(client?.data?.user?.id,client))
     {
+
       client.disconnect();
       return;
     }
@@ -93,12 +94,12 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     if (isallowedtosend && isallowedtosend.status == null) {
       const chat1 = await this.chatService.findChatByroomid({ friends: null, rooms: room });
       if (payload.content !== "") {
-        const message = await this.chatService.createmessage({ content: payload.content, sendr: user11, chat: chat1 });
         if(payload.content == "" || payload.content.length > 100)
-        {
-          this.websocketService.emiterrorToUser(client.data.user.id,"message length");
-          return;
-        }
+          {
+            this.websocketService.emiterrorToUser(client.data.user.id,"message length");
+            return;
+          }
+          const message = await this.chatService.createmessage({ content: payload.content, sendr: user11, chat: chat1 });
         this.server.to(payload.roomname).emit('roomchat', payload.roomname);
         const memebers = await this.roomService.findroommembers(payload.roomname);
         for (let i = 0; i < memebers.members.length; i++) {
@@ -246,10 +247,13 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
     for (let i = 0; i < members.members.length; i++) {
       const memberstatus = await this.roomService.getstatusofthemember(room,members.members[i]);
       if(!memberstatus.status || memberstatus.status =="muted")
+      {
         this.websocketService.emitToUser(String(members.members[i].id), "newmember");
+      }
     }
     const bool: Boolean = this.websocketService.checking(payload.id.toString(), payload.name);
     if (bool == true) {
+
       this.websocketService.emitToUser(payload.id.toString(), "ileaved");
       this.websocketService.emitToUser(payload.id.toString(), "newmember");
     }

@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { FBXLoader, GLTFLoader, OrbitControls } from 'three/examples/jsm/Addons.js';
 import './style/playersInfo.css'
 import {  Navigate} from 'react-router-dom';
+import { useEffect } from 'react';
 
 interface props{
     mode : string;
@@ -24,9 +25,12 @@ export class Player
 
 
 function Practice({mode, goGame} : props){
-	if(!goGame){
-		return <Navigate to="/Home" replace />;
-	}
+    useEffect(() => {
+		if(!goGame){
+			return <Navigate to="/Home" replace />;
+		}
+	}, []); 
+	
 	if ( !document.querySelector('canvas[data-engine="three.js r162"]')){
 			
 			let tableWidth : number;
@@ -69,17 +73,16 @@ function Practice({mode, goGame} : props){
 			}
 
 			exit.onclick = () => {
+				try{
 				root?.removeChild(renderer.domElement);
-				root?.removeChild(exit);
 				root?.removeChild(stopControl);
 				root?.removeChild(fixCamera);
-
+				root?.removeChild(exit);
 				scene.children.forEach((child : any)  => {
 					scene.remove(child);
 				});
-				renderer.dispose();
 				stopAnimate = true;
-
+				
 				renderer.setAnimationLoop(null);
 				renderer.domElement.remove(); 
 				renderer.forceContextLoss();
@@ -87,23 +90,31 @@ function Practice({mode, goGame} : props){
 				controls.dispose();
 				window.history.back();
 			}
+			catch{
+				
+			}
+			}
 			window.addEventListener('popstate', function(event) {
+				try{
 				root?.removeChild(renderer.domElement);
 				root?.removeChild(exit);
 				root?.removeChild(stopControl);
 				root?.removeChild(fixCamera);
-
+				
 				scene.children.forEach((child : any) => {
 					scene.remove(child);
 				});
 				renderer.dispose();
 				stopAnimate = true;
-
+				
 				renderer.setAnimationLoop(null);
 				renderer.domElement.remove(); 
 				renderer.forceContextLoss();
-				renderer.dispose();
 				controls.dispose();
+				}
+				catch{
+
+				}
 			});
 			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 5000 );
 			camera.position.set(
@@ -221,31 +232,9 @@ function Practice({mode, goGame} : props){
 								player1.raquete.rotation.z  = Math.PI / 6;
 							else
 								player1.raquete.rotation.z  = 0;
-							if (event.clientY - initClientY < -150){
-								p1Speed =  -3;
-								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.5;
-							}
-							else if (event.clientY - initClientY < -100){
-								p1Speed =  -2.8;
-								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.8;
-							}
-							else if (event.clientY - initClientY < -25){
-								p1Speed =  -2.5;
-								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 4;
-							}
-							else if (event.clientY - initClientY < -3){
-								p1Speed =  -2.2;
-								p1deltaT = 1 / 45;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 5;
-							}
-							else {
-								p1Speed =  -1.7;
-								p1deltaT = 1 / 46;
-								player1fp = (boundingBox.max.z - boundingBox.min.z) / 6;
-							}
+							p1Speed =  -3;
+							p1deltaT = 1 / 40;
+							player1fp = (boundingBox.max.z - boundingBox.min.z) / 3.8;
 							initclientX = event.clientX ;
 							initClientY = event.clientY;
 						}
@@ -385,10 +374,10 @@ function Practice({mode, goGame} : props){
 							if (ball.object.position.y <= floorY){
 								up = true;
 								if (stepZ > 0)
-									middle = ball.object.position.z + falligPoint / 1.2;
+									middle = ball.object.position.z + falligPoint // / 1.2;
 								else
-									middle = ball.object.position.z - falligPoint / 1.2;
-								deltaT = 1/50; 
+									middle = ball.object.position.z - falligPoint // / 1.2;
+								// deltaT = 1/50; 
 							}
 							
 						}
@@ -445,7 +434,7 @@ function Practice({mode, goGame} : props){
 			function base() {
 				scene.background = new THREE.Color( 0x000000 );
 				scene.fog = new THREE.Fog( 0x000000, 50, 1000 );
-				const hemiLight = new THREE.HemisphereLight( 0x777777, 0x777777, 5 );
+				const hemiLight = new THREE.HemisphereLight( 0x777777, 0xffffff, 5 );
 				hemiLight.position.set( 0, 500, 0 );
 				scene.add( hemiLight );
 

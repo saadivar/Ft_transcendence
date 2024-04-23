@@ -24,7 +24,16 @@ export class WebsocketService {
       return false;
   }
   removeUserFromMap(userId: string): void {
-    WebsocketService.connectedUsers.delete(userId);
+    const bool = WebsocketService.connectedUsers.delete(userId);
+  }
+  deletefrommap(userId: string): void {
+    for (const userID of WebsocketService.connectedUsers.keys()) {
+      if(userId == userID)
+      {
+        WebsocketService.connectedUsers.delete(userID);
+        }
+        
+      }   
   }
   emitToUser(userId: string, event: string): void {
     for (const userID of WebsocketService.connectedUsers.keys()) {

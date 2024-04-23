@@ -65,13 +65,17 @@ export class AuthService{
       }
       async changestatus(userid:number,status:string) {
         const user =  await this.userRepository.findOneBy({id:userid});
-        if(status == "online")
-          user.status = "online";
-        else if(status == "offline")
-          user.status = "offline";
-        else if(status == "ingame")
-          user.status = "ingame";  
-        return await this.userRepository.save(user);
+        if(user)
+        {
+          if(status == "online")
+            user.status = "online";
+          else if(status == "offline")
+            user.status = "offline";
+          else if(status == "ingame")
+            user.status = "ingame";  
+          return await this.userRepository.save(user);
+        }
+        
       }
     async findnumberofnotif(userid:number) : Promise<number>{ 
 
@@ -105,14 +109,18 @@ export class AuthService{
 
     async getnotifications(user:User)
     {
-      const notif = await this.userRepository.findOne({relations:["notif","notif.sender"],where:{
-        id:user.id
-      }});
-      const notreaded = notif.notif.filter((not)=> not.isReaded === false).map((not) => ({
-        type: not.type,
-        senderid: not.sender.id
-      }));
-      return notreaded;
+      if(user)
+      {
+        const notif = await this.userRepository.findOne({relations:["notif","notif.sender"],where:{
+          id:user.id
+        }});
+        const notreaded = notif.notif.filter((not)=> not.isReaded === false).map((not) => ({
+          type: not.type,
+          senderid: not.sender.id
+        }));
+        return notreaded;
+      }
+      
     }
     
     async updatenotification(type:string,user:User,senderid:number):Promise<void>

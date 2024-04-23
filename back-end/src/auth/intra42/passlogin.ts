@@ -20,6 +20,7 @@ export class passlogin implements CanActivate
             if(!data)
               return true;
             const user = await this.authService.findUser(data['id']);
+            
             if(!user)
               return true;
             req.user = user;

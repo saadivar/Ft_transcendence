@@ -31,7 +31,7 @@ export class FriendsController {
         const response = await this.friendsservice.confirmfriendship({user1:user,user2:users})
         if(response == "")
         {
-          this.websocketService.emiterrorToUser(users.id.toString(),`${body["login"]} already your friend`);
+          this.websocketService.emiterrorToUser(users.id.toString(),`${body["login"]} error`);
           return ;
           
 

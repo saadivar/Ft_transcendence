@@ -4,7 +4,7 @@
 import { createContext, useContext } from 'react';
 import socketIOClient from 'socket.io-client';
 
-const socketInstance = socketIOClient("ws://10.14.55.85:3000/game", {
+const socketInstance = socketIOClient(`${import.meta.env.VITE_url_socket}/game`, {
   withCredentials: true,
   transports: ['websocket']
 });

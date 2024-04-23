@@ -112,15 +112,18 @@ const Achievement = ({ profile } : UserinfoProps) => {
     </div>
   );
 };
-
+interface props {
+  setUser : any;
+}
 
 
 const UserProfile = ( {setUser} : props) => {
-  const location = useLocation();
-  const userData: ProfileData = (location.state as any)?.userData;
+  // const location = useLocation();
+  // const userData: ProfileData = (location.state as any)?.userData;
   const { userId } = useParams();
   const [profile, SetProfile] = useState(null);
   const [not, setnot] = useState('')
+  const [usr, setusr] = useState(null)
   
   useEffect(() =>  {
 
@@ -140,7 +143,19 @@ const UserProfile = ( {setUser} : props) => {
 
     getProfile();
 
-  },[])
+  },[userId])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resp = await axios.get(`${import.meta.env.VITE_url_back}/api/auth/user`, { withCredentials: true });
+        setusr(resp.data);
+        
+      } catch (error : any) {
+      }
+    };
+    fetchData();
+  }, [userId]);
 
   if(not == '404'){
     return (
@@ -159,7 +174,7 @@ const UserProfile = ( {setUser} : props) => {
             </div>
           )  
       }
-      <MenuBar user={userData} setUser={setUser} />
+      {usr && <MenuBar user={usr} setUser={setUser} />}
     </div>
   )
 }

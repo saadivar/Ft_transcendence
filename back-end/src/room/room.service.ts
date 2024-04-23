@@ -252,9 +252,13 @@ allmembers.forEach((mem) => {
           room: myroom, user: muteduser,
         }
       })
-      if (specificuser.role != "owner" || muter.role == "owner")
-        specificuser.status = "muted";
-      this.roommmemberrepository.save(specificuser)
+      if(specificuser)
+        {
+          if (specificuser?.role != "owner" || muter?.role == "owner")
+            specificuser.status = "muted";
+          this.roommmemberrepository.save(specificuser)
+        }
+     
     }
 
     return;
@@ -271,7 +275,7 @@ allmembers.forEach((mem) => {
           room: myroom, user: muteduser,
         }
       })
-      if(specificuser)
+      if(specificuser) 
       {
         if (specificuser?.role != "owner" || muter?.role == "owner")
           specificuser.status = null;
@@ -346,10 +350,13 @@ allmembers.forEach((mem) => {
           room: myroom, user: kickeduser,
         }
       })
-
-      if (specificuser.role != "owner")
-        specificuser.status = null;
-      this.roommmemberrepository.save(specificuser)
+      if(specificuser)
+        {
+          if (specificuser?.role != "owner")
+            specificuser.status = null;
+          this.roommmemberrepository.save(specificuser)
+        }
+      
     }
 
     return;

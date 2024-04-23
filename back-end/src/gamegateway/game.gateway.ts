@@ -39,23 +39,21 @@ export class GameGateway implements OnGatewayInit {
 
   @SubscribeMessage('InviteMatching')
   async inviteMatching(client : Socket, inveterName : string){
-    if (!inGame.includes(client.data.user.login)){
-      const newRoom = new Room(client.data.user.login);
+    if (!inGame.includes(client.data.user?.login)){
+      const newRoom = new Room(client.data.user?.login);
       newRoom.client1 = client;
-      newRoom.client1Name = client.data.user.login;
-      newRoom.client1Avatar = client.data.user.avatar;
-      this.rooms.set(client.data.user.login, newRoom);
-      client.join(client.data.user.login);
-      inGame.push(client.data.user.login);
-      await this.authService.changestatus(client.data.user.id,"ingame");
-      /////
-      const user = await this.authService.findUser(client.data.user.id);
+      newRoom.client1Name = client.data.user?.login;
+      newRoom.client1Avatar = client.data.user?.avatar;
+      this.rooms.set(client.data.user?.login, newRoom);
+      client.join(client.data.user?.login);
+      inGame.push(client.data.user?.login);
+      await this.authService.changestatus(client.data.user?.id,"ingame");
+      const user = await this.authService.findUser(client.data.user?.id);
       const friends = await this.friendservice.findAllacceotedfriends(user);
       for(let i = 0; i < friends.length;i++)
       {
         this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
       }
-
       client.emit('success');
     }
     else{
@@ -67,23 +65,23 @@ export class GameGateway implements OnGatewayInit {
   async inviterJoining(client : Socket, roomName : any){
     roomName = roomName.userlog;
 
-    if (!inGame.includes(client.data.user.login)){
+    if (!inGame.includes(client.data.user?.login)){
       const room = this.rooms.get(roomName);
       if (room){
         room.client2 = client;
-        room.client2Name = client.data.user.login;
-        room.client2Avatar = client.data.user.avatar;
+        room.client2Name = client.data.user?.login;
+        room.client2Avatar = client.data.user?.avatar;
         client.join(roomName);
-        inGame.push(client.data.user.login);
-        await this.authService.changestatus(client.data.user.id,"ingame");
-        const user = await this.authService.findUser(client.data.user.id);
+        inGame.push(client.data.user?.login);
+        await this.authService.changestatus(client.data.user?.id,"ingame");
+        const user = await this.authService.findUser(client.data.user?.id);
         const friends = await this.friendservice.findAllacceotedfriends(user);
         for(let i = 0; i < friends.length;i++)
         {
           this.websocketService.emitToUser(friends[i]?.id?.toString(),"friendRequestReceived");
         }
-        room.client1?.emit('start', [roomName, client.data.user.login, room.client1Avatar, room.client2Avatar]);
-        room.client2?.emit('start', [roomName, client.data.user.login, room.client1Avatar, room.client2Avatar]);
+        room.client1?.emit('start', [roomName, client.data.user?.login, room.client1Avatar, room.client2Avatar]);
+        room.client2?.emit('start', [roomName, client.data.user?.login, room.client1Avatar, room.client2Avatar]);
       }
     }
   }
@@ -91,19 +89,19 @@ export class GameGateway implements OnGatewayInit {
 
   @SubscribeMessage('CREATEROOM')
   async createRoom(client: Socket) {
-      if (clients?.length != 0 && clients[0] != client.data.user.login && !inGame.includes(client.data.user.login)){
+      if (clients?.length != 0 && clients[0] != client.data.user?.login && !inGame.includes(client.data.user?.login)){
         const room = this.rooms.get(clients[0]);
         if (room){
           room.client2 = client;
-          room.client2Name = client.data.user.login;
-          room.client2Avatar = client.data.user.avatar; 
+          room.client2Name = client.data.user?.login;
+          room.client2Avatar = client.data.user?.avatar; 
           client.join(clients[0]);
-          room.client1?.emit('start', [clients[0], client.data.user.login, room.client1Avatar, room.client2Avatar]);
-          room.client2?.emit('start', [clients[0], client.data.user.login, room.client1Avatar, room.client2Avatar]);
+          room.client1?.emit('start', [clients[0], client.data.user?.login, room.client1Avatar, room.client2Avatar]);
+          room.client2?.emit('start', [clients[0], client.data.user?.login, room.client1Avatar, room.client2Avatar]);
           clients.splice(0, 1);
-          inGame.push(client.data.user.login);
-          await this.authService.changestatus(client.data.user.id,"ingame");
-          const user = await this.authService.findUser(client.data.user.id);
+          inGame.push(client.data.user?.login);
+          await this.authService.changestatus(client.data.user?.id,"ingame");
+          const user = await this.authService.findUser(client.data.user?.id);
           const friends = await this.friendservice.findAllacceotedfriends(user);
           for(let i = 0; i < friends.length;i++)
           {
@@ -111,17 +109,17 @@ export class GameGateway implements OnGatewayInit {
           }
         }
       }
-      else if (clients.length == 0 && !inGame.includes(client.data.user.login)){
-        const newRoom = new Room(client.data.user.login);
+      else if (clients.length == 0 && !inGame.includes(client.data.user?.login)){
+        const newRoom = new Room(client.data.user?.login);
         newRoom.client1 = client;
-        newRoom.client1Name = client.data.user.login;
-        newRoom.client1Avatar = client.data.user.avatar;
-        this.rooms.set(client.data.user.login, newRoom);
-        client.join(client.data.user.login);
-        clients.push(client.data.user.login);
-        inGame.push(client.data.user.login);
-        await this.authService.changestatus(client.data.user.id,"ingame");
-        const user = await this.authService.findUser(client.data.user.id);
+        newRoom.client1Name = client.data.user?.login;
+        newRoom.client1Avatar = client.data.user?.avatar;
+        this.rooms.set(client.data.user?.login, newRoom);
+        client.join(client.data.user?.login);
+        clients.push(client.data.user?.login);
+        inGame.push(client.data.user?.login);
+        await this.authService.changestatus(client.data.user?.id,"ingame");
+        const user = await this.authService.findUser(client.data.user?.id);
         const friends = await this.friendservice.findAllacceotedfriends(user);
         for(let i = 0; i < friends.length;i++)
         {
@@ -171,35 +169,9 @@ export class GameGateway implements OnGatewayInit {
 
   @SubscribeMessage('speed')
   ballSpeed(@MessageBody() data : [string, number]){
-      
-    // if (data[1] < -150){
-    //   this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
-    //   this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
-    //   this.rooms.get(data[0])?.client1?.emit('falligPoint',3);
-
-    // }
-    // else if (data[1] < -100){
-    //   this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
-    //   this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
-    //   this.rooms.get(data[0])?.client1?.emit('falligPoint', 3);
-
-
-    // }
-    // else if (data[1] < -25){
-    //   this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
-    //   this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
-    //   this.rooms.get(data[0])?.client1?.emit('falligPoint', 3);
-    // }
-    // else if (data[1] < -2){
-    //   this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
-    //   this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/45);
-    //   this.rooms.get(data[0])?.client1?.emit('falligPoint', 3);
-    // }
-    // else{
       this.rooms.get(data[0])?.client1?.emit('speed', 2.5);
       this.rooms.get(data[0])?.client1?.emit('p2deltaT', 1/40);
       this.rooms.get(data[0])?.client1?.emit('falligPoint', 5);
-    // }
   }
   @SubscribeMessage('score')
   scoreEvent(@MessageBody() score : any[]){
@@ -217,7 +189,7 @@ export class GameGateway implements OnGatewayInit {
       const game = new Game;
       game.player1 = p1;
       game.player2 = p2;
-      if(this.rooms.get(roomName)?.client1Name != client.data.user.login)
+      if(this.rooms.get(roomName)?.client1Name != client.data.user?.login)
       {
         game.score1 = 5;
         game.score2 = 0;
@@ -241,8 +213,8 @@ export class GameGateway implements OnGatewayInit {
 
   @SubscribeMessage('endGame')
   async endGame(@MessageBody() playerScore : any[]){
-    const p1 = await this.authService.findUserbylogin(this.rooms.get(playerScore[2]).client1Name);
-    const p2 = await this.authService.findUserbylogin(this.rooms.get(playerScore[2]).client2Name);
+    const p1 = await this.authService.findUserbylogin(this.rooms.get(playerScore[2])?.client1Name);
+    const p2 = await this.authService.findUserbylogin(this.rooms.get(playerScore[2])?.client2Name);
     const game = new Game;
     game.player1 = p1;
     game.player2 = p2;
@@ -268,7 +240,7 @@ export class GameGateway implements OnGatewayInit {
   }
 
   @SubscribeMessage('isInGame')
-  isInGame(client : Socket, playerName){
+  isInGame(client : Socket, playerName : string){
     if (!inGame.includes(playerName)){
       client.emit('NotInGame');
     }
@@ -284,13 +256,13 @@ export class GameGateway implements OnGatewayInit {
 
   async handleDisconnect(client : Socket){
     const clientRoom = this.getClientRoomName(client.id);
-    if (clients[0] == client.data.user.login)
+    if (clients[0] == client.data.user?.login)
       clients.splice(0, 1);
-    inGame.splice(inGame.indexOf(client.data.user.login), 1);
+    inGame.splice(inGame.indexOf(client.data.user?.login), 1);
     this.server.to(clientRoom)?.emit('endGame', "You Win");
     
-    await this.authService.changestatus(client.data.user.id,"online");
-    const user = await this.authService.findUser(client.data.user.id);
+    await this.authService.changestatus(client.data.user?.id,"online");
+    const user = await this.authService.findUser(client.data.user?.id);
     const friends = await this.friendservice.findAllacceotedfriends(user);
     for(let i = 0; i < friends.length;i++)
     {

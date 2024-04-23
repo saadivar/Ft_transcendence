@@ -92,24 +92,7 @@ export class RoomController {
         res.send("ok");
 
     }
-    // @Post("userjoinroom")
-    // async userjoinroom(@Req() req: Request, @Res() res: Response, @Body() body: { name: string, password: string }) {
 
-    //     const user11 = req.user as User;
-    //     const roomname = body.name;
-    //     const room = await this.roomservice.findroom(roomname);
-
-    //     if (room.type == "protected") {
-    //         const check = await this.roomservice.comparePasswords(body.password, room.password)
-    //         if (!check) {
-    //             res.send({ "login": room.roomname, "cause": "password invalid" });
-    //             return;
-    //         }
-    //     }
-    //     const joining = await this.roomservice.joinusertoroom(room, user11);
-    //     res.send("ok");
-    // }
-    
     
     @Post("unmuteuser")
     async unmuteuser(@Req() req: Request, @Res() res: Response, @Body() body: { id: number, name: string }) {

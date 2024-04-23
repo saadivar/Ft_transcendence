@@ -102,9 +102,9 @@ function App() {
   const [recieverName, setReacieverName] = useState("");
     useEffect(()=>{
       socket?.on('acceptGame', (recieverName) => {
-      setReacieverName(recieverName);
-      setIsSender(true);
-      SetgoGame(true);
+        setReacieverName(recieverName);
+        SetgoGame(true);
+        setIsSender(true);
     })
   } ,[socket])
 

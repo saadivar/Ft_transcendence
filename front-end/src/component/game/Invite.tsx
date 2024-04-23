@@ -39,16 +39,17 @@ export default function Invite({inviter, isSender, recieverName, goGame, setIsSe
         }
         getSocket();
     },[])
+
     if (isSender){
         gameSocket?.emit('InviterJoining', recieverName);
+    }
+    else {
+        gameSocket?.emit('InviteMatching', inviter?.login);
     }
     gameSocket?.on('success', () => {
         baseSocket.emit('acceptGame', inviter?.id);
     });
 
-    if (!isSender){
-        gameSocket?.emit('InviteMatching', inviter?.login);
-    }
     gameSocket?.on('start', (roomInfos)=>{
         setInfos(roomInfos);
         setStart(true);
