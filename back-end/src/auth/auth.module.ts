@@ -20,7 +20,7 @@ import { GameModule } from 'src/game/game.module';
 
 @Module({
     imports:[forwardRef(() => FriendsModule),forwardRef(() =>GameModule),
-        TypeOrmModule.forFeature([User,Notif]),JwtModule.register({secret:"secret",
+        TypeOrmModule.forFeature([User,Notif]),JwtModule.register({secret:`${process.env.JWTSECRET}`,
     signOptions:{expiresIn:'1d'}})
     ],
     controllers:[AuthController,TwoFactorAuthenticationController],

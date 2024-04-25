@@ -38,7 +38,7 @@ import { Acheivment } from './typeorm/entities/acheivment';
     entities: [User,Friends,Chat,Message,Blocked,Room,RoomMember,Notif,Game,Acheivment],
     synchronize: true,
   }),JwtModule.register({secret:`${process.env.JWTSECRET}`,
-  signOptions:{expiresIn:'2h'}})
+  signOptions:{expiresIn:'1d'}})
   ,
   PassportModule.register({session: true}),
   UsersModule,FriendsModule, ChatModule, RoomModule,ConfigModule.forRoot({

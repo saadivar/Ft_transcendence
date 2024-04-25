@@ -9,7 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { Acheivment } from 'src/typeorm/entities/acheivment';
 @Module({
   imports:[forwardRef(() =>AuthModule),TypeOrmModule.forFeature([Game,Acheivment]),JwtModule.register({
-    secret: "secret",
+    secret:`${process.env.JWTSECRET}`,
     signOptions: { expiresIn: '1d' }
   })],
   controllers: [GameController],
