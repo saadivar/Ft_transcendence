@@ -3,7 +3,8 @@ import { Friends } from "./friends";
 import { Chat } from "./chat";
 import { Message } from "./message";
 import { User } from "./User";
-import { RoomMember } from "./RoomMember";
+import { RoomMember } from 'src/typeorm/entities/RoomMember';
+
 import { Notif } from "./notif";
 
 
@@ -31,7 +32,7 @@ export class Room {
     })
     members: User[];
     @OneToMany(() => RoomMember ,(roommember) => roommember.room)
-    roommember: RoomMember;
+    roommember: RoomMember[];
     @OneToMany(() => Notif, (notifroom) => notifroom.room)
     notifroom: Notif[];
 }

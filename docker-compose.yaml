@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 services:
   postgres:
     container_name: postgres
@@ -15,10 +15,11 @@ services:
     image: node:lts-alpine
     container_name: backend
     working_dir: /app
-    command: sh -c "npm install
-                    && npm run start:dev"
-                    # && npm run migration:generate -- db/migrations/newmigrations 
-                    # && npm run migration:run"
+    command: sh -c "npm install 
+                    && npm run build
+                    && npm run migration:generate -- db/migrations/newmigrations || true
+                    && npm run migration:run
+                    && npm run start:prod"
     env_file:
       - .env
     volumes:

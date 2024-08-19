@@ -7,6 +7,7 @@ import { Room } from "./rooms";
 import { Notif } from "./notif";
 import { Game } from "./game";
 import { Acheivment } from "./acheivment";
+import { RoomMember } from "./RoomMember";
 
 
 @Entity({name: 'users'})
@@ -48,6 +49,9 @@ export class User {
     messages: Message[];
     @OneToMany(() => Acheivment, (acheivment) => acheivment.belongs)
     acheivment: Acheivment[];
+
+    @OneToMany(() => RoomMember ,(roommember) => roommember.user)
+    roommember: RoomMember[];
     
     @OneToMany(() => Notif, (notif) => notif.user)
     notif: Notif[];

@@ -1,13 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, JoinColumn } from 'typeorm';
 import { User } from './User';
-import { Room } from './rooms';
+import { Room } from 'src/typeorm/entities/rooms';
+
+
 
 @Entity()
 export class RoomMember {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, {onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.roommember,{onDelete: 'CASCADE' })
   user: User;
 
   @ManyToOne(() => Room,(room) => room.roommember, {onDelete: 'CASCADE' })

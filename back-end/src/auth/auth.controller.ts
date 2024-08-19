@@ -41,7 +41,7 @@ export class AuthController
     async handleredirect(@Req() req,@Res({passthrough: true}) res: Response){
         
         const jwt = await this.jwtService.signAsync({id:req.user.id});
-        res.cookie('jwt',jwt,{httpOnly: true});
+        res.cookie('jwt',jwt,{httpOnly: true,},);
         const us = await this.authService.findUser(req.user.id);
         if(req.user.isTwoFactorAuthenticationEnabled == true)
         {

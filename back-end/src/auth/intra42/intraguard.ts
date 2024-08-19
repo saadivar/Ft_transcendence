@@ -12,7 +12,6 @@ export class IntraAuthGuard extends AuthGuard('42')
         await super.logIn(request);
         return activate;
     }
-
 }
 
 

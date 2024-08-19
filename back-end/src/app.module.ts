@@ -25,19 +25,11 @@ import { Game } from './typeorm/entities/game';
 import { GameModule } from './game/game.module';
 import { GameGateway } from './gamegateway/game.gateway';
 import { Acheivment } from './typeorm/entities/acheivment';
+import { datasourceoptions } from 'db/data-source';
 
 
 @Module({
-  imports: [AuthModule,TypeOrmModule.forRoot({
-    type:'postgres',
-    host: `${process.env.DB_HOST}`,
-    port: Number(`${process.env.DB_PORT}`),
-    username: `${process.env.POSTGRES_USER}`,
-    password: `${process.env.POSTGRES_PASSWORD}`,
-    database: `${process.env.POSTGRES_DB}`,
-    entities: [User,Friends,Chat,Message,Blocked,Room,RoomMember,Notif,Game,Acheivment],
-    synchronize: true,
-  }),JwtModule.register({secret:`${process.env.JWTSECRET}`,
+  imports: [AuthModule,TypeOrmModule.forRoot(datasourceoptions),JwtModule.register({secret:`${process.env.JWTSECRET}`,
   signOptions:{expiresIn:'1d'}})
   ,
   PassportModule.register({session: true}),
